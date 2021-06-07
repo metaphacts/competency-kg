@@ -5,48 +5,23 @@
             <mp-workspace-item id='1' default-size=550>
                 <div class='grid-demo' style='flex: 1;  width:500px'>
                   <h2>Search over Tasks & Methods</h2>
-                  <semantic-simple-search
-                    query='{
-                      "type": "sparql",
-                      "query": "SELECT DISTINCT ?resource ?label WHERE {
-                                SERVICE <https://scholkg.kmi.open.ac.uk/sparqlendpoint/>      
-                                {
-                                  ?resource a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
-                                  BIND ( STRAFTER (STR(?resource), \"http://scholkg.kmi.open.ac.uk/aikg/resource/\") AS ?label)
-                                  FILTER REGEX(LCASE(STRAFTER (STR(?resource), \"http://scholkg.kmi.open.ac.uk/aikg/resource/\") ), LCASE(?__token__), \"i\")
-                                } 
-                              } ORDER BY DESC (?score) (?label) LIMIT 10",
-                      "params": {
-                        "__token__": {
-                          "type": "token",
-                          "required": true
-                        }
-                      }
-                    }'
-                    template='{{> search-template}}'
-                    input-placeholder='Search for something e.g. "communication"'
-                  >
-                    <template id="search-template">
-                      <mp-event-trigger type="Component.TemplateUpdate" targets='["event-target"]' data='{"item": "<{{iri}}>"}'>
-                        <span style="color: blue;">{{label.value}}</span>
-                      </mp-event-trigger>
-                    </template>
-                  </semantic-simple-search>  
-
-
-
-
+                  <!-- TODO: full text search -->
                   <semantic-search>
                     <semantic-search-query-keyword
-                      query='
-                        SELECT DISTINCT ?resource ?label WHERE {
-                          SERVICE <https://scholkg.kmi.open.ac.uk/sparqlendpoint/>
-                          {
-                            ?resource a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
-                            BIND ( STRAFTER (STR(?resource), "http://scholkg.kmi.open.ac.uk/aikg/resource/") AS ?label)
-                            FILTER REGEX(LCASE(STRAFTER (STR(?resource), "http://scholkg.kmi.open.ac.uk/aikg/resource/") ), LCASE(?__token__), "i")
-                          } 
-                        } ORDER BY DESC (?score) (?label) LIMIT 10
+                      query='PREFIX kmi: <http://scholkg.kmi.open.ac.uk/aikg/ontology#>
+                            SELECT DISTINCT ?subject WHERE {
+                              SERVICE <https://scholkg.kmi.open.ac.uk/sparqlendpoint/>
+                              {
+                                {
+                                  ?subject a kmi:Task .
+                                }
+                                UNION
+                                {
+                                  ?subject a kmi:Method .
+                                }
+                                FILTER REGEX(LCASE(STRAFTER (STR(?subject), "http://scholkg.kmi.open.ac.uk/aikg/resource/") ), LCASE(?__token__), "i")
+                              } 
+                            }
                       '
                     ></semantic-search-query-keyword>
 
@@ -54,25 +29,28 @@
                       <semantic-search-result>
                         <semantic-table
                           id='overall-search-table'
-                          query='SELECT ?resource ?label WHERE {?resource rdfs:label ?label}'
+                          query='SELECT ?subject ?label ?typeLabel WHERE {
+                              SERVICE <https://scholkg.kmi.open.ac.uk/sparqlendpoint/>
+                              {
+                                ?subject a ?type .
+                                BIND ( STRAFTER (STR(?subject), "http://scholkg.kmi.open.ac.uk/aikg/resource/") AS ?label)
+                                BIND ( STRAFTER (STR(?type), "http://scholkg.kmi.open.ac.uk/aikg/ontology#") AS ?typeLabel)
+                              }
+                            } ORDER BY DESC (?score) (?label) LIMIT 50'
                           tuple-template='{{>resultTemplate}}'
                           options='{"showFilter": false}'
                         >
                           <template id='resultTemplate'>
-                            <mp-event-trigger type="Component.TemplateUpdate" targets='["event-target"]' data='{"item": "<{{iri}}>"}'>
-                              <span style="color: blue;">{{label.value}}</span>
+                            <div style="cursor: pointer; color: blue; width: 100%; padding: 0.1rem 1rem;">
+                            <mp-event-trigger type="Component.TemplateUpdate" targets='["event-target"]' data='{"item": "<{{subject.value}}>"}'>
+                              <span style="cursor: pointer; color: blue;">{{label.value}} ({{typeLabel.value}})</span>
                             </mp-event-trigger>
+                            </div>
                           </template>
                         </semantic-table>
                       </semantic-search-result>
                     </semantic-search-result-holder>
                   </semantic-search>
-
-
-
-
-
-
                
                   <h2>KMI AI-KG Tasks</h2>
                   <div style="padding: 20px; margin: 20px;height:500px; background-color: #f7f7f7; border: 1px solid #e8e8e8;">
@@ -251,7 +229,7 @@
                    <div class='ontodia-container'  >
                       <div class='ontodia-workspace-container' style="height:500px" >
                         <ontodia query="PREFIX kmi: <http://scholkg.kmi.open.ac.uk/aikg/ontology#>
-                                        CONSTRUCT {	 
+                                        CONSTRUCT {  
                                         ?this skos:broader ?parent ;
                                               skos:narrower ?child .
                                         ?s ?p ?o .
@@ -373,8 +351,4 @@
            
           </mp-workspace-row>
         </mp-workspace-layout>
-
-
-
-
 </div>
