@@ -8,5 +8,19 @@ To deploy the app, include the folder `competency-kg-app` as volume in the `/app
 
 ### Data
 The app currently uses two data sources:
-- The Computer Science Ontology which you have to download from [here](https://cso.kmi.open.ac.uk/downloads) and import into metaphactory
-- The KMI ScholKG ontology which is referenced via an external SPARQL endpoint (as it is too large to conveniently load into metaphactory)
+- The [Computer Science Ontology](https://cso.kmi.open.ac.uk/)
+- The [KMI ScholKG ontology](https://scholkg.kmi.open.ac.uk/)
+
+To import the data, do the following:
+
+1. Make sure that you are running metaphactory with docker-compose (default setup) and use BlazeGraph as data store - otherwise the data import will not work as expected.
+
+2. Make sure that BlazeGraph has enough RAM to process the file upload. The easiest way to do that is adding the following lines to the `services` section of the `docker-compose.overwrite.yml` in your deployment:
+```
+blazegraph:
+    environment:
+       - JAVA_OPTS=-Xmx4g
+```
+Hint: Restart your metaphactory instance (if it is running) to load the updated configuration.
+
+3. First check that your metaphactory instance is running, then execute `/bin/sh run_import.sh <deployment-name>` where `<deployment-name>` should be replaced with the name of your metaphactory deployment. The import may take several minutes.
