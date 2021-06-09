@@ -5,22 +5,18 @@
             <mp-workspace-item id='1' default-size=550>
                 <div class='grid-demo' style='flex: 1;  width:500px'>
                   <h2>Search over Tasks & Methods</h2>
-                  <!-- TODO: full text search -->
                   <semantic-search>
                     <semantic-search-query-keyword
                       query='PREFIX kmi: <http://scholkg.kmi.open.ac.uk/aikg/ontology#>
                             SELECT DISTINCT ?subject WHERE {
-                              SERVICE <https://scholkg.kmi.open.ac.uk/sparqlendpoint/>
                               {
-                                {
-                                  ?subject a kmi:Task .
-                                }
-                                UNION
-                                {
-                                  ?subject a kmi:Method .
-                                }
-                                FILTER REGEX(LCASE(STRAFTER (STR(?subject), "http://scholkg.kmi.open.ac.uk/aikg/resource/") ), LCASE(?__token__), "i")
-                              } 
+                                ?subject a kmi:Task .
+                              }
+                              UNION
+                              {
+                                ?subject a kmi:Method .
+                              }
+                              FILTER REGEX(LCASE(STRAFTER (STR(?subject), "http://scholkg.kmi.open.ac.uk/aikg/resource/") ), LCASE(?__token__), "i")
                             }
                       '
                     ></semantic-search-query-keyword>
@@ -30,12 +26,12 @@
                         <semantic-table
                           id='overall-search-table'
                           query='SELECT ?subject ?label ?typeLabel WHERE {
-                              SERVICE <https://scholkg.kmi.open.ac.uk/sparqlendpoint/>
-                              {
+                              #SERVICE <https://scholkg.kmi.open.ac.uk/sparqlendpoint/>
+                              #{
                                 ?subject a ?type .
                                 BIND ( STRAFTER (STR(?subject), "http://scholkg.kmi.open.ac.uk/aikg/resource/") AS ?label)
                                 BIND ( STRAFTER (STR(?type), "http://scholkg.kmi.open.ac.uk/aikg/ontology#") AS ?typeLabel)
-                              }
+                              #}
                             } ORDER BY DESC (?score) (?label) LIMIT 50'
                           tuple-template='{{>resultTemplate}}'
                           options='{"showFilter": false}'
@@ -56,66 +52,55 @@
                   <div style="padding: 20px; margin: 20px;height:500px; background-color: #f7f7f7; border: 1px solid #e8e8e8;">
                   <semantic-lazy-tree
                                 roots-query='SELECT DISTINCT ?item ?hasChildren WHERE {
-                                        SERVICE <https://scholkg.kmi.open.ac.uk/sparqlendpoint/>      
+                                          ?item a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>
+                                          FILTER NOT EXISTS 
+                                          { 
+                                            ?a rdf:subject ?item ;
+                                                rdf:predicate skos:broader ;
+                                                rdf:object ?supertopic . 
+                                          }  
+                                          OPTIONAL 
                                           {
-                                            ?item a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>
-                                            FILTER NOT EXISTS 
-                                            { 
-                                              ?a rdf:subject ?item ;
-                                                 rdf:predicate skos:broader ;
-                                                 rdf:object ?supertopic . 
-                                            }  
-                                            OPTIONAL 
-                                            {
-                                               ?b rdf:subject ?subtopic ;
-                                                  rdf:predicate skos:broader ;
-                                                  rdf:object ?item. 
-                                            } 
-                                             BIND (IF(BOUND(?subtopic), "true", "false") AS ?hasChildren) 
-                                          }
+                                              ?b rdf:subject ?subtopic ;
+                                                rdf:predicate skos:broader ;
+                                                rdf:object ?item. 
+                                          } 
+                                            BIND (IF(BOUND(?subtopic), "true", "false") AS ?hasChildren) 
                                         }'
 
                                 children-query='SELECT ?item ?hasChildren WHERE {
-                                                SERVICE <https://scholkg.kmi.open.ac.uk/sparqlendpoint/>      
-                                                {
                                                   ?c rdf:subject ?item ;
-                                                     rdf:predicate skos:broader;
-                                                     rdf:object ?parent . 
+                                                      rdf:predicate skos:broader;
+                                                      rdf:object ?parent . 
                                                   OPTIONAL 
                                                   { 
                                                     ?d rdf:subject ?subtopic ;
-                                                       rdf:predicate skos:broader ;
-                                                       rdf:object ?item . 
+                                                        rdf:predicate skos:broader ;
+                                                        rdf:object ?item . 
                                                   }
-                                                  BIND (IF(BOUND(?subtopic), "true", "false") AS ?hasChildren) 
-                                                } }'
+                                                  BIND (IF(BOUND(?subtopic), "true", "false") AS ?hasChildren)
+                                                }'
                                 node-template='{{> node}}'
 
                                 search-query='SELECT DISTINCT ?item ?label ?score ?hasChildren WHERE {
-                                               SERVICE <https://scholkg.kmi.open.ac.uk/sparqlendpoint/>      
-                                                {
-                                                  ?item a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
-                                                  BIND ( STRAFTER (STR(?item), "http://scholkg.kmi.open.ac.uk/aikg/resource/") AS ?label)
-                                                  BIND("false" AS ?hasChildren)
-                                                  FILTER REGEX(LCASE(STRAFTER (STR(?item), "http://scholkg.kmi.open.ac.uk/aikg/resource/") ), LCASE(?__token__), "i")
-                                                } 
+                                                ?item a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
+                                                BIND ( STRAFTER (STR(?item), "http://scholkg.kmi.open.ac.uk/aikg/resource/") AS ?label)
+                                                BIND("false" AS ?hasChildren)
+                                                FILTER REGEX(LCASE(STRAFTER (STR(?item), "http://scholkg.kmi.open.ac.uk/aikg/resource/") ), LCASE(?__token__), "i")
                                               } ORDER BY DESC (?score) (?label) LIMIT 50
                                             '
                                 placeholder='Select or search for a task..'
                                 parents-query='SELECT ?item ?parent ?hasChildren WHERE {
-                                                SERVICE <https://scholkg.kmi.open.ac.uk/sparqlendpoint/>      
-                                                {
-                                                     ?e rdf:subject ?item ;
-                                                        rdf:predicate skos:broader ;
-                                                        rdf:object ?parent . 
+                                                ?e rdf:subject ?item ;
+                                                  rdf:predicate skos:broader ;
+                                                  rdf:object ?parent . 
                                                 OPTIONAL 
-                                                  { 
-                                                    ?d rdf:subject ?subtopic ;
-                                                       rdf:predicate skos:broader ;
-                                                       rdf:object ?item . 
-                                                  }
-                                                  BIND (IF(BOUND(?subtopic), "true", "false") AS ?hasChildren) 
+                                                { 
+                                                  ?d rdf:subject ?subtopic ;
+                                                      rdf:predicate skos:broader ;
+                                                      rdf:object ?item . 
                                                 }
+                                                BIND (IF(BOUND(?subtopic), "true", "false") AS ?hasChildren)
                                                }'
                               >
                          <template id='node'>
@@ -139,66 +124,55 @@
                     <div style="padding: 20px; margin: 20px; height:500px; background-color: #f7f7f7; border: 1px solid #e8e8e8;">
                     <semantic-lazy-tree
                             roots-query='SELECT DISTINCT ?item ?hasChildren WHERE {
-                                        SERVICE <https://scholkg.kmi.open.ac.uk/sparqlendpoint/>      
+                                          ?item a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>
+                                          FILTER NOT EXISTS 
+                                          { 
+                                            ?a rdf:subject ?item ;
+                                                rdf:predicate skos:broader ;
+                                                rdf:object ?supertopic . 
+                                          }  
+                                          OPTIONAL 
                                           {
-                                            ?item a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>
-                                            FILTER NOT EXISTS 
-                                            { 
-                                              ?a rdf:subject ?item ;
-                                                 rdf:predicate skos:broader ;
-                                                 rdf:object ?supertopic . 
-                                            }  
-                                            OPTIONAL 
-                                            {
-                                               ?b rdf:subject ?subtopic ;
-                                                  rdf:predicate skos:broader ;
-                                                  rdf:object ?item. 
-                                            } 
-                                             BIND (IF(BOUND(?subtopic), "true", "false") AS ?hasChildren) 
-                                          }
+                                              ?b rdf:subject ?subtopic ;
+                                                rdf:predicate skos:broader ;
+                                                rdf:object ?item. 
+                                          } 
+                                          BIND (IF(BOUND(?subtopic), "true", "false") AS ?hasChildren)
                                         }'
 
                                 children-query='SELECT ?item ?hasChildren WHERE {
-                                                SERVICE <https://scholkg.kmi.open.ac.uk/sparqlendpoint/>      
-                                                {
                                                   ?c rdf:subject ?item ;
-                                                     rdf:predicate skos:broader;
-                                                     rdf:object ?parent . 
+                                                      rdf:predicate skos:broader;
+                                                      rdf:object ?parent . 
                                                   OPTIONAL 
                                                   { 
                                                     ?d rdf:subject ?subtopic ;
-                                                       rdf:predicate skos:broader ;
-                                                       rdf:object ?item . 
+                                                        rdf:predicate skos:broader ;
+                                                        rdf:object ?item . 
                                                   }
                                                   BIND (IF(BOUND(?subtopic), "true", "false") AS ?hasChildren) 
-                                                } }'
+                                                }'
                                 node-template='{{> node2}}'
 
                                 search-query='SELECT DISTINCT ?item ?label ?score ?hasChildren WHERE {
-                                               SERVICE <https://scholkg.kmi.open.ac.uk/sparqlendpoint/>      
-                                                {
-                                                  ?item a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method> .
-                                                  BIND ( STRAFTER (STR(?item), "http://scholkg.kmi.open.ac.uk/aikg/resource/") AS ?label)
-                                                  BIND("false" AS ?hasChildren)
-                                                  FILTER REGEX(LCASE(STRAFTER (STR(?item), "http://scholkg.kmi.open.ac.uk/aikg/resource/") ), LCASE(?__token__), "i")
-                                                } 
+                                                ?item a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method> .
+                                                BIND ( STRAFTER (STR(?item), "http://scholkg.kmi.open.ac.uk/aikg/resource/") AS ?label)
+                                                BIND("false" AS ?hasChildren)
+                                                FILTER REGEX(LCASE(STRAFTER (STR(?item), "http://scholkg.kmi.open.ac.uk/aikg/resource/") ), LCASE(?__token__), "i")
                                               } ORDER BY DESC (?score) (?label) LIMIT 50
                                             '
                                 placeholder='Select or search for a task..'
                                 parents-query='SELECT ?item ?parent ?hasChildren WHERE {
-                                                SERVICE <https://scholkg.kmi.open.ac.uk/sparqlendpoint/>      
-                                                {
-                                                     ?e rdf:subject ?item ;
-                                                        rdf:predicate skos:broader ;
-                                                        rdf:object ?parent . 
+                                                ?e rdf:subject ?item ;
+                                                  rdf:predicate skos:broader ;
+                                                  rdf:object ?parent . 
                                                 OPTIONAL 
-                                                  { 
-                                                    ?d rdf:subject ?subtopic ;
-                                                       rdf:predicate skos:broader ;
-                                                       rdf:object ?item . 
-                                                  }
-                                                  BIND (IF(BOUND(?subtopic), "true", "false") AS ?hasChildren) 
+                                                { 
+                                                  ?d rdf:subject ?subtopic ;
+                                                      rdf:predicate skos:broader ;
+                                                      rdf:object ?item . 
                                                 }
+                                                BIND (IF(BOUND(?subtopic), "true", "false") AS ?hasChildren)
                                                }'
                                                 >
                           <template id='node2'>
@@ -235,9 +209,6 @@
                                         ?s ?p ?o .
                                         } 
                                         WHERE {
-                                          SERVICE <https://scholkg.kmi.open.ac.uk/sparqlendpoint/>      
-                                          {
-                                            # TODO: retrieve types
                                             # retrieve parents
                                             {
                                             ?b rdf:subject {{item}} ;
@@ -251,8 +222,7 @@
                                               rdf:predicate skos:broader ;
                                               rdf:object {{item}}. 
                                             } 
-                                            # -- ITEM IS TASK --
-                                            # retrieve methods
+                                            # retrieve methods (if item is task)
                                             UNION 
                                             {
                                             ?d rdf:subject {{item}} ;
@@ -262,17 +232,6 @@
                                               ?o a kmi:Method .
                                               BIND({{item}} as ?s)
                                             }
-                                            # retrieve ingoing relations from methods (not needed as every predicate has inverse)
-                                            #UNION 
-                                            #{
-                                            #?d rdf:subject ?s ;
-                                            #  rdf:predicate ?p ;
-                                            #  rdf:object {{item}}. 
-                                            #  {{item}} a kmi:Task .
-                                            #  ?s a kmi:Method .
-                                            #  BIND({{item}} as ?o)
-                                            #} 
-                                            # -- ITEM IS METHOD --
                                             # retrieve tasks (if item is method)
                                             UNION 
                                             {
@@ -282,18 +241,7 @@
                                               {{item}} a kmi:Method .
                                               ?o a kmi:Task .
                                               BIND({{item}} as ?s)
-                                            } 
-                                            # retrieve ingoing relations from tasks (not needed as every predicate has inverse)
-                                            #UNION 
-                                            #{
-                                            #?d rdf:subject ?s ;
-                                            #  rdf:predicate ?p ;
-                                            #  rdf:object {{item}}. 
-                                            #  {{item}} a kmi:Method .
-                                            #  ?s a kmi:Task .
-                                            #  BIND({{item}} as ?o)
-                                            #} 
-                                          }
+                                            }
                                           BIND ({{item}} as ?this) 
                                         }"  >
                          </ontodia>
@@ -319,8 +267,6 @@
                       query="
                               SELECT ?node ?parent 
                               WHERE {
-                              SERVICE <https://scholkg.kmi.open.ac.uk/sparqlendpoint/>      
-                              {
                                 {
                                   ?b rdf:subject {{item}} .
                                   ?b rdf:predicate skos:narrower. 
@@ -334,8 +280,6 @@
                                   ?n rdf:object {{item}} . 
                                   BIND ({{item}} as ?node) 
                                 }
-                              }
-                              
                               } "
                       provider='d3-sankey'  
                       d3-tree-options='{"nodeWidth":300, "nodeHeight":100, "nodeLeftMargin": 5}'>
