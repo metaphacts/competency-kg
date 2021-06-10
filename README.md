@@ -24,3 +24,6 @@ blazegraph:
 Hint: Restart your metaphactory instance (if it is running) to load the updated configuration.
 
 3. First check that your metaphactory instance is running, then execute `/bin/sh run_import.sh <deployment-name>` where `<deployment-name>` should be replaced with the name of your metaphactory deployment. The import may take several minutes.
+
+### KMI Ontology Visualisation
+The KMI ontology is represented using domain statements based on RDF lists. This notation can not be visualised with metaphactory and Ontodia. To change the ontology into a representation using SHACL shapes, run the personal query `kmi-owlunion-to-shaclshape-conversion` once. This query is delivered with the app.
