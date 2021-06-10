@@ -4,9 +4,9 @@
 	<!-- RDF Format (Default is rdf/xml) -->
 	<entry key="format">application/x-turtle</entry>
 	<!-- Base URI (Optional) -->
-	<entry key="baseURI">http://scholkg.kmi.open.ac.uk/aikg/</entry>
+	<entry key="baseURI">http://scholkg.kmi.open.ac.uk/aikg/resource/</entry>
 	<!-- Default Graph URI (Optional - Required for quads mode namespace) -->
-	<entry key="defaultGraph">http://scholkg.kmi.open.ac.uk/aikg/</entry>
+	<entry key="defaultGraph">http://scholkg.kmi.open.ac.uk/aikg/resource/</entry>
 	<!-- Suppress all stdout messages (Optional) -->
 	<entry key="quiet">false</entry>
 	<!-- Show additional messages detailing the load performance. (Optional) -->
@@ -20,5 +20,5 @@
  	<!-- The configuration file for the database instance. It must be readable by the web application. -->
 	<entry key="propertyFile">/config/RWStore.properties</entry>
 	<!-- Zero or more files or directories containing the data to be loaded. This should be a comma delimited list. The files must be readable by the web application. -->
-	<entry key="fileOrDirs">/blazegraph-data/import/scholkg-ontology.ttl,/blazegraph-data/import/scholkg-data.ttl</entry>
+	<entry key="fileOrDirs">/blazegraph-data/import/kmi-data.ttl</entry>
 </properties>
