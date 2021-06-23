@@ -26,4 +26,7 @@ Hint: Restart your metaphactory instance (if it is running) to load the updated 
 3. First check that your metaphactory instance is running, then execute `/bin/sh run_import.sh <deployment-name>` where `<deployment-name>` should be replaced with the name of your metaphactory deployment. The import may take several minutes.
 
 ### KMI Ontology Visualisation
-The KMI ontology is represented using domain statements based on RDF lists. This notation can not be visualised with metaphactory and Ontodia. To change the ontology into a representation using SHACL shapes, run the personal query `kmi-owlunion-to-shaclshape-conversion` once. This query is delivered with the app.
+The KMI ontology is represented using domain statements based on RDF lists. This notation can not be visualised with metaphactory and Ontodia. Further, the ontology is not using skos-ontology. To adapt the ontology, run the following personal queries (which are delivered with the app):
+* `kmi-skos-concept` (adds the skos:Concept type to all classes in KMI)
+* `kmi-skos-broader` (creates skos:broader relationships between parent and child concepts)
+* `kmi-owlunion-to-shaclshape-conversion` (generates SHACL shapes for representation of domain and range values)

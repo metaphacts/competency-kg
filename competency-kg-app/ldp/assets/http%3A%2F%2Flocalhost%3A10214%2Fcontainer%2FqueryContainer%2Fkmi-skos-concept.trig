@@ -1,0 +1,25 @@
+
+<http://localhost:10214/container/queryContainer/kmi-skos-concept/context> {
+  <http://localhost:10214/container/queryContainer/kmi-skos-concept> a <http://spinrdf.org/sp#Update>,
+      <http://www.w3.org/ns/prov#Entity>, <http://www.w3.org/ns/ldp#Resource>;
+    <http://www.w3.org/2000/01/rdf-schema#label> "kmi-skos-concept";
+    <http://spinrdf.org/sp#text> """PREFIX : <http://www.metaphacts.com/resource/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX kmi: <http://scholkg.kmi.open.ac.uk/aikg/ontology#>
+PREFIX cso: <http://cso.kmi.open.ac.uk/schema/cso#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+INSERT { GRAPH <http://scholkg.kmi.open.ac.uk/aikg/ontology#> {
+    ?kmiClass a skos:Concept .
+    
+  }}
+WHERE { GRAPH <http://scholkg.kmi.open.ac.uk/aikg/ontology#> {
+    ?kmiClass a owl:Class .
+  }}""";
+    <http://www.w3.org/ns/prov#wasAttributedTo> <http://www.metaphacts.com/resource/user/admin>;
+    <http://www.w3.org/ns/prov#generatedAtTime> "2021-06-21T13:56:34.230Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+  
+  <http://www.metaphacts.com/ontologies/platform#queryContainer> <http://www.w3.org/ns/ldp#contains>
+      <http://localhost:10214/container/queryContainer/kmi-skos-concept> .
+}
