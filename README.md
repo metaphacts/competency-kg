@@ -29,4 +29,5 @@ Hint: Restart your metaphactory instance (if it is running) to load the updated 
 The KMI ontology is represented using domain statements based on RDF lists. This notation can not be visualised with metaphactory and Ontodia. Further, the ontology is not using skos-ontology. To adapt the ontology, run the following personal queries (which are delivered with the app):
 * `kmi-skos-concept` (adds the skos:Concept type to all classes in KMI)
 * `kmi-skos-broader` (creates skos:broader relationships between parent and child concepts)
+* `kmi-dereification` (creates plain triples from all the reified statements)
 * `kmi-owlunion-to-shaclshape-conversion` (generates SHACL shapes for representation of domain and range values)

@@ -52,32 +52,15 @@
                   <div style="padding: 20px; margin: 20px;height:500px; background-color: #f7f7f7; border: 1px solid #e8e8e8;">
                   <semantic-lazy-tree
                                 roots-query='SELECT DISTINCT ?item ?hasChildren WHERE {
-                                          ?item a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>
-                                          FILTER NOT EXISTS 
-                                          { 
-                                            ?a rdf:subject ?item ;
-                                                rdf:predicate skos:broader ;
-                                                rdf:object ?supertopic . 
-                                          }  
-                                          OPTIONAL 
-                                          {
-                                              ?b rdf:subject ?subtopic ;
-                                                rdf:predicate skos:broader ;
-                                                rdf:object ?item. 
-                                          } 
-                                            BIND (IF(BOUND(?subtopic), "true", "false") AS ?hasChildren) 
+                                          ?item a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
+                                          FILTER NOT EXISTS { ?item  skos:broader  ?supertopic . }  
+                                          OPTIONAL { ?subtopic skos:broader ?item . } 
+                                          BIND (IF(BOUND(?subtopic), "true", "false") AS ?hasChildren) 
                                         }'
 
                                 children-query='SELECT ?item ?hasChildren WHERE {
-                                                  ?c rdf:subject ?item ;
-                                                      rdf:predicate skos:broader;
-                                                      rdf:object ?parent . 
-                                                  OPTIONAL 
-                                                  { 
-                                                    ?d rdf:subject ?subtopic ;
-                                                        rdf:predicate skos:broader ;
-                                                        rdf:object ?item . 
-                                                  }
+                                                  ?item skos:broader ?parent . 
+                                                  OPTIONAL { ?subtopic skos:broader ?item . }
                                                   BIND (IF(BOUND(?subtopic), "true", "false") AS ?hasChildren)
                                                 }'
                                 node-template='{{> node}}'
@@ -91,15 +74,8 @@
                                             '
                                 placeholder='Select or search for a task..'
                                 parents-query='SELECT ?item ?parent ?hasChildren WHERE {
-                                                ?e rdf:subject ?item ;
-                                                  rdf:predicate skos:broader ;
-                                                  rdf:object ?parent . 
-                                                OPTIONAL 
-                                                { 
-                                                  ?d rdf:subject ?subtopic ;
-                                                      rdf:predicate skos:broader ;
-                                                      rdf:object ?item . 
-                                                }
+                                                ?item skos:broader ?parent . 
+                                                OPTIONAL { ?subtopic skos:broader ?item . }
                                                 BIND (IF(BOUND(?subtopic), "true", "false") AS ?hasChildren)
                                                }'
                               >
@@ -125,31 +101,14 @@
                     <semantic-lazy-tree
                             roots-query='SELECT DISTINCT ?item ?hasChildren WHERE {
                                           ?item a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>
-                                          FILTER NOT EXISTS 
-                                          { 
-                                            ?a rdf:subject ?item ;
-                                                rdf:predicate skos:broader ;
-                                                rdf:object ?supertopic . 
-                                          }  
-                                          OPTIONAL 
-                                          {
-                                              ?b rdf:subject ?subtopic ;
-                                                rdf:predicate skos:broader ;
-                                                rdf:object ?item. 
-                                          } 
+                                          FILTER NOT EXISTS { ?item skos:broader ?supertopic . }  
+                                          OPTIONAL { ?subtopic skos:broader ?item. } 
                                           BIND (IF(BOUND(?subtopic), "true", "false") AS ?hasChildren)
                                         }'
 
                                 children-query='SELECT ?item ?hasChildren WHERE {
-                                                  ?c rdf:subject ?item ;
-                                                      rdf:predicate skos:broader;
-                                                      rdf:object ?parent . 
-                                                  OPTIONAL 
-                                                  { 
-                                                    ?d rdf:subject ?subtopic ;
-                                                        rdf:predicate skos:broader ;
-                                                        rdf:object ?item . 
-                                                  }
+                                                  ?item  skos:broader ?parent . 
+                                                  OPTIONAL { ?subtopic  skos:broader  ?item . }
                                                   BIND (IF(BOUND(?subtopic), "true", "false") AS ?hasChildren) 
                                                 }'
                                 node-template='{{> node2}}'
@@ -163,15 +122,8 @@
                                             '
                                 placeholder='Select or search for a task..'
                                 parents-query='SELECT ?item ?parent ?hasChildren WHERE {
-                                                ?e rdf:subject ?item ;
-                                                  rdf:predicate skos:broader ;
-                                                  rdf:object ?parent . 
-                                                OPTIONAL 
-                                                { 
-                                                  ?d rdf:subject ?subtopic ;
-                                                      rdf:predicate skos:broader ;
-                                                      rdf:object ?item . 
-                                                }
+                                                ?item skos:broader ?parent . 
+                                                OPTIONAL { ?subtopic skos:broader ?item . }
                                                 BIND (IF(BOUND(?subtopic), "true", "false") AS ?hasChildren)
                                                }'
                                                 >
@@ -211,23 +163,17 @@
                                         WHERE {
                                             # retrieve parents
                                             {
-                                            ?b rdf:subject {{item}} ;
-                                              rdf:predicate skos:broader ;
-                                              rdf:object ?parent. 
+                                              {{item}} skos:broader ?parent. 
                                             }
                                             # retrieve children
                                             UNION 
                                             {
-                                            ?c rdf:subject ?child ;
-                                              rdf:predicate skos:broader ;
-                                              rdf:object {{item}}. 
+                                              ?child skos:broader {{item}}. 
                                             } 
                                             # retrieve methods (if item is task)
                                             UNION 
                                             {
-                                            ?d rdf:subject {{item}} ;
-                                              rdf:predicate ?p ;
-                                              rdf:object ?o. 
+                                              {{item}} ?p ?o. 
                                               {{item}} a kmi:Task .
                                               ?o a kmi:Method .
                                               BIND({{item}} as ?s)
@@ -235,9 +181,7 @@
                                             # retrieve tasks (if item is method)
                                             UNION 
                                             {
-                                            ?d rdf:subject {{item}} ;
-                                              rdf:predicate ?p ;
-                                              rdf:object ?o. 
+                                              {{item}} ?p ?o . 
                                               {{item}} a kmi:Method .
                                               ?o a kmi:Task .
                                               BIND({{item}} as ?s)
@@ -268,16 +212,12 @@
                               SELECT ?node ?parent 
                               WHERE {
                                 {
-                                  ?b rdf:subject {{item}} .
-                                  ?b rdf:predicate skos:narrower. 
-                                  ?b rdf:object ?node. 
+                                  {{item}} skos:narrower ?node . 
                                   BIND ({{item}} as ?parent)
                                 } 
                                 UNION 
                                 {
-                                  ?n rdf:subject ?parent.
-                                  ?n rdf:predicate skos:narrower. 
-                                  ?n rdf:object {{item}} . 
+                                  ?parent skos:narrower {{item}} . 
                                   BIND ({{item}} as ?node) 
                                 }
                               } "
