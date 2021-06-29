@@ -13,9 +13,9 @@ The app currently uses two data sources:
 
 To import the data, do the following:
 
-1. Make sure that you are running metaphactory with docker-compose (default setup) and use BlazeGraph as data store - otherwise the data import will not work as expected.
+a) For BlazeGraph
 
-2. Make sure that BlazeGraph has enough RAM to process the file upload. The easiest way to do that is adding the following lines to the `services` section of the `docker-compose.overwrite.yml` in your deployment:
+1. Make sure that BlazeGraph has enough RAM to process the file upload. The easiest way to do that is adding the following lines to the `services` section of the `docker-compose.overwrite.yml` in your deployment:
 ```
 blazegraph:
     environment:
@@ -23,7 +23,18 @@ blazegraph:
 ```
 Hint: Restart your metaphactory instance (if it is running) to load the updated configuration.
 
-3. First check that your metaphactory instance is running, then execute `/bin/sh run_import.sh <deployment-name>` where `<deployment-name>` should be replaced with the name of your metaphactory deployment. The import may take several minutes.
+2. Check that your metaphactory instance is running, then execute `/bin/sh run_import_blazegraph.sh <deployment-name>` where `<deployment-name>` should be replaced with the name of your metaphactory deployment. The import may take several minutes.
+
+b) For GraphDB
+
+1. Make sure that GraphDB has enough RAM to process the file upload. The easiest way to do that is adding the following lines to the `services` section of the `docker-compose.overwrite.yml` in your deployment:
+```
+graphdb:
+    mem_limit: 6g
+```
+Additionally, line 9 in `metaphactory-graphdb/docker-compose.yml` has to be adapted from `-Xmx2g -Xms1g` to `-Xmx6g -Xms1g`.
+
+2. Check that your metaphactory instance is running, then execute `/bin/sh run_import_graphdb.sh <deployment-name>` where `<deployment-name>` should be replaced with the name of your metaphactory deployment. The import may take up to thirty minutes (even though the script finishes earlier).
 
 ### KMI Ontology Visualisation
 The KMI ontology is represented using domain statements based on RDF lists. This notation can not be visualised with metaphactory and Ontodia. Further, the ontology is not using skos-ontology. To adapt the ontology, run the following personal queries (which are delivered with the app):
