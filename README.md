@@ -32,13 +32,95 @@ b) For GraphDB
 graphdb:
     mem_limit: 6g
 ```
-Additionally, line 9 in `metaphactory-graphdb/docker-compose.yml` has to be adapted from `-Xmx2g -Xms1g` to `-Xmx6g -Xms1g`.
 
 2. Check that your metaphactory instance is running, then execute `/bin/sh run_import_graphdb.sh <deployment-name>` where `<deployment-name>` should be replaced with the name of your metaphactory deployment. The import may take up to thirty minutes (even though the script finishes earlier).
 
 ### KMI Ontology Visualisation
-The KMI ontology is represented using domain statements based on RDF lists. This notation can not be visualised with metaphactory and Ontodia. Further, the ontology is not using skos-ontology. To adapt the ontology, run the following personal queries (which are delivered with the app):
-* `kmi-skos-concept` (adds the skos:Concept type to all classes in KMI)
-* `kmi-skos-broader` (creates skos:broader relationships between parent and child concepts)
-* `kmi-dereification` (creates plain triples from all the reified statements)
-* `kmi-owlunion-to-shaclshape-conversion` (generates SHACL shapes for representation of domain and range values)
+The KMI ontology is represented using domain statements based on RDF lists. This notation can not be visualised with metaphactory and Ontodia. Further, the ontology is not using skos-ontology. To adapt the ontology, run the following queries:
+
+#### Transform KMI ontology to SKOS Concept Scheme
+Add skos:Concept statements:
+```
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+INSERT { GRAPH <http://scholkg.kmi.open.ac.uk/aikg/ontology#> {
+    ?kmiClass a skos:Concept .
+    
+}}
+WHERE { GRAPH <http://scholkg.kmi.open.ac.uk/aikg/ontology#> {
+    ?kmiClass a owl:Class .
+}}
+```
+
+and add skos:broader statements:
+```
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+INSERT { GRAPH <http://scholkg.kmi.open.ac.uk/aikg/ontology#> {
+    ?kmiSub skos:broader ?kmiSuper .
+}}
+WHERE { GRAPH <http://scholkg.kmi.open.ac.uk/aikg/ontology#> {
+    ?kmiSub rdfs:subClassOf ?kmiSuper .
+}}
+```
+
+#### Add SHACL shapes for domain and range constraints
+```
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+INSERT { GRAPH <http://scholkg.kmi.open.ac.uk/aikg/ontology#> {
+ ?classShapeIri a sh:NodeShape ;
+    sh:property [
+      a sh:PropertyShape ;
+      sh:path ?property ;
+      sh:class ?range ;
+  ] ;
+    sh:targetClass ?targetClass .
+  }}
+WHERE {
+  ?property rdfs:range ?range .
+  ?property rdfs:domain ?union .
+  ?union owl:unionOf ?listStart .
+  ?listStart rdf:rest*/rdf:first ?targetClass .
+  BIND ( IRI(CONCAT(STR(?targetClass), "Shape")) as ?classShapeIri)
+}
+```
+
+#### Transform KMI reification into RDF-star
+Add RDF-star triples:
+```
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX kmi-ont: <http://scholkg.kmi.open.ac.uk/aikg/ontology#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+
+INSERT { GRAPH <http://scholkg.kmi.open.ac.uk/aikg/resource/> {
+  ?s ?p ?o .
+  <<?s ?p ?o>> ?stmt_pred ?stmt_obj .
+}}
+WHERE { GRAPH <http://scholkg.kmi.open.ac.uk/aikg/resource/> {
+?stmt a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement>;
+  rdf:subject ?s ;
+  rdf:predicate ?p ;
+  rdf:object ?o ;
+  ?stmt_pred ?stmt_obj .
+    FILTER ( ?stmt_pred IN (kmi-ont:hasSupport, prov:wasDerivedFrom, prov:wasGeneratedBy))
+}}
+```
+
+and remove reification statements:
+```
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+DELETE { GRAPH <http://scholkg.kmi.open.ac.uk/aikg/resource/> {
+  ?stmt ?p ?o .
+}}
+WHERE { GRAPH <http://scholkg.kmi.open.ac.uk/aikg/resource/> {
+?stmt a rdf:Statement;
+  ?p ?o .
+}}
+```
