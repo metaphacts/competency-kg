@@ -103,7 +103,7 @@ INSERT { GRAPH <http://scholkg.kmi.open.ac.uk/aikg/resource/> {
   <<?s ?p ?o>> ?stmt_pred ?stmt_obj .
 }}
 WHERE { GRAPH <http://scholkg.kmi.open.ac.uk/aikg/resource/> {
-?stmt a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement>;
+?stmt a kmi-ont:Statement;
   rdf:subject ?s ;
   rdf:predicate ?p ;
   rdf:object ?o ;
@@ -114,13 +114,13 @@ WHERE { GRAPH <http://scholkg.kmi.open.ac.uk/aikg/resource/> {
 
 and remove reification statements:
 ```
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX kmi-ont: <http://scholkg.kmi.open.ac.uk/aikg/ontology#>
 
 DELETE { GRAPH <http://scholkg.kmi.open.ac.uk/aikg/resource/> {
   ?stmt ?p ?o .
 }}
 WHERE { GRAPH <http://scholkg.kmi.open.ac.uk/aikg/resource/> {
-?stmt a rdf:Statement;
+?stmt a kmi-ont:Statement;
   ?p ?o .
 }}
 ```
