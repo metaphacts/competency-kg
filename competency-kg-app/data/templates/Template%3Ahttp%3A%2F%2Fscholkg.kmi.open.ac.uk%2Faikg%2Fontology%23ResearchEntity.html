@@ -1,0 +1,324 @@
+[[> Platform:KnowledgePanelStyles]]
+<style>
+  .ontodia-container {
+    flex: auto;
+    display: flex;
+    height: 100%;
+    min-height:500px;
+    width: 100%;
+  }
+
+  .ontodia-workspace-container {
+    flex-grow: 1;
+    min-width: 0;
+  }
+
+  .ontodia-knowledge-panel-container {
+    background-color: whitesmoke;
+    padding: 10px 10px 0px 0px;
+    max-width: 30%;
+  }
+
+  .ontodia-knowledge-panel-container .knowledge-panel-frame {
+    box-shadow: 0px 5px 13px 5px rgba(0, 0, 0, 0.12);
+    height: calc(100% - 10px);
+    transition: height 0.3s;
+    overflow: hidden;
+    margin-left: 0;
+    width: 380px;
+    max-width: 100%;
+  }
+  .knowledge-panel-frame .DataTable--global-filter-container {
+    width: 100%
+  }
+
+  /* hide RDF-star metadata from ontodia edges */
+  .ontodia-link__labels g:not(:first-child) {
+    visibility: hidden;
+  }
+
+</style>
+
+
+<div data-flex-layout="row stretch-stretch" style="padding: 20px;">
+
+  <div data-flex-layout="column top-stretch" data-flex-self="size-x2" >
+
+    <div data-flex-layout="row stretch-stretch">
+      <div class="grid-demo">
+        <h3>Mentioned in Publications</h3>
+        <semantic-query query='SELECT ?paper (GROUP_CONCAT(DISTINCT ?makgPaperTitle; separator=" - ") as ?makgPaperTitles) WHERE {
+            SELECT * {
+              <<?? ?p ?o>> <http://www.w3.org/ns/prov#wasDerivedFrom> ?paper .
+              ?paper owl:sameAs ?makgPaper .
+              SERVICE <https://makg.org/sparql> {
+                ?makgPaper <http://purl.org/dc/terms/title> ?makgPaperTitle .
+              }
+            } ORDER BY DESC(strlen(?makgPaperTitle))
+          } GROUP BY ?paper LIMIT 10'
+          template='{{> pubTemplate}}' >
+          <template id='pubTemplate'>
+            <ul>
+              {{#each bindings}}
+                <li><semantic-link iri="{{paper.value}}">{{makgPaperTitles.value}}</semantic-link></li>
+              {{/each}}
+            </ul>
+          </template>
+        </semantic-query>
+      </div>
+    </div>
+
+    <div data-flex-layout="row stretch-stretch">
+      <div class="grid-demo">
+        <h3>Mentioned by Authors</h3>
+        <semantic-query query='SELECT ?author ?authorName (COUNT(*) as ?cnt) WHERE {
+            <<?? ?p ?o>> <http://www.w3.org/ns/prov#wasDerivedFrom> ?paper .
+            ?paper <http://www.w3.org/2002/07/owl#sameAs> ?makgPaper .
+            SERVICE <https://makg.org/sparql> {
+              ?makgPaper <http://purl.org/dc/terms/creator> ?author .
+              ?author <http://xmlns.com/foaf/0.1/name> ?authorName .
+            }
+          } GROUP BY ?makgPaper ?author ?authorName ORDER BY DESC(?cnt) LIMIT 25'
+            template='{{> pubTemplate}}' >
+            <template id='pubTemplate'>
+              <ul>
+                {{#each bindings}}
+                  <li><a href="{{author.value}}">{{authorName.value}}</a></li>
+                {{/each}}
+              </ul>
+            </template>
+          </semantic-query>
+      </div>
+    </div>
+
+  </div>
+
+  <div data-flex-layout="column top-stretch" data-flex-self="size-x3" >
+    <div class='ontodia-container' style="height:500px; margin-bottom: 20px;">
+      <div class='ontodia-workspace-container'>
+        <ontodia query="CONSTRUCT {?? ?p ?o } WHERE {?? ?p ?o . FILTER (?p != rdf:type)} LIMIT 100">
+          <ontodia-data-providers>
+            <ontodia-sparql-provider provider-settings='{
+              "linksInfoQuery":
+                "SELECT ?type ?source ?target ?propType ?propValue WHERE {
+                  BIND (?? AS ?source)
+                  ?source ?type ?target .
+                  OPTIONAL {<< ?source ?type ?target >> ?propType ?propValue .}
+                  FILTER(?type NOT IN (skos:narrower, skos:broader))
+                  VALUES (?target) {${ids}}
+                }"
+            }'>
+            </ontodia-sparql-provider>
+          </ontodia-data-providers>
+
+          <ontodia-canvas id='canvas' use-knowledge-panel='true'>
+            <ontodia-halo-link></ontodia-halo-link>
+            <ontodia-halo></ontodia-halo>
+
+            <ontodia-toolbar id='ontodia-toolbar1-demo10'>
+              <div class='btn-group btn-group-sm' style='margin-right: 10px;'>
+                <button name='undo' class='btn btn-default'><i class='fa fa-undo'></i></button>
+                <button name='redo' class='btn btn-default'><i class='fa fa-repeat'></i></button>
+              </div>
+              <div class='btn-group btn-group-sm'>
+                <bs-dropdown bs-size='sm'>
+                  <bs-dropdown-toggle>Export</bs-dropdown-toggle>
+                  <bs-dropdown-menu>
+                    <bs-menu-item name='exportPng'>
+                      <i class='fa fa-picture-o'></i> Export PNG
+                    </bs-menu-item>
+                    <bs-menu-item name='exportSvg'>
+                      <i class='fa fa-picture-o'></i> Export SVG
+                    </bs-menu-item>
+                    <bs-menu-item name='print'>
+                      <i class='fa fa-print'></i> Print
+                    </bs-menu-item>
+                  </bs-dropdown-menu>
+                </bs-dropdown>
+              </div>
+              <div class='btn-group btn-group-sm' style='margin-right: 10px;'>
+                <bs-dropdown bs-size='sm' dropup=false> <!-- todo-oss: only force layout in OSS -->
+                  <button name='forceLayout' class='btn btn-default'>
+                    <i class='fa fa-snowflake-o'></i> Force layout
+                  </button>
+                  <bs-dropdown-toggle></bs-dropdown-toggle>
+                  <bs-dropdown-menu>
+                    <bs-menu-item name='flowLayout'><i class='fa fa-sitemap'></i> Flow layout</bs-menu-item>
+                    <bs-menu-item name='sankeyLayout'><i class='fa fa-sitemap' style='transform: rotate(90deg);'></i> Sankey layout</bs-menu-item>
+                    <bs-menu-item name='gridLayout'><i class='fa fa-th'></i> Grid layout</bs-menu-item>
+                    <bs-menu-item name='autoLayout'><i class='fa fa-magic'></i> Auto layout</bs-menu-item>
+                  </bs-dropdown-menu>
+                </bs-dropdown>
+              </div>
+            </ontodia-toolbar>
+            <ontodia-toolbar id='ontodia-toolbar2-demo10' dock='sw'>
+              <div class='btn-group-vertical btn-group-sm'>
+                <button name='zoomIn' class='btn btn-default' title='Zoom in'>
+                  <i class='fa fa-search-plus'></i>
+                </button>
+                <button name='zoomOut' class='btn btn-default' title='Zoom out'>
+                  <i class='fa fa-search-minus'></i>
+                </button>
+                <button name='zoomToFit' class='btn btn-default' title='Fit to screen'>
+                  <i class='fa fa-arrows-alt'></i>
+                </button>
+              </div>
+
+            </ontodia-toolbar>
+            <ontodia-navigator></ontodia-navigator>
+          </ontodia-canvas>
+        </ontodia>
+      </div>
+
+      <div class='ontodia-knowledge-panel-container'>
+        <mp-event-proxy
+          id='proxy-selection'
+          on-event-type='Ontodia.ShowElementInfo'
+          proxy-event-type='KnowledgePanel.Open'
+          proxy-targets='[]'>
+        </mp-event-proxy>
+        <mp-event-proxy id='close-selected-link-proxy'
+          on-event-type='Ontodia.ShowElementInfo'
+          proxy-event-type='Component.TemplateUpdate'
+          proxy-targets='["selectedlinkInfo"]'>
+        </mp-event-proxy>
+        <semantic-context repository='default'>
+          <mp-knowledge-panel-frame no-pin=true></mp-knowledge-panel-frame>
+        </semantic-context>
+      </div>
+
+      <mp-event-target-template-render id='selectedlinkInfo'
+        template='{{> t}}'>
+        <template id='t'>
+          <div class='ontodia-knowledge-panel-container'>
+            {{#ifCond links.length '==' 1}}
+              {{#each links}}
+                <div class="knowledge-panel-frame">
+                  <div class='knowledge-panel-frame__buttons'>
+                    <mp-event-trigger type='Ontodia.SelectedLinks'>
+                      <button class='knowledge-panel-frame__button'>
+                        <i class='fa fa-times'></i>
+                      </button>
+                    </mp-event-trigger>
+                  </div>
+                  <div class="knowledge-panel">
+                    <div class="knowledge-panel__header">
+                      <div class="knowledge-panel__title">
+                        <span>Metadata for Relation</span>
+                      </div>
+                    </div>
+                    <div class="knowledge-panel__content">
+                      <span>
+                        <small>Subject: </small><semantic-link iri="{{this.sourceIri}}"></semantic-link><br>
+                        <small>Predicate: </small><semantic-link iri="{{this.linkTypeIri}}"></semantic-link><br>
+                        <small>Object: </small><semantic-link iri="{{this.targetIri}}"></semantic-link>
+                      </span>
+                      <hr>
+                      <div class="knowledge-panel__table">
+                        <semantic-table class="DataTable--table"
+                            query='SELECT ?p ?o WHERE {
+                                << <{{this.sourceIri}}> <{{this.linkTypeIri}}> <{{this.targetIri}}> >> ?p ?o .
+                            } ORDER BY ASC (?p) LIMIT 100'
+                            options='{
+                              "groupingOptions": {
+                                "groupedBy": ["p"],
+                                "showOnlyAggregatedValue": true
+                              },
+                              "showTableHeading": false,
+                              "showFilter": false
+                            }'
+                            column-configuration='[
+                              {
+                                "displayName":"Property",
+                                "variableName": "p",
+                                "cellTemplate": "{{> propertyLabelTemplate property=p.value}}"
+                              },
+                              {
+                                "displayName":"Object",
+                                "variableName": "o"
+                              }
+                            ]'>
+                          <template id='propertyLabelTemplate'>
+                            <mp-label iri='{{property}}'></mp-label>
+                          </template>
+                        </semantic-table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {{/each}}
+            {{/ifCond}}
+          </div>
+        </template>
+      </mp-event-target-template-render>
+      <mp-event-proxy id='selectedLinksProxy'
+        on-event-type='Ontodia.SelectedLinks'
+        proxy-event-type='Component.TemplateUpdate'
+        proxy-targets='["selectedlinkInfo"]'>
+      </mp-event-proxy>
+      <mp-event-proxy id='selectedLinksCloseKnowledgePanelProxy'
+        on-event-type='Ontodia.SelectedLinks'
+        proxy-event-type='KnowledgePanel.Close'
+        proxy-targets='[]'>
+      </mp-event-proxy>
+    </div>
+
+    <h3>Entity Hierarchy</h3>
+    <semantic-tree
+        query="
+                SELECT ?node ?parent 
+                WHERE {
+                  {
+                    SELECT ?node ?parent WHERE {
+                    ?? skos:narrower ?node . 
+                    BIND (?? as ?parent)
+                  } LIMIT 10}
+                  UNION 
+                  {
+                    SELECT ?node ?parent WHERE {
+                    ?parent skos:narrower ?? . 
+                    BIND (?? as ?node) 
+                  } LIMIT 10}
+                }"
+        provider='d3-sankey'  
+        d3-tree-options='{"nodeWidth":300, "nodeHeight":100, "nodeLeftMargin": 5}'>
+    </semantic-tree>
+
+  </div>
+</div>
+
+
+<div data-flex-layout="row stretch-stretch" style="padding: 20px;">
+  <div data-flex-layout="column top-stretch" data-flex-self="size-x5" >
+    <h3>Metadata View</h3> 
+    <semantic-table
+      query='
+        SELECT ?p ?o ?po ?mp ?mo WHERE {                    
+          <<?? ?p ?o>> ?mp ?mo .
+          bind(concat(str(?p), ", ", str(?o)) as ?po)
+        }'
+      options='{
+        "enableGrouping": false,
+        "groupingOptions": {"groupedBy": ["po"], "showOnlyAggregatedValue": true}
+      }'
+      column-configuration='[
+        {"variableName": "p", "visible": false},
+        {"variableName": "o", "visible": false},
+        {"variableName": "po", "displayName": "Fact", "cellTemplate": "{{> poGroup}}"},
+        {"variableName": "mp", "displayName": "Metadata", "aggregationCellTemplate": "{{> metadata}}"},
+        {"variableName": "mo", "visible": false}
+      ]'
+    >
+      <template id="poGroup">
+        <semantic-link iri='{{p.0.value}}'></semantic-link>: <semantic-link iri='{{o.0.value}}'></semantic-link>
+      </template>
+
+      <template id="metadata">
+        {{#each rows}}
+          <semantic-link iri='{{this.mp.value}}'></semantic-link>: {{#if (isIri this.mo)}}<semantic-link iri='{{this.mo.value}}'></semantic-link>{{else}}{{this.mo.value}}{{/if}}<br>
+        {{/each}}
+      </template>
+    
+    </semantic-table>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="page">
+  <semantic-table query="SELECT ?p ?o WHERE {
+                          ?? owl:sameAs ?makgPaper .
+                          SERVICE <https://makg.org/sparql> {
+                            ?makgPaper ?p ?o .
+                          }
+                          BIND(IF(isURI(?o), 2, 1) as ?sort)
+                          } ORDER BY ASC(?sort)"
+                  options='{"showTableHeading": false, "showFilter": false}'>
+  </semantic-table>
+</div>

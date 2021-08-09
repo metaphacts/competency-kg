@@ -1,0 +1,138 @@
+@prefix : <http://www.metaphacts.com/resource/> .
+@prefix lookup: <http://www.metaphacts.com/ontologies/platform/repository/lookup#> .
+@prefix User: <http://www.metaphacts.com/resource/user/> .
+@prefix Help: <http://help.metaphacts.com/resource/> .
+@prefix Platform: <http://www.metaphacts.com/ontologies/platform#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix Service: <http://www.metaphacts.com/ontologies/platform/service/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix kmi-data: <http://scholkg.kmi.open.ac.uk/aikg/resource/> .
+@prefix Admin: <http://www.metaphacts.com/resource/admin/> .
+@prefix Repository: <http://www.metaphacts.com/ontologies/repository#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix Assets: <http://www.metaphacts.com/resource/assets/> .
+@prefix ephedra: <http://www.metaphacts.com/ontologies/platform/ephedra#> .
+@prefix kmi-ont: <http://scholkg.kmi.open.ac.uk/aikg/ontology#> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix cso: <http://cso.kmi.open.ac.uk/schema/cso#> .
+
+<http://ontologies.metaphacts.com/competencies> a owl:Ontology;
+  rdfs:label "Competency ontology";
+  <http://www.linkedmodel.org/1.2/schema/vaem#namespace> <http://ontologies.metaphacts.com/competencies/>;
+  <http://purl.org/dc/terms/title> "Competency ontology" .
+
+<http://ontologies.metaphacts.com/competencies/has_competency> a owl:ObjectProperty;
+  rdfs:subPropertyOf <http://www.w3.org/ns/org#classification>;
+  rdfs:label "has competency";
+  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
+
+<https://kompaki.metaphacts.net/547f62ce-c28f-4d6c-9b38-84ae13eb387d> a sh:PropertyShape;
+  sh:path <http://ontologies.metaphacts.com/competencies/hasCompetency>;
+  sh:class <http://ontologies.metaphacts.com/competencies/Competency> .
+
+<http://ontologies.metaphacts.com/competencies/Competency> a owl:Class;
+  rdfs:label "Competency";
+  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
+
+<http://ontologies.metaphacts.com/competencies/hasCompetency> a owl:ObjectProperty;
+  rdfs:label "hasCompetency";
+  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
+
+<http://ontologies.metaphacts.com/competencies/subProjectOf> a owl:ObjectProperty;
+  rdfs:label "subProjectOf";
+  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
+
+<http://ontologies.metaphacts.com/competencies/BusinessObject> a owl:Class;
+  rdfs:label "BusinessObject";
+  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
+
+<http://ontologies.metaphacts.com/competencies/appliesCompetency> a owl:ObjectProperty;
+  rdfs:label "appliesCompetency";
+  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
+
+<https://kompaki.metaphacts.net/76b3e0ac-81be-4365-876c-bebed8f5e95e> a sh:PropertyShape;
+  sh:path <http://aida.kmi.open.ac.uk/ontology#hasIndustrialSector>;
+  sh:class <http://aida.kmi.open.ac.uk/ontology#industrialSector> .
+
+<https://kompaki.metaphacts.net/9b0f3d53-1b62-45f4-8aec-7a3a9acc10cd> a sh:PropertyShape;
+  sh:path <http://ontologies.metaphacts.com/competencies/appliesCompetency>;
+  sh:class <http://ontologies.metaphacts.com/competencies/Competency> .
+
+<https://kompaki.metaphacts.net/e51465d1-4114-49ee-a8b4-1e542cfd28f8> a sh:PropertyShape;
+  sh:path <http://ontologies.metaphacts.com/competencies/isInvolvedIn>;
+  sh:class <http://ontologies.metaphacts.com/competencies/BusinessObject> .
+
+<http://ontologies.metaphacts.com/competencies/isInvolvedIn> a owl:ObjectProperty;
+  rdfs:label "isInvolvedIn";
+  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
+
+<https://kompaki.metaphacts.net/7dc66dd3-ddd0-4e0d-9764-906ac635f1fd> a sh:PropertyShape;
+  sh:path <http://ontologies.metaphacts.com/competencies/describes>;
+  sh:class <http://ontologies.metaphacts.com/competencies/BusinessObject> .
+
+<http://ontologies.metaphacts.com/competencies/describes> a owl:ObjectProperty;
+  rdfs:label "describes";
+  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
+
+<http://ontologies.metaphacts.com/competencies/db912080-5ecf-4518-b3ba-bcde92aee56c>
+  a sh:PropertyShape;
+  sh:path <http://ontologies.metaphacts.com/competencies/description>;
+  sh:datatype xsd:string .
+
+<http://ontologies.metaphacts.com/competencies/description> a owl:DatatypeProperty;
+  rdfs:label "description";
+  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
+
+<https://kompaki.metaphacts.net/33db43a8-7253-4e61-b944-4e17c5453039> a sh:PropertyShape;
+  sh:path <http://ontologies.metaphacts.com/competencies/isIncludedIn>;
+  sh:class <http://ontologies.metaphacts.com/competencies/BusinessObject> .
+
+<http://ontologies.metaphacts.com/competencies/Application> a owl:Class;
+  rdfs:subClassOf <http://ontologies.metaphacts.com/competencies/BusinessObject>;
+  rdfs:label "Application";
+  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
+
+<http://ontologies.metaphacts.com/competencies/Functionality> a owl:Class;
+  rdfs:subClassOf <http://ontologies.metaphacts.com/competencies/BusinessObject>;
+  rdfs:label "Functionality";
+  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
+
+<http://ontologies.metaphacts.com/competencies/Process> a owl:Class;
+  rdfs:subClassOf <http://ontologies.metaphacts.com/competencies/BusinessObject>;
+  rdfs:label "Process";
+  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
+
+_:genid-fc41831ed8224c989dd5aacece50a69f-1bdb81a898bfe12a624a3e54feaaac a sh:NodeShape;
+  sh:property _:genid-fc41831ed8224c989dd5aacece50a69f-58f15fd61cc8ef1ab6c2515a82d8d;
+  sh:targetClass <http://www.w3.org/ns/org#Organization> .
+
+_:genid-fc41831ed8224c989dd5aacece50a69f-58f15fd61cc8ef1ab6c2515a82d8d a sh:PropertyShape;
+  sh:path skos:prefLabel;
+  sh:minCount 1;
+  sh:datatype xsd:string .
+
+_:genid-fc41831ed8224c989dd5aacece50a69f-56f405fc812892c74e116f42889734 a sh:NodeShape;
+  sh:property <https://kompaki.metaphacts.net/547f62ce-c28f-4d6c-9b38-84ae13eb387d>,
+    <https://kompaki.metaphacts.net/e51465d1-4114-49ee-a8b4-1e542cfd28f8>;
+  sh:targetClass <http://xmlns.com/foaf/0.1/Agent> .
+
+_:genid-fc41831ed8224c989dd5aacece50a69f-79e26b3cdd14e2a0cd018541c59c8f6 a sh:NodeShape;
+  sh:property <https://kompaki.metaphacts.net/76b3e0ac-81be-4365-876c-bebed8f5e95e>,
+    <https://kompaki.metaphacts.net/9b0f3d53-1b62-45f4-8aec-7a3a9acc10cd>, <http://ontologies.metaphacts.com/competencies/db912080-5ecf-4518-b3ba-bcde92aee56c>,
+    <https://kompaki.metaphacts.net/33db43a8-7253-4e61-b944-4e17c5453039>;
+  sh:targetClass <http://ontologies.metaphacts.com/competencies/BusinessObject> .
+
+_:genid-fc41831ed8224c989dd5aacece50a69f-a2942a037e07920ee0da984568f16 a sh:NodeShape;
+  sh:property <https://kompaki.metaphacts.net/7dc66dd3-ddd0-4e0d-9764-906ac635f1fd>;
+  sh:targetClass <http://xmlns.com/foaf/0.1/Document> .
+
+<http://ontologies.metaphacts.com/competencies/isIncludedIn> a owl:ObjectProperty;
+  rdfs:label "isIncludedIn";
+  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
+
+kmi-ont:ResearchEntity rdfs:subClassOf <http://ontologies.metaphacts.com/competencies/Competency> .
+
+<http://xmlns.com/foaf/0.1/Project> rdfs:subClassOf <http://ontologies.metaphacts.com/competencies/BusinessObject> .

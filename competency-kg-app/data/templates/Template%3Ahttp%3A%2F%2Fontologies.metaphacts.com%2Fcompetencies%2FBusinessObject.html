@@ -1,0 +1,350 @@
+<style>
+  .ontodia-container {
+    flex: auto;
+    display: flex;
+    height: 100%;
+    min-height:500px;
+    width: 100%;
+  }
+
+  .ontodia-workspace-container {
+    flex-grow: 1;
+    min-width: 0;
+  }
+
+  .ontodia-knowledge-panel-container {
+    background-color: whitesmoke;
+    padding: 10px 10px 0px 0px;
+    max-width: 30%;
+  }
+
+  .ontodia-knowledge-panel-container .knowledge-panel-frame {
+    box-shadow: 0px 5px 13px 5px rgba(0, 0, 0, 0.12);
+    height: calc(100% - 10px);
+    transition: height 0.3s;
+    overflow: hidden;
+    margin-left: 0;
+    width: 380px;
+    max-width: 100%;
+  }
+  .knowledge-panel-frame .DataTable--global-filter-container {
+    width: 100%
+  }
+
+</style>
+
+<div data-flex-layout="row stretch-stretch" style="padding: 20px;">
+  <div data-flex-layout="column top-stretch" data-flex-self="size-x1" style="padding:10px;">
+    <h3>Details</h3>
+    <div>
+      <semantic-form
+        subject="[[this]]"
+        fields='[
+          {
+            "id": "type",
+            "label": "Type",
+            "xsdDatatype": "xsd:anyURI",
+            "minOccurs": 1,
+            "maxOccurs": 1,
+            "selectPattern": "SELECT $value WHERE { $subject a $value }",
+            "insertPattern": "INSERT { $subject a $value } WHERE {}",
+            "deletePattern": "DELETE { $subject a $value } WHERE {}"
+          },
+          {
+            "id": "label",
+            "label": "Name",
+            "description": "The name of the artifact",
+            "xsdDatatype": "xsd:string",
+            "minOccurs": 1,
+            "maxOccurs": 1,
+            "selectPattern": "SELECT ?value WHERE { $subject skos:prefLabel ?value }",
+            "insertPattern": "INSERT { $subject rdfs:label ?value ; skos:prefLabel ?value } WHERE {}",
+            "deletePattern": "DELETE { $subject rdfs:label ?value ; skos:prefLabel ?value } WHERE {}"
+          },
+          {
+            "id": "description",
+            "label": "Description",
+            "description": "A description of the artifact",
+            "xsdDatatype": "xsd:string",
+            "minOccurs": 1,
+            "maxOccurs": 1,
+            "selectPattern": "SELECT ?value WHERE { $subject <http://ontologies.metaphacts.com/competencies/description> ?value }",
+            "insertPattern": "INSERT { $subject <http://ontologies.metaphacts.com/competencies/description> ?value } WHERE {}",
+            "deletePattern": "DELETE { $subject <http://ontologies.metaphacts.com/competencies/description> ?value } WHERE {}"
+          },
+          {
+            "id": "isInvolvedIn",
+            "label": "Involved Agents",
+            "description": "Agents involved in this artifact",
+            "xsdDatatype": "xsd:anyURI",
+            "selectPattern": "SELECT ?value ?label WHERE { ?value <http://ontologies.metaphacts.com/competencies/isInvolvedIn> $subject ; rdfs:label ?label . }",
+            "insertPattern": "INSERT { ?value <http://ontologies.metaphacts.com/competencies/isInvolvedIn> $subject } WHERE {}",
+            "deletePattern": "DELETE { ?value <http://ontologies.metaphacts.com/competencies/isInvolvedIn> $subject } WHERE {}",
+            "autosuggestionPattern": "PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+              SELECT $value ?label WHERE {
+                $value a/rdfs:subClassOf* foaf:Agent ;
+                  rdfs:label ?label .
+                FILTER REGEX(LCASE(?label), LCASE(?__token__), \"i\")
+              }
+            "
+          },
+          {
+            "id": "isIncludedIn",
+            "label": "Is included in",
+            "description": "Artifacts that include this one",
+            "xsdDatatype": "xsd:anyURI",
+            "selectPattern": "SELECT ?value ?label WHERE {
+              $subject <http://ontologies.metaphacts.com/competencies/isIncludedIn> ?value .
+              ?value rdfs:label ?label .
+            }",
+            "insertPattern": "INSERT { $subject <http://ontologies.metaphacts.com/competencies/isIncludedIn> ?value } WHERE {}",
+            "deletePattern": "DELETE { $subject <http://ontologies.metaphacts.com/competencies/isIncludedIn> ?value } WHERE {}",
+            "autosuggestionPattern": "SELECT $value ?label WHERE {
+              $value a/rdfs:subClassOf* <http://ontologies.metaphacts.com/competencies/BusinessObject> ;
+                rdfs:label ?label .
+              FILTER REGEX(LCASE(?label), LCASE(?__token__), \"i\")
+            }"
+          },
+          {
+            "id": "appliesCompetency",
+            "label": "Applied Competencies",
+            "xsdDatatype": "xsd:anyURI",
+            "selectPattern": "SELECT ?value ?label WHERE {
+              $subject <http://ontologies.metaphacts.com/competencies/appliesCompetency> ?value .
+              ?value rdfs:label ?label .
+            }",
+            "insertPattern": "
+              INSERT { $subject <http://ontologies.metaphacts.com/competencies/appliesCompetency> ?value } WHERE {}
+            ",
+            "deletePattern": "
+              DELETE { $subject <http://ontologies.metaphacts.com/competencies/appliesCompetency> ?value } WHERE {}
+            ",
+            "autosuggestionPattern": "
+              PREFIX comp: <http://ontologies.metaphacts.com/competencies/>
+              SELECT ?value ?label WHERE {
+                SERVICE Repository:lookup {
+                  ?value lookup:token ?__token__ .
+                  ?value lookup:name ?label .
+                  ?value lookup:tokenizeQueryString false .
+                }
+                ?value a/rdfs:subClassOf* comp:Competency .
+              }
+            "
+          },
+          {
+            "id": "industrialSector",
+            "label": "Industrial Sector",
+            "xsdDatatype": "xsd:anyURI",
+            "minOccurs": 1,
+            "selectPattern": "SELECT ?value WHERE { $subject <http://aida.kmi.open.ac.uk/ontology#hasIndustrialSector> ?value . }",
+            "insertPattern": "INSERT { $subject <http://aida.kmi.open.ac.uk/ontology#hasIndustrialSector> ?value } WHERE {}",
+            "deletePattern": "DELETE { $subject <http://aida.kmi.open.ac.uk/ontology#hasIndustrialSector> ?value } WHERE {}",
+            "autosuggestionPattern": "SELECT $value ?label WHERE {
+              $value a <http://aida.kmi.open.ac.uk/ontology#industrialSector> .
+              BIND (STRAFTER (STR($value), \"http://aida.kmi.open.ac.uk/resource/\") as ?label)
+              FILTER REGEX(LCASE(?label), LCASE(?__token__), \"i\")
+            }"
+          },
+          {
+            "id": "documents",
+            "label": "Document",
+            "xsdDatatype": "xsd:anyURI",
+            "selectPattern": "SELECT ?value ?label WHERE {
+              ?value <http://ontologies.metaphacts.com/competencies/describes> $subject ;
+                rdfs:label ?label .
+            }",
+            "insertPattern": "INSERT { ?value <http://ontologies.metaphacts.com/competencies/describes> $subject } WHERE {}",
+            "deletePattern": "DELETE { ?value <http://ontologies.metaphacts.com/competencies/describes> $subject } WHERE {}",
+            "autosuggestionPattern": "SELECT $value $label WHERE {
+              $value a <http://xmlns.com/foaf/0.1/Document> .
+              $value rdfs:label $label .
+              FILTER REGEX($label, $__token__, \"i\")
+            }"
+          }
+        ]'>
+        <semantic-form-hidden-input for="type"></semantic-form-hidden-input>
+        <semantic-form-auto-input for="label"></semantic-form-auto-input>
+        <semantic-form-auto-input for="description"></semantic-form-auto-input>
+        <semantic-form-auto-input for="isIncludedIn"></semantic-form-auto-input>
+        <semantic-form-auto-input for="isInvolvedIn"></semantic-form-auto-input>
+        <semantic-form-auto-input for="appliesCompetency"></semantic-form-auto-input>
+        <semantic-form-auto-input for="industrialSector"></semantic-form-auto-input>
+
+        <semantic-form-autocomplete-input for="documents" placeholder="Search for existing documents...">
+          <semantic-form new-subject-template="{{uri}}" fields='[
+            {
+              "id": "uri",
+              "label": "Document URI",
+              "xsdDatatype": "xsd:string",
+              "minOccurs": 1,
+              "maxOccurs": 1
+            },
+            {
+              "id": "label",
+              "label": "Label",
+              "xsdDatatype": "xsd:string",
+              "minOccurs": 1,
+              "maxOccurs": 1,
+              "selectPattern": "SELECT ?value WHERE { $subject rdfs:label ?value }",
+              "insertPattern": "INSERT { $subject rdfs:label ?value } WHERE {}",
+              "deletePattern": "DELETE { $subject rdfs:label ?value } WHERE {}"
+            },
+            {
+              "id": "type",
+              "label": "Type",
+              "xsdDatatype": "xsd:anyURI",
+              "minOccurs": 1,
+              "maxOccurs": 1,
+              "selectPattern": "SELECT $value WHERE { $subject a $value }",
+              "insertPattern": "INSERT { $subject a $value } WHERE {}",
+              "deletePattern": "DELETE { $subject a $value } WHERE {}"
+            }]'
+            new-subject-template-settings='{
+              "placeholders": {
+                "uri": {"transform": "none"}
+              }
+            }'>
+            <semantic-form-hidden-input for="type" default-value="http://xmlns.com/foaf/0.1/Document"></semantic-form-hidden-input>
+            <semantic-form-text-input for="uri"></semantic-form-text-input>
+            <semantic-form-text-input for="label"></semantic-form-text-input>
+            <semantic-form-errors></semantic-form-errors>
+            <button name="submit" class="btn btn-secondary">Add Document</button>
+            <button name="reset" class="btn btn-secondary">Reset Document</button>
+          </semantic-form>
+        </semantic-form-autocomplete-input>
+      </semantic-form>
+    </div>
+  </div>
+
+  <div data-flex-layout="column top-stretch" data-flex-self="size-x4" style="padding:10px;">
+    <div class='ontodia-container' style="height:500px; margin-bottom: 20px;">
+      <div class='ontodia-workspace-container'>
+        <ontodia query="CONSTRUCT {?? ?p ?o } WHERE { ?? ?p ?o .}">
+          <ontodia-canvas id='canvas' use-knowledge-panel='true'>
+            <ontodia-halo-link></ontodia-halo-link>
+            <ontodia-halo></ontodia-halo>
+
+            <ontodia-toolbar id='ontodia-toolbar1-demo10'>
+              <div class='btn-group btn-group-sm' style='margin-right: 10px;'>
+                <button name='undo' class='btn btn-default'><i class='fa fa-undo'></i></button>
+                <button name='redo' class='btn btn-default'><i class='fa fa-repeat'></i></button>
+              </div>
+              <div class='btn-group btn-group-sm'>
+                <bs-dropdown bs-size='sm'>
+                  <bs-dropdown-toggle>Export</bs-dropdown-toggle>
+                  <bs-dropdown-menu>
+                    <bs-menu-item name='exportPng'>
+                      <i class='fa fa-picture-o'></i> Export PNG
+                    </bs-menu-item>
+                    <bs-menu-item name='exportSvg'>
+                      <i class='fa fa-picture-o'></i> Export SVG
+                    </bs-menu-item>
+                    <bs-menu-item name='print'>
+                      <i class='fa fa-print'></i> Print
+                    </bs-menu-item>
+                  </bs-dropdown-menu>
+                </bs-dropdown>
+              </div>
+              <div class='btn-group btn-group-sm' style='margin-right: 10px;'>
+                <bs-dropdown bs-size='sm' dropup=false> <!-- todo-oss: only force layout in OSS -->
+                  <button name='forceLayout' class='btn btn-default'>
+                    <i class='fa fa-snowflake-o'></i> Force layout
+                  </button>
+                  <bs-dropdown-toggle></bs-dropdown-toggle>
+                  <bs-dropdown-menu>
+                    <bs-menu-item name='flowLayout'><i class='fa fa-sitemap'></i> Flow layout</bs-menu-item>
+                    <bs-menu-item name='sankeyLayout'><i class='fa fa-sitemap' style='transform: rotate(90deg);'></i> Sankey layout</bs-menu-item>
+                    <bs-menu-item name='gridLayout'><i class='fa fa-th'></i> Grid layout</bs-menu-item>
+                    <bs-menu-item name='autoLayout'><i class='fa fa-magic'></i> Auto layout</bs-menu-item>
+                  </bs-dropdown-menu>
+                </bs-dropdown>
+              </div>
+            </ontodia-toolbar>
+            <ontodia-toolbar id='ontodia-toolbar2-demo10' dock='sw'>
+              <div class='btn-group-vertical btn-group-sm'>
+                <button name='zoomIn' class='btn btn-default' title='Zoom in'>
+                  <i class='fa fa-search-plus'></i>
+                </button>
+                <button name='zoomOut' class='btn btn-default' title='Zoom out'>
+                  <i class='fa fa-search-minus'></i>
+                </button>
+                <button name='zoomToFit' class='btn btn-default' title='Fit to screen'>
+                  <i class='fa fa-arrows-alt'></i>
+                </button>
+              </div>
+
+            </ontodia-toolbar>
+            <ontodia-navigator></ontodia-navigator>
+          </ontodia-canvas>
+        </ontodia>
+      </div>
+
+      <div class='ontodia-knowledge-panel-container'>
+        <mp-event-proxy
+          id='proxy-selection'
+          on-event-type='Ontodia.ShowElementInfo'
+          proxy-event-type='KnowledgePanel.Open'
+          proxy-targets='[]'>
+        </mp-event-proxy>
+        <mp-event-proxy id='close-selected-link-proxy'
+          on-event-type='Ontodia.ShowElementInfo'
+          proxy-event-type='Component.TemplateUpdate'
+          proxy-targets='["selectedlinkInfo"]'>
+        </mp-event-proxy>
+        <semantic-context repository='default'>
+          <mp-knowledge-panel-frame no-pin=true></mp-knowledge-panel-frame>
+        </semantic-context>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div data-flex-layout="row stretch-stretch" style="padding: 20px;">
+  <div data-flex-layout="column top-stretch" data-flex-self="size-x2" style="padding:10px;">
+    <h3>Artifacts where similiar Competencies are applied</h3>
+    <semantic-table
+      query='
+        SELECT ?artifact ?artifactComp WHERE {
+          ?artifact <http://ontologies.metaphacts.com/competencies/appliesCompetency> ?artifactComp .
+          FILTER(?artifact != ??)
+          FILTER EXISTS {
+            { SELECT ?comp { ?? <http://ontologies.metaphacts.com/competencies/appliesCompetency> ?comp . } }
+            FILTER (?comp = ?artifactComp)
+          }
+        }
+        '
+      options='{
+        "enableGrouping": false,
+        "groupingOptions": {"groupedBy": ["artifact"], "showOnlyAggregatedValue": false}
+      }'
+      column-configuration='[
+        {"variableName": "artifact", "displayName": "Artifact"},
+        {"variableName": "artifactComp", "displayName": "Competencies"}
+      ]'
+    ></semantic-table>
+  </div>
+
+
+  <div data-flex-layout="column top-stretch" data-flex-self="size-x3" style="padding:10px;">
+    <h3>Related Artifacts</h3>
+    <semantic-tree
+        query="
+                SELECT ?node ?parent 
+                WHERE {
+                  {
+                    SELECT ?node ?parent WHERE {
+                    ?? <http://ontologies.metaphacts.com/competencies/isIncludedIn> ?parent . 
+                    BIND (?? as ?node)
+                  } LIMIT 10}
+                  UNION 
+                  {
+                    SELECT ?node ?parent WHERE {
+                    ?node <http://ontologies.metaphacts.com/competencies/isIncludedIn> ?? . 
+                    BIND (?? as ?parent) 
+                  } LIMIT 10}
+                }"
+        provider='d3-sankey'  
+        d3-tree-options='{"nodeWidth":300, "nodeHeight":100, "nodeLeftMargin": 5}'>
+    </semantic-tree>
+  </div>
+</div>
