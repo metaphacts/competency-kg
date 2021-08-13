@@ -2,13 +2,38 @@
 
 The Competency Knowledge Graph is an effort to represent the broad field of artificial intelligence in a single knowledge graph. The idea is to describe the technical perspective (methods, tasks, models, metrics, ..) as well as the business perspective (use cases, sectors, business units, ..) in order to bridge the gap between theory and practice. Potential use cases of this graph may be the identification of relevant use cases for a given task, or the discovery of methods to solve a certain problem.
 
+## Use Cases
+
+Given the scenario of a medium- or large-sized company that runs numerous projects or products where AI techonologies are applied, several use cases can be served with a competency knowledge graph due to its search and recommendation capabilities:
+
+### Search
+
+- **Search based on a problem:** Having a concrete AI problem like spotting fraudulent orders in an online shop, one can find concrete tasks that solve this kind of problem, or conrete methods that are used to spot fraudulent behavior. One can also find metrics that are typically used to measure success in such a scenario.
+
+- **Search for people:** With a set of competencies in mind, one can find people that have these competencies, or people that have worked in projects/on products where these competencies are applied. This is helpful in a simple `expert search` scenario, i.e. one has a problem or question and wants to consult an expert. It can also be useful when assembling a team that should have diverse competencies (e.g. for a new project).
+
+- **Search for organisations:** One can find organisations that have certain competencies, or organisations that have conducted projects/created products where certain competencies were applied. This is helpful, for instance, to find new business partners for a cooperation. But internally, it can also be used to find suitable contractors the company has already successfully worked with.
+
+- **Search for projects:** One can find projects based on the problem solved, or based on the competencies applied. This may increase the potential to reuse the results and findings of completed projects.
+
+### Recommendation
+
+- **Recommend related competencies:** People can receive recommendations of competencies that are related to the ones that they already have. This can be an incentive to close potential knowledge gaps or broaden one's horizont. Similarly, organisations can get recommendations of related competencies indicating potential business opportunities.
+
+- **Recommend based on compentencies:** People can receive recommendations of colleagues with similar interests for knowledge transfer. They may also get recommendations of projects to which they could contribute to (as the competencies applied in the project are similar to the ones of the person). Organisations can receive recommendations of other organisations with similar competencies (for cooperations) or with a need for certain competencies (as customers).
+
+Of course, there are other scenarios where a knowledge graph of competencies can provide benefit. Apart from its use within a company, for instance, it can be used to present the company's competencies, projects, and products to potential business partners.
+
 ## Getting Started
+
 This is an app for the [metaphactory platform](https://metaphacts.com/product). We recommend to use the docker-based setup with GraphDB for this app.
 
 ### App Deployment
+
 To deploy the app, include the folder `competency-kg-app` as volume in the `/apps` directory (if using docker). Alternatively, you can upload a zipped version of the folder `competency-kg-app` via Admin:Apps in your metaphactory instance.
 
 ### Data
+
 The app currently uses two main data sources to model competencies:
 - The [Computer Science Ontology](https://cso.kmi.open.ac.uk/)
 - The [KMI ScholKG ontology](https://scholkg.kmi.open.ac.uk/)
@@ -25,6 +50,7 @@ graphdb:
 2. Check that your metaphactory instance is running, then execute `/bin/sh run_import_graphdb.sh <deployment-name>` where `<deployment-name>` should be replaced with the name of your metaphactory deployment. The import may take up to thirty minutes (even though the script finishes earlier).
 
 ### GraphDB Configuration
+
 The following query sets up a fulltext-search based on Lucene.
 
 Create the Lucene connector:
@@ -71,9 +97,11 @@ INSERT DATA {
 
 
 ### KMI Transformation
+
 The KMI dataset has several shortcomings that we try to address with transforming SPARQL queries. To adapt the data, run the following queries:
 
 #### Transform KMI ontology to SKOS Concept Scheme
+
 Add skos:Concept statements:
 ```
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
@@ -103,6 +131,7 @@ WHERE { GRAPH <http://scholkg.kmi.open.ac.uk/aikg/ontology> {
 ```
 
 #### Add SHACL shapes for domain and range constraints
+
 ```
 PREFIX sh: <http://www.w3.org/ns/shacl#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -128,6 +157,7 @@ WHERE {
 ```
 
 #### Transform KMI reification into RDF-star
+
 Add RDF-star triples:
 ```
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -162,6 +192,7 @@ WHERE { GRAPH <http://scholkg.kmi.open.ac.uk/aikg/resource> {
 ```
 
 #### Create labels for KMI
+
 Classes:
 ```
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -195,6 +226,7 @@ WHERE { GRAPH <http://scholkg.kmi.open.ac.uk/aikg/resource> {
 ```
 
 #### Create sameAs-links from KMI to MAKG
+
 ```
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX kmi-ont: <http://scholkg.kmi.open.ac.uk/aikg/ontology#>
