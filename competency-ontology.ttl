@@ -24,11 +24,6 @@
   <http://www.linkedmodel.org/1.2/schema/vaem#namespace> <http://ontologies.metaphacts.com/competencies/>;
   <http://purl.org/dc/terms/title> "Competency ontology" .
 
-<http://ontologies.metaphacts.com/competencies/has_competency> a owl:ObjectProperty;
-  rdfs:subPropertyOf <http://www.w3.org/ns/org#classification>;
-  rdfs:label "has competency";
-  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
-
 <https://kompaki.metaphacts.net/547f62ce-c28f-4d6c-9b38-84ae13eb387d> a sh:PropertyShape;
   sh:path <http://ontologies.metaphacts.com/competencies/hasCompetency>;
   sh:class <http://ontologies.metaphacts.com/competencies/Competency> .
@@ -105,32 +100,102 @@
   rdfs:label "Process";
   rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
 
-_:genid-fc41831ed8224c989dd5aacece50a69f-1bdb81a898bfe12a624a3e54feaaac a sh:NodeShape;
-  sh:property _:genid-fc41831ed8224c989dd5aacece50a69f-58f15fd61cc8ef1ab6c2515a82d8d;
+<http://ontologies.metaphacts.com/competencies/isIncludedIn> a owl:ObjectProperty;
+  rdfs:label "isIncludedIn";
+  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
+
+_:genid-a6bf85f444d449bd84043d06a54eacec-g_0 a sh:NodeShape;
+  sh:property _:genid-a6bf85f444d449bd84043d06a54eacec-g_1;
+  sh:targetClass <http://xmlns.com/foaf/0.1/Agent> .
+
+_:genid-a6bf85f444d449bd84043d06a54eacec-g_1 a sh:PropertyShape;
+  sh:path <http://ontologies.metaphacts.com/competencies/authorOf>;
+  sh:class <http://xmlns.com/foaf/0.1/Document> .
+
+<http://ontologies.metaphacts.com/competencies/37bd5dd4-f6b3-4478-99d1-7c4ad9a0fa30>
+  a sh:PropertyShape;
+  sh:path <http://ontologies.metaphacts.com/competencies/abstract>;
+  sh:datatype xsd:string;
+  sh:maxCount 1 .
+
+<http://ontologies.metaphacts.com/competencies/729ffe48-bb6c-42bc-a16f-9f38987b4f38>
+  a sh:PropertyShape;
+  sh:path <http://ontologies.metaphacts.com/competencies/keyword>;
+  sh:datatype xsd:string .
+
+<http://ontologies.metaphacts.com/competencies/ResearchPublication> a owl:Class;
+  rdfs:subClassOf <http://xmlns.com/foaf/0.1/Document>;
+  rdfs:label "ResearchPublication";
+  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
+
+<http://ontologies.metaphacts.com/competencies/abstract> a owl:DatatypeProperty;
+  rdfs:label "abstract";
+  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
+
+<http://ontologies.metaphacts.com/competencies/keyword> a owl:DatatypeProperty;
+  rdfs:label "keyword";
+  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
+
+<http://ontologies.metaphacts.com/competencies/Report> a owl:Class;
+  rdfs:subClassOf <http://xmlns.com/foaf/0.1/Document>;
+  rdfs:label "Report";
+  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
+
+<http://ontologies.metaphacts.com/competencies/Video> a owl:Class;
+  rdfs:subClassOf <http://xmlns.com/foaf/0.1/Document>;
+  rdfs:label "Video";
+  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
+
+<http://ontologies.metaphacts.com/competencies/Website> a owl:Class;
+  rdfs:subClassOf <http://xmlns.com/foaf/0.1/Document>;
+  rdfs:label "Website";
+  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
+
+<https://kompaki.metaphacts.net/bef66a32-fa8e-4aca-a135-b36793efbaa6> a sh:PropertyShape;
+  sh:path <http://ontologies.metaphacts.com/competencies/mentions>;
+  sh:class <http://ontologies.metaphacts.com/competencies/Competency> .
+
+<http://ontologies.metaphacts.com/competencies/mentions> a owl:ObjectProperty;
+  rdfs:label "mentions";
+  rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
+
+_:genid-df6cc488e1b0424a9291fed9f9afbae0-1bdb81a898bfe12a624a3e54feaaac a sh:NodeShape;
+  sh:property _:genid-df6cc488e1b0424a9291fed9f9afbae0-58f15fd61cc8ef1ab6c2515a82d8d;
   sh:targetClass <http://www.w3.org/ns/org#Organization> .
 
-_:genid-fc41831ed8224c989dd5aacece50a69f-58f15fd61cc8ef1ab6c2515a82d8d a sh:PropertyShape;
+_:genid-df6cc488e1b0424a9291fed9f9afbae0-58f15fd61cc8ef1ab6c2515a82d8d a sh:PropertyShape;
   sh:path skos:prefLabel;
   sh:minCount 1;
   sh:datatype xsd:string .
 
-_:genid-fc41831ed8224c989dd5aacece50a69f-56f405fc812892c74e116f42889734 a sh:NodeShape;
+_:genid-df6cc488e1b0424a9291fed9f9afbae0-56f405fc812892c74e116f42889734 a sh:NodeShape;
   sh:property <https://kompaki.metaphacts.net/547f62ce-c28f-4d6c-9b38-84ae13eb387d>,
-    <https://kompaki.metaphacts.net/e51465d1-4114-49ee-a8b4-1e542cfd28f8>;
+    <https://kompaki.metaphacts.net/e51465d1-4114-49ee-a8b4-1e542cfd28f8>, <https://kompaki.metaphacts.net/8100aa0b-854e-42a5-9f6e-4e8d32439211>;
   sh:targetClass <http://xmlns.com/foaf/0.1/Agent> .
 
-_:genid-fc41831ed8224c989dd5aacece50a69f-79e26b3cdd14e2a0cd018541c59c8f6 a sh:NodeShape;
+<https://kompaki.metaphacts.net/8100aa0b-854e-42a5-9f6e-4e8d32439211> a sh:PropertyShape;
+  sh:path <http://ontologies.metaphacts.com/competencies/creatorOf>;
+  sh:class <http://ontologies.metaphacts.com/competencies/BusinessObject> .
+
+_:genid-df6cc488e1b0424a9291fed9f9afbae0-6c121b51bdd39713b19f8592f5fea1d a sh:NodeShape;
   sh:property <https://kompaki.metaphacts.net/76b3e0ac-81be-4365-876c-bebed8f5e95e>,
     <https://kompaki.metaphacts.net/9b0f3d53-1b62-45f4-8aec-7a3a9acc10cd>, <http://ontologies.metaphacts.com/competencies/db912080-5ecf-4518-b3ba-bcde92aee56c>,
     <https://kompaki.metaphacts.net/33db43a8-7253-4e61-b944-4e17c5453039>;
   sh:targetClass <http://ontologies.metaphacts.com/competencies/BusinessObject> .
 
-_:genid-fc41831ed8224c989dd5aacece50a69f-a2942a037e07920ee0da984568f16 a sh:NodeShape;
-  sh:property <https://kompaki.metaphacts.net/7dc66dd3-ddd0-4e0d-9764-906ac635f1fd>;
+_:genid-df6cc488e1b0424a9291fed9f9afbae0-a2942a037e07920ee0da984568f16 a sh:NodeShape;
+  sh:property <https://kompaki.metaphacts.net/7dc66dd3-ddd0-4e0d-9764-906ac635f1fd>,
+    <https://kompaki.metaphacts.net/bef66a32-fa8e-4aca-a135-b36793efbaa6>;
   sh:targetClass <http://xmlns.com/foaf/0.1/Document> .
 
-<http://ontologies.metaphacts.com/competencies/isIncludedIn> a owl:ObjectProperty;
-  rdfs:label "isIncludedIn";
+_:genid-df6cc488e1b0424a9291fed9f9afbae0-f32d3a53cee3cc575247310378171 a sh:NodeShape;
+  sh:property <http://ontologies.metaphacts.com/competencies/37bd5dd4-f6b3-4478-99d1-7c4ad9a0fa30>,
+    <http://ontologies.metaphacts.com/competencies/729ffe48-bb6c-42bc-a16f-9f38987b4f38>;
+  sh:targetClass <http://ontologies.metaphacts.com/competencies/ResearchPublication> .
+
+<http://ontologies.metaphacts.com/competencies/creatorOf> a owl:ObjectProperty;
+  rdfs:subPropertyOf <http://ontologies.metaphacts.com/competencies/isInvolvedIn>;
+  rdfs:label "creatorOf";
   rdfs:isDefinedBy <http://ontologies.metaphacts.com/competencies> .
 
 kmi-ont:ResearchEntity rdfs:subClassOf <http://ontologies.metaphacts.com/competencies/Competency> .
