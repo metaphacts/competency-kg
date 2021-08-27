@@ -1,0 +1,909 @@
+relations='{
+  [[!-- Task --]]
+  "<http://www.metaphacts.com/ontology/_taskImprovedBy_method>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#taskImprovedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_taskImprovedBy_task>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#taskImprovedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_taskIncludedBy_task>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#taskIncludedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_taskRequiredBy_task>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#taskRequiredBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_taskRequiredBy_method>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#taskRequiredBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_taskSupportedBy_task>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#taskSupportedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_taskSupportedBy_method>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#taskSupportedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_taskSupportedBy_material>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#taskSupportedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Material> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_taskSupportedBy_metric>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#taskSupportedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_taskUsedBy_task>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#taskUsedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
+    }"
+  }],
+  [[!-- Method --]]
+  "<http://www.metaphacts.com/ontology/_methodImprovedBy_task>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#methodImprovedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_methodImprovedBy_method>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#methodImprovedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_methodImprovedBy_material>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#methodImprovedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Material> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_methodIncludedBy_task>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#methodIncludedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_methodIncludedBy_method>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#methodIncludedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_methodSupportedBy_task>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#methodSupportedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_methodSupportedBy_method>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#methodSupportedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_methodUsedBy_task>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#methodUsedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_methodUsedBy_method>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#methodUsedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method> .
+    }"
+  }],
+  [[!-- Material --]]
+  "<http://www.metaphacts.com/ontology/_materialIncludedBy_method>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#materialIncludedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_materialIncludedBy_material>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#materialIncludedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Material> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_materialPredictedBy_task>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#materialPredictedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_materialPredictedBy_method>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#materialPredictedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_materialProvidedBy_task>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#materialProvidedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_materialProviedBy_method>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#materialProvidedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_materialRequiredBy_task>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#materialRequiredBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_materialRequiredBy_method>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#materialRequiredBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_materialUsedBy_task>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#materialUsedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_materialUsedBy_method>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#materialUsedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method> .
+    }"
+  }],
+  [[!-- Metric --]]
+  "<http://www.metaphacts.com/ontology/_metricImprovedBy_task>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#metricImprovedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_metricImprovedBy_method>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#metricImprovedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_metricPredictedBy_task>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#metricPredictedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_metricPredictedBy_method>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#metricPredictedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_metricPredictedBy_metric>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#metricPredictedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_metricUsedBy_task>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#metricUsedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_metricUsedBy_method>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://scholkg.kmi.open.ac.uk/aikg/ontology#metricUsedBy> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method> .
+    }"
+  }],
+  [[!-- Agent --]]
+  "<http://www.metaphacts.com/ontology/_involvedIn_project>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://ontologies.metaphacts.com/competencies/isInvolvedIn> ?__value__ .
+?__value__ a <http://xmlns.com/foaf/0.1/Project> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_involvedIn_application>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://ontologies.metaphacts.com/competencies/isInvolvedIn> ?__value__ .
+?__value__ a <http://ontologies.metaphacts.com/competencies/Application> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_involvedIn_functionality>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://ontologies.metaphacts.com/competencies/isInvolvedIn> ?__value__ .
+?__value__ a <http://ontologies.metaphacts.com/competencies/Functionality> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_involvedIn_process>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://ontologies.metaphacts.com/competencies/isInvolvedIn> ?__value__ .
+?__value__ a <http://ontologies.metaphacts.com/competencies/Process> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_creatorOf_project>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://ontologies.metaphacts.com/competencies/creatorOf> ?__value__ .
+?__value__ a <http://xmlns.com/foaf/0.1/Project> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_creatorOf_application>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://ontologies.metaphacts.com/competencies/creatorOf> ?__value__ .
+?__value__ a <http://ontologies.metaphacts.com/competencies/Application> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_creatorOf_functionality>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://ontologies.metaphacts.com/competencies/creatorOf> ?__value__ .
+?__value__ a <http://ontologies.metaphacts.com/competencies/Functionality> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_creatorOf_process>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://ontologies.metaphacts.com/competencies/creatorOf> ?__value__ .
+?__value__ a <http://ontologies.metaphacts.com/competencies/Process> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_hasCompetency_task>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://ontologies.metaphacts.com/competencies/hasCompetency> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_hasCompetency_method>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://ontologies.metaphacts.com/competencies/hasCompetency> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_hasCompetency_material>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://ontologies.metaphacts.com/competencies/hasCompetency> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Material> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_hasCompetency_metric>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://ontologies.metaphacts.com/competencies/hasCompetency> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric> .
+    }"
+  }],
+  [[!-- BusinessObject --]]
+  "<http://www.metaphacts.com/ontology/_appliesCompetency_task>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://ontologies.metaphacts.com/competencies/appliesCompetency> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Task> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_appliesCompetency_method>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://ontologies.metaphacts.com/competencies/appliesCompetency> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Method> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_appliesCompetency_material>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://ontologies.metaphacts.com/competencies/appliesCompetency> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Material> .
+    }"
+  }],
+  "<http://www.metaphacts.com/ontology/_appliesCompetency_metric>": [{
+    "kind": "resource",
+    "queryPattern": "{
+$subject <http://ontologies.metaphacts.com/competencies/appliesCompetency> ?__value__ .
+?__value__ a <http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric> .
+    }"
+  }]
+}'
+
+search-profile='{
+  "categories": [
+  {
+    "iri": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>",
+    "label": "Task",
+    "thumbnail": "https://uxwing.com/wp-content/themes/uxwing/download/04-file-folder-type/checklist.png"
+  }, {
+    "iri": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>",
+    "label": "Method",
+    "thumbnail": "https://uxwing.com/wp-content/themes/uxwing/download/42-business-professional-services/business-management.png"
+  }, {
+    "iri": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Material>",
+    "label": "Material",
+    "thumbnail": "https://uxwing.com/wp-content/themes/uxwing/download/07-web-app-development/database-line.png"
+  }, {
+    "iri": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric>",
+    "label": "Metric",
+    "thumbnail": "https://uxwing.com/wp-content/themes/uxwing/download/11-household-and-furniture/measuring-tape.png"
+  }, {
+    "iri": "<http://xmlns.com/foaf/0.1/Person>",
+    "label": "Person",
+    "thumbnail": "https://uxwing.com/wp-content/themes/uxwing/download/12-peoples-avatars/person-profile.png"
+  }, {
+    "iri": "<http://www.w3.org/ns/org#Organization>",
+    "label": "Organisation",
+    "thumbnail": "https://uxwing.com/wp-content/themes/uxwing/download/42-business-professional-services/company-enterprise.png"
+  }, {
+    "iri": "<http://xmlns.com/foaf/0.1/Project>",
+    "label": "Project",
+    "thumbnail": "https://uxwing.com/wp-content/themes/uxwing/download/42-business-professional-services/project-work.png"
+  }, {
+    "iri": "<http://ontologies.metaphacts.com/competencies/Application>",
+    "label": "Application",
+    "thumbnail": "https://uxwing.com/wp-content/themes/uxwing/download/07-web-app-development/desktop-application-app.png"
+  }, {
+    "iri": "<http://ontologies.metaphacts.com/competencies/Functionality>",
+    "label": "Functionality",
+    "thumbnail": "https://uxwing.com/wp-content/themes/uxwing/download/18-education-school/formula-fx.png"
+  }, {
+    "iri": "<http://ontologies.metaphacts.com/competencies/Process>",
+    "label": "Process",
+    "thumbnail": "https://uxwing.com/wp-content/themes/uxwing/download/42-business-professional-services/manufacturing-process-engineer.png"
+  }],
+ "relations": [
+  [[!-- Task --]]
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>",
+    "iri": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#taskEvaluatedBy>",
+    "label": "Evaluated by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>",
+    "iri": "<http://www.metaphacts.com/ontology/_taskImprovedBy_task>",
+    "label": "Improved by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>",
+    "iri": "<http://www.metaphacts.com/ontology/_taskImprovedBy_method>",
+    "label": "Improved by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>",
+    "iri": "<http://www.metaphacts.com/ontology/_taskIncludedBy_task>",
+    "label": "Included by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>",
+    "iri": "<http://www.metaphacts.com/ontology/_taskRequiredBy_task>",
+    "label": "Required by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>",
+    "iri": "<http://www.metaphacts.com/ontology/_taskRequiredBy_method>",
+    "label": "Required by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>",
+    "iri": "<http://www.metaphacts.com/ontology/_taskSupportedBy_task>",
+    "label": "Supported by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>",
+    "iri": "<http://www.metaphacts.com/ontology/_taskSupportedBy_method>",
+    "label": "Supported by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>",
+    "iri": "<http://www.metaphacts.com/ontology/_taskSupportedBy_material>",
+    "label": "Supported by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Material>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>",
+    "iri": "<http://www.metaphacts.com/ontology/_taskSupportedBy_metric>",
+    "label": "Supported by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>",
+    "iri": "<http://www.metaphacts.com/ontology/_taskUsedBy_task>",
+    "label": "Used by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  [[!-- Method --]]
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>",
+    "iri": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#methodEvaluatedBy>",
+    "label": "Evaluated by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>",
+    "iri": "<http://www.metaphacts.com/ontology/_methodImprovedBy_task>",
+    "label": "Improved by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>",
+    "iri": "<http://www.metaphacts.com/ontology/_methodImprovedBy_method>",
+    "label": "Improved by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>",
+    "iri": "<http://www.metaphacts.com/ontology/_methodImprovedBy_material>",
+    "label": "Improved by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Material>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>",
+    "iri": "<http://www.metaphacts.com/ontology/_methodIncludedBy_task>",
+    "label": "Included by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>",
+    "iri": "<http://www.metaphacts.com/ontology/_methodIncludedBy_method>",
+    "label": "Included by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>",
+    "iri": "<http://www.metaphacts.com/ontology/_methodSupportedBy_task>",
+    "label": "Supported by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>",
+    "iri": "<http://www.metaphacts.com/ontology/_methodSupportedBy_method>",
+    "label": "Supported by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>",
+    "iri": "<http://www.metaphacts.com/ontology/_methodUsedBy_task>",
+    "label": "Used by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>",
+    "iri": "<http://www.metaphacts.com/ontology/_methodUsedBy_method>",
+    "label": "Used by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>"
+  },
+  [[!-- Material --]]
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Material>",
+    "iri": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#materialEvaluatedBy>",
+    "label": "Evaluated by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Material>",
+    "iri": "<http://www.metaphacts.com/ontology/_materialIncludedBy_method>",
+    "label": "Included by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Material>",
+    "iri": "<http://www.metaphacts.com/ontology/_materialIncludedBy_material>",
+    "label": "Included by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Material>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Material>",
+    "iri": "<http://www.metaphacts.com/ontology/_materialPredictedBy_task>",
+    "label": "Predicted by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Material>",
+    "iri": "<http://www.metaphacts.com/ontology/_materialPredictedBy_method>",
+    "label": "Predicted by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Material>",
+    "iri": "<http://www.metaphacts.com/ontology/_materialProvidedBy_task>",
+    "label": "Provided by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Material>",
+    "iri": "<http://www.metaphacts.com/ontology/_materialProvidedBy_method>",
+    "label": "Provided by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Material>",
+    "iri": "<http://www.metaphacts.com/ontology/_materialRequiredBy_task>",
+    "label": "Required by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Material>",
+    "iri": "<http://www.metaphacts.com/ontology/_materialRequiredBy_method>",
+    "label": "Required by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Material>",
+    "iri": "<http://www.metaphacts.com/ontology/_materialUsedBy_task>",
+    "label": "Used by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Material>",
+    "iri": "<http://www.metaphacts.com/ontology/_materialUsedBy_method>",
+    "label": "Used by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>"
+  },
+  [[!-- Metric --]]
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric>",
+    "iri": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#metricEvaluatedBy>",
+    "label": "Evaluated by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric>",
+    "iri": "<http://www.metaphacts.com/ontology/_metricImprovedBy_task>",
+    "label": "Improved by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric>",
+    "iri": "<http://www.metaphacts.com/ontology/_metricImprovedBy_method>",
+    "label": "Improved by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric>",
+    "iri": "<http://www.metaphacts.com/ontology/_metricPredictedBy_task>",
+    "label": "Predicted by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric>",
+    "iri": "<http://www.metaphacts.com/ontology/_metricPredictedBy_method>",
+    "label": "Predicted by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric>",
+    "iri": "<http://www.metaphacts.com/ontology/_metricPredictedBy_metric>",
+    "label": "Predicted by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric>",
+    "iri": "<http://www.metaphacts.com/ontology/_metricUsedBy_task>",
+    "label": "Used by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  {
+    "hasDomain": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric>",
+    "iri": "<http://www.metaphacts.com/ontology/_metricUsedBy_method>",
+    "label": "Used by",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>"
+  },
+  [[!-- Person --]]
+  {
+    "hasDomain": "<http://xmlns.com/foaf/0.1/Person>",
+    "iri": "<http://www.metaphacts.com/ontology/_involvedIn_project>",
+    "label": "Involved in",
+    "hasRange": "<http://xmlns.com/foaf/0.1/Project>"
+  },
+  {
+    "hasDomain": "<http://xmlns.com/foaf/0.1/Person>",
+    "iri": "<http://www.metaphacts.com/ontology/_involvedIn_application>",
+    "label": "Involved in",
+    "hasRange": "<http://ontologies.metaphacts.com/competencies/Application>"
+  },
+  {
+    "hasDomain": "<http://xmlns.com/foaf/0.1/Person>",
+    "iri": "<http://www.metaphacts.com/ontology/_involvedIn_functionality>",
+    "label": "Involved in",
+    "hasRange": "<http://ontologies.metaphacts.com/competencies/Functionality>"
+  },
+  {
+    "hasDomain": "<http://xmlns.com/foaf/0.1/Person>",
+    "iri": "<http://www.metaphacts.com/ontology/_involvedIn_process>",
+    "label": "Involved in",
+    "hasRange": "<http://ontologies.metaphacts.com/competencies/Process>"
+  },
+  {
+    "hasDomain": "<http://xmlns.com/foaf/0.1/Person>",
+    "iri": "<http://www.metaphacts.com/ontology/_creatorOf_project>",
+    "label": "Involved in",
+    "hasRange": "<http://xmlns.com/foaf/0.1/Project>"
+  },
+  {
+    "hasDomain": "<http://xmlns.com/foaf/0.1/Person>",
+    "iri": "<http://www.metaphacts.com/ontology/_creatorOf_application>",
+    "label": "Involved in",
+    "hasRange": "<http://ontologies.metaphacts.com/competencies/Application>"
+  },
+  {
+    "hasDomain": "<http://xmlns.com/foaf/0.1/Person>",
+    "iri": "<http://www.metaphacts.com/ontology/_creatorOf_functionality>",
+    "label": "Involved in",
+    "hasRange": "<http://ontologies.metaphacts.com/competencies/Functionality>"
+  },
+  {
+    "hasDomain": "<http://xmlns.com/foaf/0.1/Person>",
+    "iri": "<http://www.metaphacts.com/ontology/_creatorOf_process>",
+    "label": "Involved in",
+    "hasRange": "<http://ontologies.metaphacts.com/competencies/Process>"
+  },
+  {
+    "hasDomain": "<http://xmlns.com/foaf/0.1/Person>",
+    "iri": "<http://www.metaphacts.com/ontology/_hasCompetency_task>",
+    "label": "Competency (Task)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  {
+    "hasDomain": "<http://xmlns.com/foaf/0.1/Person>",
+    "iri": "<http://www.metaphacts.com/ontology/_hasCompetency_method>",
+    "label": "Competency (Method)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>"
+  },
+  {
+    "hasDomain": "<http://xmlns.com/foaf/0.1/Person>",
+    "iri": "<http://www.metaphacts.com/ontology/_hasCompetency_material>",
+    "label": "Competency (Material)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Material>"
+  },
+  {
+    "hasDomain": "<http://xmlns.com/foaf/0.1/Person>",
+    "iri": "<http://www.metaphacts.com/ontology/_hasCompetency_metric>",
+    "label": "Competency (Metric)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric>"
+  },
+  [[!-- Organisation --]]
+  {
+    "hasDomain": "<http://www.w3.org/ns/org#Organization>",
+    "iri": "<http://www.metaphacts.com/ontology/_involvedIn_project>",
+    "label": "Involved in",
+    "hasRange": "<http://xmlns.com/foaf/0.1/Project>"
+  },
+  {
+    "hasDomain": "<http://www.w3.org/ns/org#Organization>",
+    "iri": "<http://www.metaphacts.com/ontology/_involvedIn_application>",
+    "label": "Involved in",
+    "hasRange": "<http://ontologies.metaphacts.com/competencies/Application>"
+  },
+  {
+    "hasDomain": "<http://www.w3.org/ns/org#Organization>",
+    "iri": "<http://www.metaphacts.com/ontology/_involvedIn_functionality>",
+    "label": "Involved in",
+    "hasRange": "<http://ontologies.metaphacts.com/competencies/Functionality>"
+  },
+  {
+    "hasDomain": "<http://www.w3.org/ns/org#Organization>",
+    "iri": "<http://www.metaphacts.com/ontology/_involvedIn_process>",
+    "label": "Involved in",
+    "hasRange": "<http://ontologies.metaphacts.com/competencies/Process>"
+  },
+  {
+    "hasDomain": "<http://www.w3.org/ns/org#Organization>",
+    "iri": "<http://www.metaphacts.com/ontology/_creatorOf_project>",
+    "label": "Involved in",
+    "hasRange": "<http://xmlns.com/foaf/0.1/Project>"
+  },
+  {
+    "hasDomain": "<http://www.w3.org/ns/org#Organization>",
+    "iri": "<http://www.metaphacts.com/ontology/_creatorOf_application>",
+    "label": "Involved in",
+    "hasRange": "<http://ontologies.metaphacts.com/competencies/Application>"
+  },
+  {
+    "hasDomain": "<http://www.w3.org/ns/org#Organization>",
+    "iri": "<http://www.metaphacts.com/ontology/_creatorOf_functionality>",
+    "label": "Involved in",
+    "hasRange": "<http://ontologies.metaphacts.com/competencies/Functionality>"
+  },
+  {
+    "hasDomain": "<http://www.w3.org/ns/org#Organization>",
+    "iri": "<http://www.metaphacts.com/ontology/_creatorOf_process>",
+    "label": "Involved in",
+    "hasRange": "<http://ontologies.metaphacts.com/competencies/Process>"
+  },
+  {
+    "hasDomain": "<http://www.w3.org/ns/org#Organization>",
+    "iri": "<http://www.metaphacts.com/ontology/_hasCompetency_task>",
+    "label": "Competency (Task)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  {
+    "hasDomain": "<http://www.w3.org/ns/org#Organization>",
+    "iri": "<http://www.metaphacts.com/ontology/_hasCompetency_method>",
+    "label": "Competency (Method)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>"
+  },
+  {
+    "hasDomain": "<http://www.w3.org/ns/org#Organization>",
+    "iri": "<http://www.metaphacts.com/ontology/_hasCompetency_material>",
+    "label": "Competency (Material)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Material>"
+  },
+  {
+    "hasDomain": "<http://www.w3.org/ns/org#Organization>",
+    "iri": "<http://www.metaphacts.com/ontology/_hasCompetency_metric>",
+    "label": "Competency (Metric)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric>"
+  },
+  [[!-- Project --]]
+  {
+    "hasDomain": "<http://xmlns.com/foaf/0.1/Project>",
+    "iri": "<http://www.metaphacts.com/ontology/_appliesCompetency_task>",
+    "label": "Competency (Task)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  {
+    "hasDomain": "<http://xmlns.com/foaf/0.1/Project>",
+    "iri": "<http://www.metaphacts.com/ontology/_appliesCompetency_method>",
+    "label": "Competency (Method)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>"
+  },
+  {
+    "hasDomain": "<http://xmlns.com/foaf/0.1/Project>",
+    "iri": "<http://www.metaphacts.com/ontology/_appliesCompetency_material>",
+    "label": "Competency (Material)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Material>"
+  },
+  {
+    "hasDomain": "<http://xmlns.com/foaf/0.1/Project>",
+    "iri": "<http://www.metaphacts.com/ontology/_appliesCompetency_metric>",
+    "label": "Competency (Metric)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric>"
+  },
+  [[!-- Application --]]
+  {
+    "hasDomain": "<http://ontologies.metaphacts.com/competencies/Application>",
+    "iri": "<http://www.metaphacts.com/ontology/_appliesCompetency_task>",
+    "label": "Competency (Task)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  {
+    "hasDomain": "<http://ontologies.metaphacts.com/competencies/Application>",
+    "iri": "<http://www.metaphacts.com/ontology/_appliesCompetency_method>",
+    "label": "Competency (Method)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>"
+  },
+  {
+    "hasDomain": "<http://ontologies.metaphacts.com/competencies/Application>",
+    "iri": "<http://www.metaphacts.com/ontology/_appliesCompetency_material>",
+    "label": "Competency (Material)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Material>"
+  },
+  {
+    "hasDomain": "<http://ontologies.metaphacts.com/competencies/Application>",
+    "iri": "<http://www.metaphacts.com/ontology/_appliesCompetency_metric>",
+    "label": "Competency (Metric)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric>"
+  },
+  [[!-- Functionality --]]
+  {
+    "hasDomain": "<http://ontologies.metaphacts.com/competencies/Functionality>",
+    "iri": "<http://www.metaphacts.com/ontology/_appliesCompetency_task>",
+    "label": "Competency (Task)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  {
+    "hasDomain": "<http://ontologies.metaphacts.com/competencies/Functionality>",
+    "iri": "<http://www.metaphacts.com/ontology/_appliesCompetency_method>",
+    "label": "Competency (Method)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>"
+  },
+  {
+    "hasDomain": "<http://ontologies.metaphacts.com/competencies/Functionality>",
+    "iri": "<http://www.metaphacts.com/ontology/_appliesCompetency_material>",
+    "label": "Competency (Material)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Material>"
+  },
+  {
+    "hasDomain": "<http://ontologies.metaphacts.com/competencies/Functionality>",
+    "iri": "<http://www.metaphacts.com/ontology/_appliesCompetency_metric>",
+    "label": "Competency (Metric)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric>"
+  },
+  [[!-- Process --]]
+  {
+    "hasDomain": "<http://ontologies.metaphacts.com/competencies/Process>",
+    "iri": "<http://www.metaphacts.com/ontology/_appliesCompetency_task>",
+    "label": "Competency (Task)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Task>"
+  },
+  {
+    "hasDomain": "<http://ontologies.metaphacts.com/competencies/Process>",
+    "iri": "<http://www.metaphacts.com/ontology/_appliesCompetency_method>",
+    "label": "Competency (Method)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Method>"
+  },
+  {
+    "hasDomain": "<http://ontologies.metaphacts.com/competencies/Process>",
+    "iri": "<http://www.metaphacts.com/ontology/_appliesCompetency_material>",
+    "label": "Competency (Material)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Material>"
+  },
+  {
+    "hasDomain": "<http://ontologies.metaphacts.com/competencies/Process>",
+    "iri": "<http://www.metaphacts.com/ontology/_appliesCompetency_metric>",
+    "label": "Competency (Metric)",
+    "hasRange": "<http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric>"
+  }
+]}'
+

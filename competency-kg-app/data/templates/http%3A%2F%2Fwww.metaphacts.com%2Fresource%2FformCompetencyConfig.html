@@ -1,0 +1,23 @@
+{
+  "id": "competency",
+  "label": "Competencies",
+  "xsdDatatype": "xsd:anyURI",
+  "selectPattern": "
+    SELECT ?value ?label WHERE {
+      ?subject [[predicate]] ?value .
+      ?value rdfs:label ?label .
+    }
+  ",
+  "insertPattern": "INSERT { ?subject [[predicate]] ?value } WHERE {}",
+  "deletePattern": "DELETE { ?subject [[predicate]] ?value } WHERE {}",
+  "autosuggestionPattern": "
+    SELECT ?value ?label WHERE {
+      SERVICE Repository:lookup {
+        ?value lookup:token ?__token__ .
+        ?value lookup:name ?label .
+        ?value lookup:tokenizeQueryString \"false\" .
+      }
+      ?value a/rdfs:subClassOf* comp:Competency .
+    }
+  "
+}

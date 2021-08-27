@@ -1,143 +1,4 @@
 <style>
-  .semantic-carousel .slick-arrow {
-    width: initial;
-    height: initial;
-  }
-
-  @media (min-width: 900px) {
-    .slick-list {
-      margin: 0 50px!important;
-      padding: 0!important;
-    }
-
-    .slick-center .semantic-carousel-item {
-      display: flex;
-      justify-content: center;
-    }
-    .slick-center .carousel-item {
-      width: 400px;
-      height: 250px;
-      min-width: 100%;
-      z-index: 2;
-      transform: scale(1);
-    }
-
-    .semantic-carousel-item {
-      padding: 30px 18px;
-    }
-    .carousel-item {
-      transform: scale(0.6);
-    }
-
-    .carousel-item .carousel-item__overlay {
-      font-size: 12px;
-    }
-
-    .carousel-item__overlay-header {
-      font-size: initial;
-    }
-  }
-
-  .carousel-item__overlay-header {
-    font-size: 20px;
-    font-weight: bold;
-  }
-
-  .carousel-item {
-    width: 100%;
-    flex-shrink: 0;
-    background-color: white;
-    transition: width 0.4s, transform 0.2s;
-    padding: 10px;
-    box-shadow: 0px -2px 13px 4px #0000005e;
-    position: relative;
-    height: 250px;
-  }
-
-  .carousel-item__image {
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .carousel-item__image img {
-    min-width: 100%;
-    min-height: 100%;
-    object-fit: cover;
-  }
-
-  .carousel-item__overlay {
-    transition: opacity 0.3s;
-    padding: 10px;
-    overflow: hidden;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 50%;
-    opacity: 0.2;
-    background-color: dimgray;
-    font-size: 10px;
-    text-align: justify;
-  }
-
-  .carousel-item__overlay h3, .carousel-item__overlay a {
-    color: white;
-  }
-
-  .slick-center .carousel-item__overlay {
-    opacity: 0.5;
-  }
-
-  .grid-resource-outer-link {
-    display: none;
-  }
-
-  .grid-resource-outer-link div {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-  }
-
-  .slick-center .grid-resource-outer-link {
-    display: block;
-  }
-
-  .carousel-item__overlay:hover {
-    opacity: 0.8;
-  }
-
-  .slick-slider button::before {
-    font-size: 24px;
-  }
-
-  .advanced-search {
-    font-size: 20px;
-  }
-
-  .joyride-tooltip__header {
-    border-bottom: 1px solid #e95226;
-  }
-
-  .joyride-tooltip__button--primary {
-    background-color: #e95226;
-  }
-  .joyride-tooltip__button--primary:active,
-  .joyride-tooltip__button--primary:focus {
-    background-color: #e95226;
-  }
-  .joyride-tooltip__button--primary:hover {
-    background-color: #d34e25;
-  }
-
-
-
-
   .grid {
     display: grid;
     grid-template-rows: calc(100% - 58px) 42px;
@@ -156,44 +17,11 @@
     box-shadow: 0 0 14px 0 rgba(0,0,0,0.12);
     height: 100%;
   }
-
-
-  .ontodia-container {
-    flex: auto;
-    display: flex;
-    height: 100%;
-    min-height:500px;
-    width: 100%;
-  }
-
-  .ontodia-workspace-container {
-    flex-grow: 1;
-    min-width: 0;
-  }
-
-  .ontodia-knowledge-panel-container {
-    background-color: whitesmoke;
-    padding: 10px 10px 0px 0px;
-    max-width: 30%;
-  }
-
-  .ontodia-knowledge-panel-container .knowledge-panel-frame {
-    box-shadow: 0px 5px 13px 5px rgba(0, 0, 0, 0.12);
-    height: calc(100% - 10px);
-    transition: height 0.3s;
-    overflow: hidden;
-    margin-left: 0;
-    width: 380px;
-    max-width: 100%;
-  }
-  .knowledge-panel-frame .DataTable--global-filter-container {
-    width: 100%
-  }
 </style>
 
 <div style="margin-bottom: 30px;">
   <div class="text-center">
-    <h1 style="padding: 30px 0;"><b>KompAKI Competency Graph</b></h1>
+    <h1 style="padding: 30px 0;"><b>Competency Knowledge Graph</b></h1>
   </div>
 
   <bs-row>
@@ -201,232 +29,94 @@
 
       <div class="grid single-grid">
         <div class="panel">
-          <bs-row>
+          <bs-row style='padding: 50px 0;'>
             <bs-col sm='10' sm-offset='1'>
-              <h3 class="text-center" style="padding-top:25px; color: grey;">Explore Machine Learning Competencies</h3>
-
-              <div style="padding: 30px;">
-                <semantic-simple-search
-                  query='
-                    SELECT ?resource ?label ?typeLabel WHERE {
-                        SERVICE Repository:lookup {
-                          ?resource lookup:token ?__token__ ;
-                              lookup:name ?label ;
-                              lookup:score ?score ;
-                              lookup:limit 50 ;
-                              lookup:tokenizeQueryString false ;
-                        }
-                        ?resource a ?type .
-                        ?type rdfs:label ?typeLabel .
-                      } ORDER BY DESC(?score)'
-                  template='{{> suggestion}}'
-                  placeholder='Search for tasks, methods, materials, metrics, ..'
-                  tokenize-lucene-query=false
+              <semantic-search limit=1000
+                [[> :competencyTypeSearchConfig]]>
+                <semantic-search-query-keyword-type
+                  default-query='SELECT ?subject WHERE {
+                        ?subject a ?__domain__ .
+                    }'
+                  default-count-query='SELECT (COUNT(*) as ?count) WHERE {
+                      ?subject a ?__domain__
+                    }'
+                  count-query-mode='queryPerCategory'
+                  token-pattern='
+                    SERVICE Repository:lookup {
+                        ?subject lookup:token ?__token__  .
+                        ?subject lookup:limit 20 .
+                        ?subject lookup:type ?__domain__ .
+                    }
+                  '
+                  inline-suggest='true'
+                  placeholder="Enter your search term here"
                 >
-                  <template id='suggestion'>
-                      {{label.value}} <small>({{typeLabel.value}})</small>
-                  </template>
-                </semantic-simple-search>
-              </div>
-            </bs-col>
-          </bs-row>
+                </semantic-search-query-keyword-type>
 
+                [[> :typeSearchResultsTemplate]]
 
-          <bs-row>
-            <bs-col sm='10' sm-offset='1'>
-              <bs-row style="padding: 0 30px 30px 30px;">
-                <bs-col sm="12"><h5 class="text-center" style="color: grey;">For Example:</h5></bs-col>
-                <bs-col class="text-center" sm="3">
-                  <div style="color: grey;">Tasks</div>
-                  <semantic-link iri="http://scholkg.kmi.open.ac.uk/aikg/resource/semantic_web_application"></semantic-link><br>
-                  <semantic-link iri="http://scholkg.kmi.open.ac.uk/aikg/resource/twitter_sentiment_prediction"></semantic-link><br>
-                  <semantic-link iri="http://scholkg.kmi.open.ac.uk/aikg/resource/relation_extraction"></semantic-link><br>
-                </bs-col>
-                <bs-col class="text-center" sm="3">
-                  <div style="color: grey;">Methods</div>
-                  <semantic-link iri="http://scholkg.kmi.open.ac.uk/aikg/resource/relation_extractor"></semantic-link><br>
-                  <semantic-link iri="http://scholkg.kmi.open.ac.uk/aikg/resource/type_constrained_inference"></semantic-link><br>
-                  <semantic-link iri="http://scholkg.kmi.open.ac.uk/aikg/resource/multitask_learning"></semantic-link><br>
-                </bs-col>
-                <bs-col class="text-center" sm="3">
-                  <div style="color: grey;">Metrics</div>
-                  <semantic-link iri="http://scholkg.kmi.open.ac.uk/aikg/resource/evaluation_metric"></semantic-link><br>
-                  <semantic-link iri="http://scholkg.kmi.open.ac.uk/aikg/resource/f1_score"></semantic-link><br>
-                  <semantic-link iri="http://scholkg.kmi.open.ac.uk/aikg/resource/auc"></semantic-link><br>
-                </bs-col>
-                <bs-col class="text-center" sm="3">
-                  <div style="color: grey;">Materials</div>
-                  <semantic-link iri="http://scholkg.kmi.open.ac.uk/aikg/resource/imagenet10k"></semantic-link><br>
-                  <semantic-link iri="http://scholkg.kmi.open.ac.uk/aikg/resource/dbpedia"></semantic-link><br>
-                  <semantic-link iri="http://scholkg.kmi.open.ac.uk/aikg/resource/linked_data_set"></semantic-link><br>
-                </bs-col>
-              </bs-row>
+              </semantic-search>
+
             </bs-col>
           </bs-row>
         </div>
-
       </div>
+
       <div class="grid single-grid">
-
-        <div class="panel" style="min-height: 800px;">
-          <bs-row>
+        <div class="panel">  
+          <bs-row style='padding: 50px 0;'>
             <bs-col sm='10' sm-offset='1'>
-              <h3 class="text-center" style="padding: 25px 0 30px 0; color: grey;">Find Companies with Competencies</h3>
+              <h5 class="text-center" style="color: grey;">Not finding what you are looking for?</h5>
 
-              <div class='ontodia-container' style="height:500px; margin-bottom: 20px;">
-                <div class='ontodia-workspace-container'>
-                  <ontodia query="
-                    CONSTRUCT {
-                      ?org skos:prefLabel ?label .
-                      ?org <http://ontologies.metaphacts.com/competencies/hasCompetency> ?comp .
-                    } WHERE {
-                      ?org skos:prefLabel ?label .
-                      ?org a <http://www.w3.org/ns/org#Organization> .
-                      OPTIONAL { ?org <http://ontologies.metaphacts.com/competencies/hasCompetency> ?comp}
-                    } LIMIT 100"
-                  >
-                    <ontodia-canvas id='canvas' use-knowledge-panel='true'>
-                      <ontodia-halo-link></ontodia-halo-link>
-                      <ontodia-halo></ontodia-halo>
+              <div class="KeywordTypeQuery--domainCards">
+                <div data-flex-layout="rows stretch-stretch">
+                  [[#> AddResourceModal resourceType="Person" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/12-peoples-avatars/person-profile.png"]]
+                    [[#*inline "modalContent"]][[> :formPerson]][[/inline]]
+                  [[/AddResourceModal]]
 
-                      <ontodia-toolbar id='ontodia-toolbar1-demo10'>
-                        <div class='btn-group btn-group-sm' style='margin-right: 10px;'>
-                          <button name='undo' class='btn btn-default'><i class='fa fa-undo'></i></button>
-                          <button name='redo' class='btn btn-default'><i class='fa fa-repeat'></i></button>
-                        </div>
-                        <div class='btn-group btn-group-sm'>
-                          <bs-dropdown bs-size='sm'>
-                            <bs-dropdown-toggle>Export</bs-dropdown-toggle>
-                            <bs-dropdown-menu>
-                              <bs-menu-item name='exportPng'>
-                                <i class='fa fa-picture-o'></i> Export PNG
-                              </bs-menu-item>
-                              <bs-menu-item name='exportSvg'>
-                                <i class='fa fa-picture-o'></i> Export SVG
-                              </bs-menu-item>
-                              <bs-menu-item name='print'>
-                                <i class='fa fa-print'></i> Print
-                              </bs-menu-item>
-                            </bs-dropdown-menu>
-                          </bs-dropdown>
-                        </div>
-                        <div class='btn-group btn-group-sm' style='margin-right: 10px;'>
-                          <bs-dropdown bs-size='sm' dropup=false> <!-- todo-oss: only force layout in OSS -->
-                            <button name='forceLayout' class='btn btn-default'>
-                              <i class='fa fa-snowflake-o'></i> Force layout
-                            </button>
-                            <bs-dropdown-toggle></bs-dropdown-toggle>
-                            <bs-dropdown-menu>
-                              <bs-menu-item name='flowLayout'><i class='fa fa-sitemap'></i> Flow layout</bs-menu-item>
-                              <bs-menu-item name='sankeyLayout'><i class='fa fa-sitemap' style='transform: rotate(90deg);'></i> Sankey layout</bs-menu-item>
-                              <bs-menu-item name='gridLayout'><i class='fa fa-th'></i> Grid layout</bs-menu-item>
-                              <bs-menu-item name='autoLayout'><i class='fa fa-magic'></i> Auto layout</bs-menu-item>
-                            </bs-dropdown-menu>
-                          </bs-dropdown>
-                        </div>
-                      </ontodia-toolbar>
-                      <ontodia-toolbar id='ontodia-toolbar2-demo10' dock='sw'>
-                        <div class='btn-group-vertical btn-group-sm'>
-                          <button name='zoomIn' class='btn btn-default' title='Zoom in'>
-                            <i class='fa fa-search-plus'></i>
-                          </button>
-                          <button name='zoomOut' class='btn btn-default' title='Zoom out'>
-                            <i class='fa fa-search-minus'></i>
-                          </button>
-                          <button name='zoomToFit' class='btn btn-default' title='Fit to screen'>
-                            <i class='fa fa-arrows-alt'></i>
-                          </button>
-                        </div>
+                  [[#> AddResourceModal resourceType="Organisation" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/42-business-professional-services/company-enterprise.png"]]
+                    [[#*inline "modalContent"]][[> :formOrganisation]][[/inline]]
+                  [[/AddResourceModal]]
 
-                      </ontodia-toolbar>
-                      <ontodia-navigator></ontodia-navigator>
-                    </ontodia-canvas>
-                  </ontodia>
+                  [[#> AddResourceModal resourceType="Project" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/42-business-professional-services/project-work.png"]]
+                    [[#*inline "modalContent"]][[> :formBusinessObject type="http://xmlns.com/foaf/0.1/Project"]][[/inline]]
+                  [[/AddResourceModal]]
+
+                  [[#> AddResourceModal resourceType="Application" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/07-web-app-development/desktop-application-app.png"]]
+                    [[#*inline "modalContent"]][[> :formBusinessObject type="http://ontologies.metaphacts.com/competencies/Application"]][[/inline]]
+                  [[/AddResourceModal]]
+
+                  [[#> AddResourceModal resourceType="Functionality" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/18-education-school/formula-fx.png"]]
+                    [[#*inline "modalContent"]][[> :formBusinessObject type="http://ontologies.metaphacts.com/competencies/Functionality"]][[/inline]]
+                  [[/AddResourceModal]]
+
+                  [[#> AddResourceModal resourceType="Process" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/42-business-professional-services/manufacturing-process-engineer.png"]]
+                    [[#*inline "modalContent"]][[> :formBusinessObject type="http://ontologies.metaphacts.com/competencies/Process"]][[/inline]]
+                  [[/AddResourceModal]]
                 </div>
-
-                <div class='ontodia-knowledge-panel-container'>
-                  <mp-event-proxy
-                    id='proxy-selection'
-                    on-event-type='Ontodia.ShowElementInfo'
-                    proxy-event-type='KnowledgePanel.Open'
-                    proxy-targets='[]'>
-                  </mp-event-proxy>
-                  <mp-event-proxy id='close-selected-link-proxy'
-                    on-event-type='Ontodia.ShowElementInfo'
-                    proxy-event-type='Component.TemplateUpdate'
-                    proxy-targets='["selectedlinkInfo"]'>
-                  </mp-event-proxy>
-                  <semantic-context repository='default'>
-                    <mp-knowledge-panel-frame no-pin=true></mp-knowledge-panel-frame>
-                  </semantic-context>
-                </div>
-
               </div>
-            </bs-col>
-          </bs-row>
-          
-          <bs-row style='padding: 30px 0;'>
-            <bs-col sm='10' sm-offset='1'>
-              <h5 class="text-center" style="color: grey;">Is your Company listed yet?</h5>
-              <semantic-form
-                new-subject-template="https://kompaki.metaphacts.net/resource/{{UUID}}"
-                for-class="http://www.w3.org/ns/org#Organization"
-                fields='[
-                  {
-                    "id": "type",
-                    "label": "Type",
-                    "insertPattern": "INSERT { $subject a ?value } WHERE {}",
-                    "xsdDatatype": "xsd:anyURI"
-                  },
-                  {
-                    "id": "label",
-                    "label": "Company Name",
-                    "description": "The name of the company",
-                    "xsdDatatype": "xsd:string",
-                    "minOccurs": 1,
-                    "maxOccurs": 1,
-                    "insertPattern": "INSERT { $subject rdfs:label ?value ; skos:prefLabel ?value } WHERE {}"
-                  },
-                  {
-                    "id": "hasCompetency",
-                    "label": "Competencies",
-                    "xsdDatatype": "xsd:anyURI",
-                    "selectPattern": "
-                      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-                      SELECT ?value ?label WHERE {
-                        $subject <http://ontologies.metaphacts.com/competencies/hasCompetency> ?value .
-                        ?value rdfs:label ?label .
-                      }
-                    ",
-                    "insertPattern": "
-                      INSERT { $subject <http://ontologies.metaphacts.com/competencies/hasCompetency> ?value } WHERE {}
-                    ",
-                    "deletePattern": "
-                      DELETE { $subject <http://ontologies.metaphacts.com/competencies/hasCompetency> ?value } WHERE {}
-                    ",
-                    "autosuggestionPattern": "
-                      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-                      PREFIX comp: <http://ontologies.metaphacts.com/competencies/>
-                      SELECT ?value ?label WHERE {
-                        SERVICE Repository:lookup {
-                          ?value lookup:token ?__token__ .
-                          ?value lookup:name ?label .
-                          ?value lookup:tokenizeQueryString false .
-                        }
-                        ?value a/rdfs:subClassOf* comp:Competency .
-                      }
-                    "
-                  }
-                ]'>
-                <semantic-form-hidden-input for="type" default-value="http://www.w3.org/ns/org#Organization"></semantic-form-hidden-input>
-                <semantic-form-auto-input for="label"></semantic-form-auto-input>
-                <semantic-form-auto-input for="hasCompetency"></semantic-form-auto-input>
-              </semantic-form>
             </bs-col>
           </bs-row>
         </div>
       </div>
     </bs-col>
   </bs-row>
-
 </div>
+
+[[#*inline "AddResourceModal"]]
+<mp-overlay-dialog title="Add [[resourceType]]" bs-size="large">
+  <mp-overlay-dialog-trigger>
+    <div data-flex-self="size-1of3 md-half sm-full" class="KeywordTypeQuery--domainCardItem">
+      <button type="button" class="btn btn-secondary KeywordTypeQuery--domainCard ">
+        <span class="KeywordTypeQuery--domainThumbnail">
+          <img src="[[thumbnail]]" alt="[[resourceType]]">
+        </span>
+        <span class="h4" style="padding-top: 10px;">Add [[resourceType]]</span>
+      </button>
+    </div>
+  </mp-overlay-dialog-trigger>
+  <mp-overlay-dialog-content>
+    [[> modalContent]]
+  </mp-overlay-dialog-content>
+</mp-overlay-dialog>
+[[/inline]]

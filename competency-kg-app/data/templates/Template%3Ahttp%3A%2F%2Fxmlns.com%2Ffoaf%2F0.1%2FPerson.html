@@ -2,9 +2,7 @@
 
 [[#*inline "viewDetailSection"]]
   [[> :viewDetail label="Name" predicate="rdfs:label" singleValue=true]]
-  [[> :viewDetail label="Parent Organisations" predicate="<http://www.w3.org/ns/org#subOrganizationOf>"]]
-  [[> :viewDetail label="Child Organisations" predicate="<http://www.w3.org/ns/org#subOrganizationOf>" inverse=true]]
-  [[> :viewDetail label="Members" predicate="<http://www.w3.org/ns/org#memberOf>" inverse=true]]
+  [[> :viewDetail label="Affiliated with" predicate="<http://www.w3.org/ns/org#memberOf>"]]
   [[> :viewDetail label="Competencies" predicate="comp:hasCompetency"]]
   [[> :viewDetail label="Creator of" predicate="comp:creatorOf"]]
   [[> :viewDetail label="Contributor to" predicate="comp:isInvolvedIn"]]
@@ -12,7 +10,7 @@
 [[/inline]]
 
 [[#*inline "editDetailSection"]]
-  [[> :formOrganisation editMode=true]]
+  [[> :formPerson editMode=true]]
 [[/inline]]
 
 [[#*inline "customSection"]]
@@ -25,7 +23,7 @@
     [[> :viewMoreRelevantCompetenciesBasedOnAgents]]
 
     [[> :viewEntitiesWithSimilarCompetencies entityTypeName="Person or Organisation" sourcePredicate="comp:hasCompetency" targetPredicate="comp:hasCompetency"]]
-    
+
     [[> :viewEntitiesWithSimilarCompetencies entityTypeName="Business Object" sourcePredicate="comp:hasCompetency" targetPredicate="comp:appliesCompetency"]]
   </bs-row>
 </div>

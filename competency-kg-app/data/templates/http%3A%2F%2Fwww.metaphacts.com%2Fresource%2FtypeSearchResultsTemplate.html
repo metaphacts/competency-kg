@@ -1,0 +1,42 @@
+<style>
+  #search-results .table-custom-row {
+    justify-content: space-between;
+  }
+</style>
+
+<div data-flex-layout="row stretch-stretch">
+  <div data-flex-self="size-1of3" style="flex: 0 0 20px;">
+    <semantic-search-facet id='semantic-search-facet'></semantic-search-facet>
+  </div>
+
+  <semantic-search-result-holder>
+    <div data-flex-self="md-full">
+    <semantic-search-facet-breadcrumbs></semantic-search-facet-breadcrumbs>
+      <semantic-search-result-context multi=true>
+          <semantic-search-result>
+              <semantic-search-table-result>
+                <semantic-table id="results-table"
+                                query='SELECT DISTINCT ?subject WHERE { FILTER(?__contextRelationPattern__) }'
+                                options='{"showFilter":false,
+                                  "enableGrouping": false,
+                                  "groupingOptions": {"groupedBy": ["subject"], "showOnlyAggregatedValue": true, "defaultAggregation":"concat"}
+                                }'
+                                column-configuration='[{
+                      "variableName": "subject",
+                      "displayName": "Subject",
+                      "cellTemplate": "{{> subjectTemplate iri=subject.value}}"
+                    }
+                  ]'
+                >
+                    <!-- this column configuration is rewritten by semantic-search-table-result in multi mode and we have only default rendering without panel trigger -->
+                  <template id='subjectTemplate'>
+                    <semantic-link iri='{{iri}}'></semantic-link>
+                  </template>
+                </semantic-table>
+              </semantic-search-table-result>
+            </semantic-search-result>
+      </semantic-search-result-context>
+    </div>
+  </semantic-search-result-holder>
+</div>
+

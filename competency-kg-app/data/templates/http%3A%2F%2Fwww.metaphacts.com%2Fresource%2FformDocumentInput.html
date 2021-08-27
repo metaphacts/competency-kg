@@ -1,0 +1,65 @@
+<semantic-form-autocomplete-input for="document" placeholder="Search for existing documents..">
+  <semantic-form new-subject-template="{{uri}}" fields='[
+    {
+      "id": "uri",
+      "label": "URI",
+      "xsdDatatype": "xsd:string",
+      "minOccurs": 1,
+      "maxOccurs": 1
+    },
+    {
+      "id": "label",
+      "label": "Name",
+      "xsdDatatype": "xsd:string",
+      "minOccurs": 1,
+      "maxOccurs": 1,
+      "selectPattern": "SELECT ?value WHERE { $subject rdfs:label ?value }",
+      "insertPattern": "INSERT { $subject rdfs:label ?value } WHERE {}",
+      "deletePattern": "DELETE { $subject rdfs:label ?value } WHERE {}"
+    },
+    {
+      "id": "type",
+      "label": "Type",
+      "xsdDatatype": "xsd:anyURI",
+      "minOccurs": 1,
+      "maxOccurs": 1,
+      "selectPattern": "SELECT $value WHERE { $subject a $value }",
+      "insertPattern": "INSERT { $subject a $value } WHERE {}",
+      "deletePattern": "DELETE { $subject a $value } WHERE {}",
+      "valueSetPattern": "SELECT ?value WHERE {
+        ?value rdfs:subClassOf <http://xmlns.com/foaf/0.1/Document> .
+        FILTER ( STRSTARTS(STR(?value), \"http://ontologies.metaphacts.com/competencies/\") )
+      }"
+    },
+    {
+      "id": "keyword",
+      "label": "Keyword",
+      "xsdDatatype": "xsd:string",
+      "selectPattern": "SELECT ?value WHERE { $subject <http://ontologies.metaphacts.com/competencies/keyword> ?value }",
+      "insertPattern": "INSERT { $subject <http://ontologies.metaphacts.com/competencies/keyword> ?value } WHERE {}",
+      "deletePattern": "DELETE { $subject <http://ontologies.metaphacts.com/competencies/keyword> ?value } WHERE {}"
+    },
+    {
+      "id": "abstract",
+      "label": "Abstract",
+      "xsdDatatype": "xsd:string",
+      "maxOccurs": 1,
+      "selectPattern": "SELECT ?value WHERE { $subject <http://ontologies.metaphacts.com/competencies/abstract> ?value }",
+      "insertPattern": "INSERT { $subject <http://ontologies.metaphacts.com/competencies/abstract> ?value } WHERE {}",
+      "deletePattern": "DELETE { $subject <http://ontologies.metaphacts.com/competencies/abstract> ?value } WHERE {}"
+    }]'
+    new-subject-template-settings='{
+      "placeholders": {
+        "uri": {"transform": "none"}
+      }
+    }'>
+    <semantic-form-checklist-input for="type" type="radio" row="true"></semantic-form-checklist-input>
+    <semantic-form-text-input for="uri"></semantic-form-text-input>
+    <semantic-form-text-input for="label"></semantic-form-text-input>
+    <semantic-form-text-input for="keyword"></semantic-form-text-input>
+    <semantic-form-text-input for="abstract" multiline=true></semantic-form-text-input>
+    <semantic-form-errors></semantic-form-errors>
+    <button name="submit" class="btn btn-secondary">Add Document</button>
+    <button name="reset" class="btn btn-secondary">Reset Document</button>
+  </semantic-form>
+</semantic-form-autocomplete-input>

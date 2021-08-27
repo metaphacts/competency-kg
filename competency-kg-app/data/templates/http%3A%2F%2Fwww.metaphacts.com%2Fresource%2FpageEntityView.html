@@ -1,0 +1,179 @@
+<style>
+  .grid {
+    display: grid;
+    grid-template-rows: calc(100% - 58px) 42px;
+    grid-gap: 16px;
+  }
+
+  .single-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 14px 0 rgba(0,0,0,0.12);
+    height: 100%;
+  }
+
+  .ontodia-container {
+    flex: auto;
+    display: flex;
+    height: 100%;
+    min-height: 500px;
+    width: 100%;
+  }
+
+  .ontodia-workspace-container {
+    flex-grow: 1;
+    min-width: 0;
+  }
+
+  .ontodia-knowledge-panel-container {
+    background-color: whitesmoke;
+    padding: 10px 10px 0px 0px;
+    max-width: 30%;
+  }
+
+  .ontodia-knowledge-panel-container .knowledge-panel-frame {
+    box-shadow: 0px 5px 13px 5px rgba(0, 0, 0, 0.12);
+    height: calc(100% - 10px);
+    transition: height 0.3s;
+    overflow: hidden;
+    margin-left: 0;
+    width: 380px;
+    max-width: 100%;
+  }
+  .knowledge-panel-frame .DataTable--global-filter-container {
+    width: 100%
+  }
+</style>
+
+<div class="main">
+  <div style="padding: 30px 20px;">
+    <bs-row>
+        <bs-col sm='5'>
+          <div>
+            <h2>Details</h2>
+
+            <div style="position: absolute; top: 0; right: 15px;">
+              <mp-overlay-dialog title="Edit Details" type="modal" bs-size="large">
+                <mp-overlay-dialog-trigger>
+                  <button class="btn btn-secondary" style="margin-right: 10px;">Edit</button>
+                </mp-overlay-dialog-trigger>
+                <mp-overlay-dialog-content>
+                  [[> editDetailSection]]
+                </mp-overlay-dialog-content>
+              </mp-overlay-dialog>
+
+              <semantic-update query='
+                DELETE {
+                  ?gs ?gp ?go .
+                  ?? ?po ?o .
+                  ?s ?ps ?? .
+                } WHERE {
+                  BIND ( IRI(CONCAT(STR(??), "/container/context")) as ?g)
+                  { GRAPH ?g { ?gs ?gp ?go } }
+                  UNION { ?? ?po ?o }
+                  UNION { ?s ?ps ?? }
+                }'
+                variable-params='["g", "gs", "gp", "go", "po", "o", "s", "ps"]'
+                post-action='[[resolvePrefix ":Start"]]'
+                show-confirmation='true'
+                confirmation-options='{
+                  "message": "Do you really want to delete this entity and all associated data?",
+                  "confirmLabel": "Delete"
+                }'>
+                <button class='btn btn-danger'>Delete</button>
+              </semantic-update>
+            </div>
+            
+            [[> viewDetailSection]]
+          </div>
+        </bs-col>
+
+        <bs-col sm='7'>
+          <div>
+            <div class='ontodia-container'>
+              <div class='ontodia-workspace-container'>
+                <ontodia query="CONSTRUCT {?? ?po ?o . ?s ?ps ?? . } WHERE { {?? ?po ?o} UNION {?s ?ps ??} } LIMIT 100">
+
+                  <ontodia-canvas id='canvas' use-knowledge-panel='true'>
+                    <ontodia-halo-link></ontodia-halo-link>
+                    <ontodia-halo></ontodia-halo>
+
+                    <ontodia-toolbar id='ontodia-toolbar1-demo10'>
+                      <div class='btn-group btn-group-sm' style='margin-right: 10px;'>
+                        <button name='undo' class='btn btn-default'><i class='fa fa-undo'></i></button>
+                        <button name='redo' class='btn btn-default'><i class='fa fa-repeat'></i></button>
+                      </div>
+                      <div class='btn-group btn-group-sm'>
+                        <bs-dropdown bs-size='sm'>
+                          <bs-dropdown-toggle>Export</bs-dropdown-toggle>
+                          <bs-dropdown-menu>
+                            <bs-menu-item name='exportPng'>
+                              <i class='fa fa-picture-o'></i> Export PNG
+                            </bs-menu-item>
+                            <bs-menu-item name='exportSvg'>
+                              <i class='fa fa-picture-o'></i> Export SVG
+                            </bs-menu-item>
+                            <bs-menu-item name='print'>
+                              <i class='fa fa-print'></i> Print
+                            </bs-menu-item>
+                          </bs-dropdown-menu>
+                        </bs-dropdown>
+                      </div>
+                      <div class='btn-group btn-group-sm' style='margin-right: 10px;'>
+                        <bs-dropdown bs-size='sm' dropup=false> <!-- todo-oss: only force layout in OSS -->
+                          <button name='forceLayout' class='btn btn-default'>
+                            <i class='fa fa-snowflake-o'></i> Force layout
+                          </button>
+                          <bs-dropdown-toggle></bs-dropdown-toggle>
+                          <bs-dropdown-menu>
+                            <bs-menu-item name='flowLayout'><i class='fa fa-sitemap'></i> Flow layout</bs-menu-item>
+                            <bs-menu-item name='sankeyLayout'><i class='fa fa-sitemap' style='transform: rotate(90deg);'></i> Sankey layout</bs-menu-item>
+                            <bs-menu-item name='gridLayout'><i class='fa fa-th'></i> Grid layout</bs-menu-item>
+                            <bs-menu-item name='autoLayout'><i class='fa fa-magic'></i> Auto layout</bs-menu-item>
+                          </bs-dropdown-menu>
+                        </bs-dropdown>
+                      </div>
+                    </ontodia-toolbar>
+                    <ontodia-toolbar id='ontodia-toolbar2-demo10' dock='sw'>
+                      <div class='btn-group-vertical btn-group-sm'>
+                        <button name='zoomIn' class='btn btn-default' title='Zoom in'>
+                          <i class='fa fa-search-plus'></i>
+                        </button>
+                        <button name='zoomOut' class='btn btn-default' title='Zoom out'>
+                          <i class='fa fa-search-minus'></i>
+                        </button>
+                        <button name='zoomToFit' class='btn btn-default' title='Fit to screen'>
+                          <i class='fa fa-arrows-alt'></i>
+                        </button>
+                      </div>
+                    </ontodia-toolbar>
+                    <ontodia-navigator></ontodia-navigator>
+                  </ontodia-canvas>
+                </ontodia>
+              </div>
+
+              <div class='ontodia-knowledge-panel-container'>
+                <mp-event-proxy
+                  id='proxy-selection'
+                  on-event-type='Ontodia.ShowElementInfo'
+                  proxy-event-type='KnowledgePanel.Open'
+                  proxy-targets='[]'>
+                </mp-event-proxy>
+                <semantic-context repository='default'>
+                  <mp-knowledge-panel-frame no-pin=true></mp-knowledge-panel-frame>
+                </semantic-context>
+              </div>
+            </div>
+          </div>
+        </bs-col>
+    </bs-row>
+
+    [[> customSection]]
+  </div>
+</div>

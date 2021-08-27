@@ -1,0 +1,39 @@
+<semantic-query query='SELECT ?sub WHERE {
+    [[#if inverse]]
+      ?sub [[predicate]] ?? .
+    [[else]]
+      ?? [[predicate]] ?sub .
+    [[/if]]
+  }[[#if singleValue]] LIMIT 1[[/if]]'
+  template="{{> template}}">
+  <template id="template">
+    {{#ifCond bindings.length '>' 0}}
+      <bs-row>
+        <bs-col lg='4'>[[label]]:</bs-col>
+        <bs-col lg='8'>
+          [[#if singleValue]]
+            <div style="margin-bottom: 1rem;">
+              {{#if (isIri bindings.0.sub)}}
+                <semantic-link iri="{{bindings.0.sub.value}}"></semantic-link>
+              {{else}}
+                {{bindings.0.sub.value}}
+              {{/if}}
+            </div>
+          [[else]]
+            <ul>
+              {{#each bindings}}
+              <li>
+                {{#if (isIri sub)}}
+                  <semantic-link iri="{{sub.value}}"></semantic-link>
+                {{else}}
+                  {{sub.value}}
+                {{/if}}
+                </li>
+              {{/each}}
+            </ul>
+          [[/if]]
+        </bs-col>
+      </bs-row>
+    {{/ifCond}}
+  </template>
+</semantic-query>

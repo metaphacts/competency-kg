@@ -1,0 +1,72 @@
+<semantic-form-autocomplete-input for="competency" placeholder="Search for existing competencies..">
+  <semantic-form new-subject-template="{{type}}-{{label}}" fields='[
+    {
+      "id": "type",
+      "label": "Type",
+      "xsdDatatype": "xsd:anyURI",
+      "minOccurs": 1,
+      "maxOccurs": 1,
+      "selectPattern": "SELECT ?value WHERE { ?subject a ?value }",
+      "insertPattern": "INSERT { ?subject a ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject a ?value } WHERE {}",
+      "valueSetPattern": "SELECT ?value WHERE {
+        ?value rdfs:subClassOf+ comp:Competency .
+        FILTER NOT EXISTS { ?sub rdfs:subClassOf ?value }
+      }"
+    },
+    {
+      "id": "label",
+      "label": "Name",
+      "xsdDatatype": "xsd:string",
+      "minOccurs": 1,
+      "maxOccurs": 1,
+      "selectPattern": "SELECT ?value WHERE { ?subject rdfs:label ?value ; skos:prefLabel ?value }",
+      "insertPattern": "INSERT { ?subject rdfs:label ?value ; skos:prefLabel ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject rdfs:label ?value ; skos:prefLabel ?value } WHERE {}"
+    },
+    {
+      "id": "superCompetency",
+      "label": "More General Competency",
+      "xsdDatatype": "xsd:anyURI",
+      "selectPattern": "SELECT ?value WHERE { ?subject skos:broader ?value }",
+      "insertPattern": "INSERT { ?subject skos:broader ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject skos:broader ?value } WHERE {}",
+      "autosuggestionPattern": "
+      SELECT ?value ?label WHERE {
+        SERVICE Repository:lookup {
+          ?value lookup:token ?__token__ .
+          ?value lookup:name ?label .
+        }
+        ?value a/rdfs:subClassOf* comp:Competency .
+      }"
+    },
+    {
+      "id": "subCompetency",
+      "label": "More Specific Competency",
+      "xsdDatatype": "xsd:anyURI",
+      "selectPattern": "SELECT ?value WHERE { ?value skos:broader ?subject }",
+      "insertPattern": "INSERT { ?value skos:broader ?subject } WHERE {}",
+      "deletePattern": "DELETE { ?value skos:broader ?subject } WHERE {}",
+      "autosuggestionPattern": "
+      SELECT ?value ?label WHERE {
+        SERVICE Repository:lookup {
+          ?value lookup:token ?__token__ .
+          ?value lookup:name ?label .
+        }
+        ?value a/rdfs:subClassOf* comp:Competency .
+      }"
+    }]'
+    new-subject-template-settings='{
+      "placeholders": {
+        "type": {"transform": "none"}
+      }
+    }'>
+  <semantic-form-checklist-input for="type" type="radio" row="true"></semantic-form-checklist-input>
+  <semantic-form-auto-input for="label"></semantic-form-auto-input>
+  <semantic-form-autocomplete-input for="superCompetency"></semantic-form-autocomplete-input>
+  <semantic-form-autocomplete-input for="subCompetency"></semantic-form-autocomplete-input>
+    <semantic-form-errors></semantic-form-errors>
+    <button name="submit" class="btn btn-secondary">Add Competency</button>
+    <button name="reset" class="btn btn-secondary">Reset Competency</button>
+  </semantic-form>
+</semantic-form-autocomplete-input>

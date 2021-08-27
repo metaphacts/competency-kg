@@ -1,0 +1,16 @@
+{
+  "id": "document",
+  "label": "[[label]]",
+  "xsdDatatype": "xsd:anyURI",
+  "selectPattern": "SELECT ?value ?label WHERE {
+    ?value [[predicate]] ?subject ;
+      rdfs:label ?label .
+  }",
+  "insertPattern": "INSERT { ?value [[predicate]] ?subject } WHERE {}",
+  "deletePattern": "DELETE { ?value [[predicate]] ?subject } WHERE {}",
+  "autosuggestionPattern": "SELECT ?value ?label WHERE {
+    ?value a/rdfs:subClassOf* <http://xmlns.com/foaf/0.1/Document> ;
+      rdfs:label ?label .
+    FILTER REGEX(?label, ?__token__, \"i\")
+  }"
+}

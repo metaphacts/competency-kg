@@ -1,0 +1,32 @@
+<semantic-query [[> query]] template="{{> template}}">
+  <template id="template">
+    <bs-col sm='6'>
+      <h3>Relevant competencies (based on existing competencies)</h3> 
+      <semantic-table
+        [[> query]]
+        options='{
+          "enableGrouping": false,
+          "groupingOptions": {"groupedBy": ["competency"], "showOnlyAggregatedValue": false}
+        }'
+        column-configuration='[
+          {"variableName": "competency", "displayName": "Because of the competency.."},
+          {"variableName": "relComp", "displayName": "This competency might be relevant as well"}
+        ]'
+      ></semantic-table>
+    </bs-col>
+  </template>
+</semantic-query>
+
+[[#*inline "query"]]
+query='
+  SELECT ?competency ?relComp WHERE {    
+    ?? comp:hasCompetency ?competency .                
+    ?competency ?p ?relComp .
+    ?relComp a/rdfs:subClassOf* comp:Competency .
+    FILTER (?p != rdf:type)
+    FILTER NOT EXISTS {
+      ?? comp:hasCompetency ?relComp .
+    }
+  }
+'
+[[/inline]]

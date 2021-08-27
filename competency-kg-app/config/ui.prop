@@ -1,0 +1,2 @@
+templateIncludeQuery = SELECT ?type WHERE { ?? a/rdfs:subClassOf* ?type }
+preferredLabels = rdfs:label,skos:prefLabel,<http://xmlns.com/foaf/0.1/name>,<http://purl.org/dc/terms/title>,owl:sameAs/<http://purl.org/dc/terms/title>

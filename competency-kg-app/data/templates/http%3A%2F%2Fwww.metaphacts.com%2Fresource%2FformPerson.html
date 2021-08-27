@@ -1,0 +1,52 @@
+[[#> :formEntity editMode=editMode]]
+[[#*inline "fields"]]
+  fields='[
+    {
+      "id": "type",
+      "label": "Type",
+      "selectPattern": "SELECT ?value WHERE { ?subject a ?value }",
+      "insertPattern": "INSERT { ?subject a ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject a ?value } WHERE {}",
+      "xsdDatatype": "xsd:anyURI"
+    },
+    {
+      "id": "label",
+      "label": "Name",
+      "xsdDatatype": "xsd:string",
+      "minOccurs": 1,
+      "maxOccurs": 1,
+      "selectPattern": "SELECT ?value WHERE { ?subject rdfs:label ?value ; skos:prefLabel ?value }",
+      "insertPattern": "INSERT { ?subject rdfs:label ?value ; skos:prefLabel ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject rdfs:label ?value ; skos:prefLabel ?value } WHERE {}"
+    },
+    {
+      "id": "organisation",
+      "label": "Organisation",
+      "description": "An organisation this person belongs to",
+      "xsdDatatype": "xsd:anyURI",
+      "selectPattern": "SELECT ?value WHERE { ?subject <http://www.w3.org/ns/org#memberOf> ?value }",
+      "insertPattern": "INSERT { ?subject <http://www.w3.org/ns/org#memberOf> ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject <http://www.w3.org/ns/org#memberOf> ?value } WHERE {}",
+      "autosuggestionPattern": "
+        SELECT ?value ?label WHERE {
+          SERVICE Repository:lookup {
+            ?value lookup:token ?__token__ .
+            ?value lookup:name ?label .
+            ?value lookup:type <http://www.w3.org/ns/org#Organization> .
+          }
+        }
+      "
+    },
+    [[> :formCompetencyConfig predicate="comp:hasCompetency"]],
+    [[> :formDocumentConfig predicate="comp:author" label="Publications"]]
+  ]'
+[[/inline]]
+
+[[#*inline "inputFields"]]
+  <semantic-form-hidden-input for="type" default-value="http://xmlns.com/foaf/0.1/Person"></semantic-form-hidden-input>
+  <semantic-form-auto-input for="label"></semantic-form-auto-input>
+  <semantic-form-auto-input for="organisation"></semantic-form-auto-input>
+  [[> :formCompetencyInput]]
+  [[> :formDocumentInput]]
+[[/inline]]
+[[/:formEntity]]

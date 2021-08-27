@@ -1,0 +1,39 @@
+<semantic-query [[> query]] template="{{> template}}">
+  <template id="template">
+    <bs-col sm='6'>
+      <h3>Relevant competencies (based on affiliations)</h3> 
+      <semantic-table
+        [[> query]]
+        options='{
+          "enableGrouping": false,
+          "groupingOptions": {"groupedBy": ["agent"], "showOnlyAggregatedValue": false}
+        }'
+        column-configuration='[
+          {"variableName": "agent", "displayName": "Because of affiliations with.."},
+          {"variableName": "agentComp", "displayName": "This competency might be relevant as well"}
+        ]'
+      ></semantic-table>
+    </bs-col>
+  </template>
+</semantic-query>
+
+[[#*inline "query"]]
+query='
+  SELECT ?agent ?agentComp WHERE {
+    { ?? <http://www.w3.org/ns/org#subOrganizationOf>+ ?agent }
+    UNION
+    { ?agent <http://www.w3.org/ns/org#subOrganizationOf>+ ?? }
+    UNION
+    { ?? <http://www.w3.org/ns/org#subOrganizationOf>+/<http://www.w3.org/ns/org#memberOf> ?agent}
+    UNION
+    { ?agent <http://www.w3.org/ns/org#memberOf>/<http://www.w3.org/ns/org#subOrganizationOf>* ?? }
+    UNION
+    { ?? <http://www.w3.org/ns/org#memberOf>/<http://www.w3.org/ns/org#subOrganizationOf>* ?agent }
+
+    ?agent comp:hasCompetency ?agentComp .
+    FILTER NOT EXISTS {
+      ?? comp:hasCompetency ?agentComp .
+    }
+  }
+'
+[[/inline]]

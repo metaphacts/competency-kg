@@ -76,13 +76,17 @@ INSERT DATA {
   ],
   "languages": [],
   "types": [
-    "http://scholkg.kmi.open.ac.uk/aikg/ontology#CSOTopic",
-    "http://scholkg.kmi.open.ac.uk/aikg/ontology#OtherEntity",
     "http://scholkg.kmi.open.ac.uk/aikg/ontology#Material",
     "http://scholkg.kmi.open.ac.uk/aikg/ontology#Method",
     "http://scholkg.kmi.open.ac.uk/aikg/ontology#Metric",
     "http://scholkg.kmi.open.ac.uk/aikg/ontology#Task",
-    "http://scholkg.kmi.open.ac.uk/aikg/ontology#ResearchEntity"
+    "http://scholkg.kmi.open.ac.uk/aikg/ontology#OtherEntity",
+    "http://www.w3.org/ns/org#Organization",
+    "http://xmlns.com/foaf/0.1/Person",
+    "http://xmlns.com/foaf/0.1/Project",
+    "http://ontologies.metaphacts.com/competencies/Application",
+    "http://ontologies.metaphacts.com/competencies/Functionality",
+    "http://ontologies.metaphacts.com/competencies/Process"
   ],
   "readonly": false,
   "detectFields": false,

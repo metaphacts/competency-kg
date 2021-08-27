@@ -1,0 +1,30 @@
+<semantic-query 
+  [[> query]]
+  template="{{> template}}">
+  <template id="template">
+    <bs-col sm='6'>
+      <h3>[[entityTypeName]] with Similar Competencies</h3>
+      <semantic-table
+        [[> query]]
+        options='{
+          "enableGrouping": false,
+          "groupingOptions": {"groupedBy": ["competency"], "showOnlyAggregatedValue": false}
+        }'
+        column-configuration='[
+          {"variableName": "competency", "displayName": "Competency"},
+          {"variableName": "obj", "displayName": "[[entityTypeName]]"}
+        ]'
+      ></semantic-table>
+    </bs-col>
+  </template>
+</semantic-query>
+
+[[#*inline "query"]]
+query='
+  SELECT ?competency ?obj WHERE {    
+    ?? [[sourcePredicate]] ?competency .                
+    ?obj [[targetPredicate]] ?competency .
+    FILTER (?obj != ??)
+  }
+'
+[[/inline]]

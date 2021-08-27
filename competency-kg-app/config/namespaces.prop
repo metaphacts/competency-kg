@@ -1,3 +1,4 @@
 kmi-ont = http://scholkg.kmi.open.ac.uk/aikg/ontology#
 kmi-data = http://scholkg.kmi.open.ac.uk/aikg/resource/
 cso = http://cso.kmi.open.ac.uk/schema/cso#
+comp = http://ontologies.metaphacts.com/competencies/

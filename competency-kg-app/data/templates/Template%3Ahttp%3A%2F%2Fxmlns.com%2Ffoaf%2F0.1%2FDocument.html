@@ -1,0 +1,74 @@
+[[#> :pageEntityView]]
+
+[[#*inline "viewDetailSection"]]
+  <div style="margin-bottom: 1rem;"><a href="[[this]]">Go to document</a></div>
+  [[> :viewDetail id="1" label="Name" predicate="rdfs:label" singleValue=true]]
+  [[> :viewDetail id="2" label="Abstract" predicate="comp:abstract" singleValue=true]]
+  [[> :viewDetail id="3" label="Authors" predicate="comp:author"]]
+  [[> :viewDetail id="4" label="Keywords" predicate="comp:keyword"]]
+[[/inline]]
+
+[[#*inline "editDetailSection"]]
+  <semantic-form subject="[[this]]" fields='[
+    {
+      "id": "uri",
+      "label": "URI",
+      "xsdDatatype": "xsd:string",
+      "minOccurs": 1,
+      "maxOccurs": 1
+    },
+    {
+      "id": "type",
+      "label": "Type",
+      "xsdDatatype": "xsd:anyURI",
+      "minOccurs": 1,
+      "maxOccurs": 1,
+      "selectPattern": "SELECT $value WHERE { $subject a $value }",
+      "insertPattern": "INSERT { $subject a $value } WHERE {}",
+      "deletePattern": "DELETE { $subject a $value } WHERE {}",
+      "valueSetPattern": "SELECT ?value WHERE {
+        ?value rdfs:subClassOf <http://xmlns.com/foaf/0.1/Document> .
+        FILTER ( STRSTARTS(STR(?value), \"http://ontologies.metaphacts.com/competencies/\") )
+      }"
+    },
+    {
+      "id": "label",
+      "label": "Name",
+      "xsdDatatype": "xsd:string",
+      "minOccurs": 1,
+      "maxOccurs": 1,
+      "selectPattern": "SELECT ?value WHERE { $subject rdfs:label ?value }",
+      "insertPattern": "INSERT { $subject rdfs:label ?value } WHERE {}",
+      "deletePattern": "DELETE { $subject rdfs:label ?value } WHERE {}"
+    },
+    {
+      "id": "keyword",
+      "label": "Keyword",
+      "xsdDatatype": "xsd:string",
+      "selectPattern": "SELECT ?value WHERE { $subject <http://ontologies.metaphacts.com/competencies/keyword> ?value }",
+      "insertPattern": "INSERT { $subject <http://ontologies.metaphacts.com/competencies/keyword> ?value } WHERE {}",
+      "deletePattern": "DELETE { $subject <http://ontologies.metaphacts.com/competencies/keyword> ?value } WHERE {}"
+    },
+    {
+      "id": "abstract",
+      "label": "Abstract",
+      "xsdDatatype": "xsd:string",
+      "maxOccurs": 1,
+      "selectPattern": "SELECT ?value WHERE { $subject <http://ontologies.metaphacts.com/competencies/abstract> ?value }",
+      "insertPattern": "INSERT { $subject <http://ontologies.metaphacts.com/competencies/abstract> ?value } WHERE {}",
+      "deletePattern": "DELETE { $subject <http://ontologies.metaphacts.com/competencies/abstract> ?value } WHERE {}"
+    }]'>
+    <semantic-form-hidden-input for="type"></semantic-form-hidden-input>
+    <semantic-form-hidden-input for="uri"></semantic-form-hidden-input>
+    <semantic-form-text-input for="label"></semantic-form-text-input>
+    <semantic-form-text-input for="keyword"></semantic-form-text-input>
+    <semantic-form-text-input for="abstract" multiline=true></semantic-form-text-input>
+    <semantic-form-errors></semantic-form-errors>
+    <button name="submit" class="btn btn-secondary">Save</button>
+    <button name="reset" class="btn btn-secondary">Reset</button>
+  </semantic-form>
+[[/inline]]
+
+[[#*inline "customSection"]]
+[[/inline]]
+[[/app:EntityView]]

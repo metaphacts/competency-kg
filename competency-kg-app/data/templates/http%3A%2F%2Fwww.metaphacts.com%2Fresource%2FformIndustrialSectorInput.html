@@ -1,0 +1,57 @@
+<semantic-form-autocomplete-input for="industrialSector" placeholder="Search for industrial sectors..">
+  <semantic-form new-subject-template="http://aida.kmi.open.ac.uk/resource/{{label}}" fields='[
+    {
+      "id": "type",
+      "label": "Type",
+      "xsdDatatype": "xsd:anyURI",
+      "minOccurs": 1,
+      "maxOccurs": 1,
+      "selectPattern": "SELECT ?value WHERE { ?subject a ?value }",
+      "insertPattern": "INSERT { ?subject a ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject a ?value } WHERE {}"
+    },
+    {
+      "id": "label",
+      "label": "Name",
+      "xsdDatatype": "xsd:string",
+      "minOccurs": 1,
+      "maxOccurs": 1,
+      "selectPattern": "SELECT ?value WHERE { ?subject rdfs:label ?value ; skos:prefLabel ?value }",
+      "insertPattern": "INSERT { ?subject rdfs:label ?value ; skos:prefLabel ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject rdfs:label ?value ; skos:prefLabel ?value } WHERE {}"
+    },
+    {
+      "id": "superSector",
+      "label": "More General Sector",
+      "xsdDatatype": "xsd:anyURI",
+      "selectPattern": "SELECT ?value WHERE { ?subject skos:broader ?value }",
+      "insertPattern": "INSERT { ?subject skos:broader ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject skos:broader ?value } WHERE {}",
+      "autosuggestionPattern": "SELECT ?value ?label WHERE {
+        ?value a <http://aida.kmi.open.ac.uk/ontology#industrialSector> .
+        BIND (STRAFTER (STR(?value), \"http://aida.kmi.open.ac.uk/resource/\") as ?label)
+        FILTER REGEX(LCASE(?label), LCASE(?__token__), \"i\")
+      }"
+    },
+    {
+      "id": "subSector",
+      "label": "More Specific Sector",
+      "xsdDatatype": "xsd:anyURI",
+      "selectPattern": "SELECT ?value WHERE { ?value skos:broader ?subject }",
+      "insertPattern": "INSERT { ?value skos:broader ?subject } WHERE {}",
+      "deletePattern": "DELETE { ?value skos:broader ?subject } WHERE {}",
+      "autosuggestionPattern": "SELECT ?value ?label WHERE {
+        ?value a <http://aida.kmi.open.ac.uk/ontology#industrialSector> .
+        BIND (STRAFTER (STR(?value), \"http://aida.kmi.open.ac.uk/resource/\") as ?label)
+        FILTER REGEX(LCASE(?label), LCASE(?__token__), \"i\")
+      }"
+    }]'>
+  <semantic-form-hidden-input for="type" default-value="http://aida.kmi.open.ac.uk/ontology#industrialSector"></semantic-form-hidden-input>
+  <semantic-form-auto-input for="label"></semantic-form-auto-input>
+  <semantic-form-autocomplete-input for="superSector"></semantic-form-autocomplete-input>
+  <semantic-form-autocomplete-input for="subSector"></semantic-form-autocomplete-input>
+    <semantic-form-errors></semantic-form-errors>
+    <button name="submit" class="btn btn-secondary">Add Sector</button>
+    <button name="reset" class="btn btn-secondary">Reset Sector</button>
+  </semantic-form>
+</semantic-form-autocomplete-input>

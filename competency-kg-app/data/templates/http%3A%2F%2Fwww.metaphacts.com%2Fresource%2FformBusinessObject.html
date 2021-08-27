@@ -1,0 +1,114 @@
+[[#> :formEntity editMode=editMode]]
+[[#*inline "fields"]]
+  fields='[
+    {
+      "id": "type",
+      "label": "Type",
+      "selectPattern": "SELECT ?value WHERE { ?subject a ?value }",
+      "insertPattern": "INSERT { ?subject a ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject a ?value } WHERE {}",
+      "xsdDatatype": "xsd:anyURI"
+    },
+    {
+      "id": "label",
+      "label": "Name",
+      "description": "The name of the project",
+      "xsdDatatype": "xsd:string",
+      "minOccurs": 1,
+      "maxOccurs": 1,
+      "selectPattern": "SELECT ?value WHERE { ?subject rdfs:label ?value ; skos:prefLabel ?value }",
+      "insertPattern": "INSERT { ?subject rdfs:label ?value ; skos:prefLabel ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject rdfs:label ?value ; skos:prefLabel ?value } WHERE {}"
+    },
+    {
+      "id": "description",
+      "label": "Description",
+      "xsdDatatype": "xsd:string",
+      "minOccurs": 1,
+      "maxOccurs": 1,
+      "selectPattern": "SELECT ?value WHERE { $subject comp:description ?value }",
+      "insertPattern": "INSERT { $subject comp:description ?value } WHERE {}",
+      "deletePattern": "DELETE { $subject comp:description ?value } WHERE {}"
+    },
+    {
+      "id": "industrialSector",
+      "label": "Industrial Sector",
+      "xsdDatatype": "xsd:anyURI",
+      "selectPattern": "SELECT ?value WHERE { ?subject <http://aida.kmi.open.ac.uk/ontology#hasIndustrialSector> ?value . }",
+      "insertPattern": "INSERT { ?subject <http://aida.kmi.open.ac.uk/ontology#hasIndustrialSector> ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject <http://aida.kmi.open.ac.uk/ontology#hasIndustrialSector> ?value } WHERE {}",
+      "autosuggestionPattern": "SELECT ?value ?label WHERE {
+        ?value a <http://aida.kmi.open.ac.uk/ontology#industrialSector> .
+        BIND (STRAFTER (STR(?value), \"http://aida.kmi.open.ac.uk/resource/\") as ?label)
+        FILTER REGEX(LCASE(?label), LCASE(?__token__), \"i\")
+      }"
+    },
+    {
+      "id": "isIncludedIn",
+      "label": "Parent Object",
+      "description": "Business object that includes this one",
+      "xsdDatatype": "xsd:anyURI",
+      "selectPattern": "SELECT ?value WHERE { ?subject comp:isIncludedIn ?value }",
+      "insertPattern": "INSERT { ?subject comp:isIncludedIn ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject comp:isIncludedIn ?value } WHERE {}",
+      "autosuggestionPattern": "SELECT ?value ?label WHERE {
+        ?value a/rdfs:subClassOf* comp:BusinessObject .
+        SERVICE Repository:lookup {
+          ?value lookup:token ?__token__ .
+          ?value lookup:name ?label .
+        }
+      }"
+    },
+    {
+      "id": "creatorOf",
+      "label": "Creator",
+      "description": "Person or organisation that created this object",
+      "xsdDatatype": "xsd:anyURI",
+      "selectPattern": "SELECT ?value ?label WHERE { ?value comp:creatorOf ?subject ; rdfs:label ?label . }",
+      "insertPattern": "INSERT { ?value comp:creatorOf ?subject } WHERE {}",
+      "deletePattern": "DELETE { ?value comp:creatorOf ?subject } WHERE {}",
+      "autosuggestionPattern": "PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+        SELECT ?value ?label WHERE {
+          ?value a/rdfs:subClassOf* foaf:Agent .
+          SERVICE Repository:lookup {
+            ?value lookup:token ?__token__ .
+            ?value lookup:name ?label .
+          }
+        }
+      "
+    },
+    {
+      "id": "isInvolvedIn",
+      "label": "Contributor",
+      "description": "Person or organisation that is involved in any way",
+      "xsdDatatype": "xsd:anyURI",
+      "selectPattern": "SELECT ?value ?label WHERE { ?value comp:isInvolvedIn ?subject ; rdfs:label ?label . }",
+      "insertPattern": "INSERT { ?value comp:isInvolvedIn ?subject } WHERE {}",
+      "deletePattern": "DELETE { ?value comp:isInvolvedIn ?subject } WHERE {}",
+      "autosuggestionPattern": "PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+        SELECT ?value ?label WHERE {
+          ?value a/rdfs:subClassOf* foaf:Agent .
+          SERVICE Repository:lookup {
+            ?value lookup:token ?__token__ .
+            ?value lookup:name ?label .
+          }
+        }
+      "
+    },
+    [[> :formCompetencyConfig predicate="comp:appliesCompetency"]],
+    [[> :formDocumentConfig predicate="comp:describes" label="Document"]]
+  ]'
+[[/inline]]
+
+[[#*inline "inputFields"]]
+  <semantic-form-hidden-input for="type" default-value="[[type]]"></semantic-form-hidden-input>
+  <semantic-form-auto-input for="label"></semantic-form-auto-input>
+  <semantic-form-text-input for="description" multiline='true'></semantic-form-text-input>
+  [[> :formIndustrialSectorInput]]
+  <semantic-form-auto-input for="isIncludedIn"></semantic-form-auto-input>
+  <semantic-form-auto-input for="creatorOf"></semantic-form-auto-input>
+  <semantic-form-auto-input for="isInvolvedIn"></semantic-form-auto-input>
+  [[> :formCompetencyInput]]
+  [[> :formDocumentInput]]
+[[/inline]]
+[[/:formEntity]]

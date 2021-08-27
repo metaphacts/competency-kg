@@ -1,0 +1,30 @@
+<semantic-query [[> query]] template="{{> template}}">
+  <template id="template">
+    <bs-col sm='6'>
+      <h3>Relevant competencies (based on business objects)</h3> 
+      <semantic-table
+        [[> query]]
+        options='{
+          "enableGrouping": false,
+          "groupingOptions": {"groupedBy": ["object"], "showOnlyAggregatedValue": false}
+        }'
+        column-configuration='[
+          {"variableName": "object", "displayName": "Because of contributions to.."},
+          {"variableName": "objComp", "displayName": "This competency might be relevant as well"}
+        ]'
+      ></semantic-table>
+    </bs-col>
+  </template>
+</semantic-query>
+
+[[#*inline "query"]]
+query='
+  SELECT ?object ?objComp WHERE {
+    ?? comp:isInvolvedIn|comp:creatorOf ?object .                
+    ?object comp:appliesCompetency ?objComp .
+    FILTER NOT EXISTS {
+      ?? comp:hasCompetency ?objComp .
+    }
+  }
+'
+[[/inline]]

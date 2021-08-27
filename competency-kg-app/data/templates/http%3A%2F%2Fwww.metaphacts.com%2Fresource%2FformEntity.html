@@ -1,0 +1,14 @@
+<semantic-form
+  [[> fields]]
+
+  [[#if editMode]]
+    subject='[[this]]'
+  [[else]]
+    post-action="redirect"
+    new-subject-template="https://kompaki.metaphacts.net/resource/{{UUID}}"
+  [[/if]]
+>
+
+  [[> inputFields]]
+
+</semantic-form>
