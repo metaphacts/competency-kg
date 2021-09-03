@@ -46,13 +46,12 @@
     {
       "id": "isIncludedIn",
       "label": "Parent Object",
-      "description": "Business object that includes this one",
       "xsdDatatype": "xsd:anyURI",
       "selectPattern": "SELECT ?value WHERE { ?subject comp:isIncludedIn ?value }",
       "insertPattern": "INSERT { ?subject comp:isIncludedIn ?value } WHERE {}",
       "deletePattern": "DELETE { ?subject comp:isIncludedIn ?value } WHERE {}",
       "autosuggestionPattern": "SELECT ?value ?label WHERE {
-        ?value a/rdfs:subClassOf* comp:BusinessObject .
+        ?value a/rdfs:subClassOf* comp:CompetencyTarget .
         SERVICE Repository:lookup {
           ?value lookup:token ?__token__ .
           ?value lookup:name ?label .
@@ -62,14 +61,13 @@
     {
       "id": "creatorOf",
       "label": "Creator",
-      "description": "Person or organisation that created this object",
       "xsdDatatype": "xsd:anyURI",
       "selectPattern": "SELECT ?value ?label WHERE { ?value comp:creatorOf ?subject ; rdfs:label ?label . }",
       "insertPattern": "INSERT { ?value comp:creatorOf ?subject } WHERE {}",
       "deletePattern": "DELETE { ?value comp:creatorOf ?subject } WHERE {}",
-      "autosuggestionPattern": "PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+      "autosuggestionPattern": "
         SELECT ?value ?label WHERE {
-          ?value a/rdfs:subClassOf* foaf:Agent .
+          ?value a/rdfs:subClassOf* comp:CompetencyHolder .
           SERVICE Repository:lookup {
             ?value lookup:token ?__token__ .
             ?value lookup:name ?label .
@@ -80,14 +78,13 @@
     {
       "id": "isInvolvedIn",
       "label": "Contributor",
-      "description": "Person or organisation that is involved in any way",
       "xsdDatatype": "xsd:anyURI",
       "selectPattern": "SELECT ?value ?label WHERE { ?value comp:isInvolvedIn ?subject ; rdfs:label ?label . }",
       "insertPattern": "INSERT { ?value comp:isInvolvedIn ?subject } WHERE {}",
       "deletePattern": "DELETE { ?value comp:isInvolvedIn ?subject } WHERE {}",
-      "autosuggestionPattern": "PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+      "autosuggestionPattern": "
         SELECT ?value ?label WHERE {
-          ?value a/rdfs:subClassOf* foaf:Agent .
+          ?value a/rdfs:subClassOf* comp:CompetencyHolder .
           SERVICE Repository:lookup {
             ?value lookup:token ?__token__ .
             ?value lookup:name ?label .

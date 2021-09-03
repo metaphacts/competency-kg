@@ -71,7 +71,7 @@
     <div data-flex-layout="row stretch-stretch">
       <div class="grid-demo">
         <h3>Mentioned by Authors</h3>
-        <semantic-query query='SELECT ?author ?authorName (COUNT(*) as ?cnt) WHERE {
+        <semantic-query query='SELECT DISTINCT ?author ?authorName (COUNT(*) as ?cnt) WHERE {
             <<?? ?p ?o>> <http://www.w3.org/ns/prov#wasDerivedFrom> ?paper .
             ?paper <http://www.w3.org/2002/07/owl#sameAs> ?makgPaper .
             SERVICE <https://makg.org/sparql> {

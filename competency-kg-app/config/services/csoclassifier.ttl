@@ -1,0 +1,69 @@
+PREFIX sp: <http://spinrdf.org/sp#>
+PREFIX spin: <http://spinrdf.org/spin#>
+PREFIX spl: <http://spinrdf.org/spl#>
+PREFIX csoclf: <http://ontologies.metaphacts.com/csoclassifier/>
+PREFIX ephedra: <http://www.metaphacts.com/ontologies/platform/ephedra#>
+PREFIX : <http://www.metaphacts.com/ontologies/platform/service/custom#>
+
+ephedra:csoclassifier a ephedra:Service ;
+	<http://www.openrdf.org/config/sail#sailType> "metaphacts:RESTService" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "A wrapper for the REST API of the CSO classifier." ;
+	ephedra:hasSPARQLPattern (
+		[
+			sp:subject :_results ;
+			sp:predicate csoclf:title ;
+			sp:object :_title
+		]
+		[
+			sp:subject :_results ;
+			sp:predicate csoclf:abstract ;
+			sp:object :_abstract
+		]
+		[
+			sp:subject :_results ;
+			sp:predicate csoclf:keywords ;
+			sp:object :_keywords
+		]
+		[
+			sp:subject :_results ;
+			sp:predicate csoclf:concept ;
+			sp:object :_concept
+		]
+	) ;
+	spin:constraint
+	[
+		a spl:Argument ;
+		rdfs:comment "Title of the paper" ;
+		spl:predicate :_title ;
+		spl:valueType xsd:string
+    ] ;
+  spin:constraint
+	[
+		a spl:Argument ;
+		rdfs:comment "Abstract of the paper" ;
+		spl:predicate :_abstract ;
+		spl:valueType xsd:string
+    ] ;
+  spin:constraint
+	[
+		a spl:Argument ;
+		rdfs:comment "Keywords of the paper (concatenated by comma)" ;
+		spl:predicate :_keywords ;
+		spl:valueType xsd:string
+    ] ;
+	spin:column
+	[
+		a spin:Column ;
+		rdfs:comment "Concepts returned by the CSO classifier" ;
+		spl:predicate :_results ;
+		spl:valueType xsd:string;
+		ephedra:jsonPath "$.concepts"
+	]  ;
+	spin:column
+	[
+		a spin:Column ;
+		rdfs:comment "Single concept of the CSO classifier" ;
+		spl:predicate :_concept ;
+		spl:valueType xsd:string;
+		ephedra:jsonPath "$"
+	] .

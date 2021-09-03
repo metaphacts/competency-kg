@@ -4,8 +4,8 @@
   [[> :viewDetail label="Name" predicate="rdfs:label" singleValue=true]]
   [[> :viewDetail label="Description" predicate="comp:description" singleValue=true]]
   [[> :viewDetail label="Industrial Sector" predicate="<http://aida.kmi.open.ac.uk/ontology#hasIndustrialSector>"]]
-  [[> :viewDetail label="Parent Business Objects" predicate="comp:isIncludedIn"]]
-  [[> :viewDetail label="Included Business Objects" predicate="comp:isIncludedIn" inverse=true]]
+  [[> :viewDetail label="Parent Objects" predicate="comp:isIncludedIn"]]
+  [[> :viewDetail label="Included Objects" predicate="comp:isIncludedIn" inverse=true]]
   [[> :viewDetail label="Creators" predicate="comp:creatorOf" inverse=true]]
   [[> :viewDetail label="Contributors" predicate="comp:isInvolvedIn" inverse=true]]
   [[> :viewDetail label="Competencies" predicate="comp:appliesCompetency"]]
@@ -13,14 +13,14 @@
 [[/inline]]
 
 [[#*inline "editDetailSection"]]
-  [[> :formBusinessObject editMode=true type=type]]
+  [[> :formCompetencyTarget editMode=true type=type]]
 [[/inline]]
 
 [[#*inline "customSection"]]
 <div style="padding-top: 30px;">
   <bs-row>
     [[> :viewEntitiesWithSimilarCompetencies entityTypeName="Person or Organisation" sourcePredicate="comp:appliesCompetency" targetPredicate="comp:hasCompetency"]]
-    [[> :viewEntitiesWithSimilarCompetencies entityTypeName="Business Object" sourcePredicate="comp:appliesCompetency" targetPredicate="comp:appliesCompetency"]]
+    [[> :viewEntitiesWithSimilarCompetencies entityTypeName="Competency Target" sourcePredicate="comp:appliesCompetency" targetPredicate="comp:appliesCompetency"]]
   </bs-row>
 </div>
 [[/inline]]

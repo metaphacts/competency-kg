@@ -2,10 +2,11 @@
 
 [[#*inline "viewDetailSection"]]
   <div style="margin-bottom: 1rem;"><a href="[[this]]">Go to document</a></div>
-  [[> :viewDetail id="1" label="Name" predicate="rdfs:label" singleValue=true]]
-  [[> :viewDetail id="2" label="Abstract" predicate="comp:abstract" singleValue=true]]
-  [[> :viewDetail id="3" label="Authors" predicate="comp:author"]]
-  [[> :viewDetail id="4" label="Keywords" predicate="comp:keyword"]]
+  [[> :viewDetail label="Name" predicate="rdfs:label" singleValue=true]]
+  [[> :viewDetail label="Abstract" predicate="comp:abstract" singleValue=true]]
+  [[> :viewDetail label="Authors" predicate="comp:author"]]
+  [[> :viewDetail label="Keywords" predicate="comp:keyword"]]
+  [[> :viewDetail label="Topics" predicate="comp:hasTopic"]]
 [[/inline]]
 
 [[#*inline "editDetailSection"]]
@@ -57,18 +58,78 @@
       "selectPattern": "SELECT ?value WHERE { $subject <http://ontologies.metaphacts.com/competencies/abstract> ?value }",
       "insertPattern": "INSERT { $subject <http://ontologies.metaphacts.com/competencies/abstract> ?value } WHERE {}",
       "deletePattern": "DELETE { $subject <http://ontologies.metaphacts.com/competencies/abstract> ?value } WHERE {}"
-    }]'>
+    },
+    {
+      "id": "topic",
+      "label": "Topic",
+      "xsdDatatype": "xsd:anyURI",
+      "selectPattern": "SELECT ?value WHERE { ?subject comp:hasTopic ?value }",
+      "insertPattern": "INSERT { ?subject comp:hasTopic ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject comp:hasTopic ?value } WHERE {}",
+      "autosuggestionPattern": "
+        SELECT ?value ?label WHERE {
+          SERVICE Repository:lookup {
+            ?value lookup:token ?__token__ .
+            ?value lookup:name ?label .
+            ?value lookup:tokenizeQueryString \"false\" .
+          }
+          ?value a/rdfs:subClassOf* comp:Competency .
+        }"
+    }
+    ]'>
     <semantic-form-hidden-input for="type"></semantic-form-hidden-input>
     <semantic-form-hidden-input for="uri"></semantic-form-hidden-input>
     <semantic-form-text-input for="label"></semantic-form-text-input>
     <semantic-form-text-input for="keyword"></semantic-form-text-input>
     <semantic-form-text-input for="abstract" multiline=true></semantic-form-text-input>
+    <semantic-form-auto-input for="topic"></semantic-form-auto-input>
     <semantic-form-errors></semantic-form-errors>
-    <button name="submit" class="btn btn-secondary">Save</button>
-    <button name="reset" class="btn btn-secondary">Reset</button>
   </semantic-form>
 [[/inline]]
 
 [[#*inline "customSection"]]
+<semantic-update query='
+PREFIX lookup: <http://www.metaphacts.com/ontologies/platform/repository/lookup#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX comp: <http://ontologies.metaphacts.com/competencies/>
+PREFIX csoclf: <http://ontologies.metaphacts.com/csoclassifier/>
+
+DELETE {
+  GRAPH ?g {
+    ?? comp:hasTopic ?existingTopic .
+  }
+}
+INSERT {
+  GRAPH ?g {
+    ?? comp:hasTopic ?comp .
+  }
+} WHERE {
+  GRAPH ?g {
+  ?? rdfs:label ?title ;
+     comp:abstract ?abstract .
+    OPTIONAL { ?? comp:hasTopic ?existingTopic }
+  }
+  {
+  SELECT (GROUP_CONCAT(?keyword ; separator=",") as ?keywords) WHERE {
+      ?? comp:keyword ?keyword .
+	}
+  }
+ SERVICE <http://www.metaphacts.com/ontologies/platform/repository/federation#csoclassifier> {
+   ?results csoclf:title ?title ;
+    csoclf:abstract ?abstract ;
+    csoclf:keywords ?keywords .
+   ?results csoclf:concept ?concept .
+ }
+ SERVICE Repository:lookup {
+    ?comp lookup:token ?concept  .
+    ?comp lookup:name ?compName .
+  }
+  FILTER ( ?concept = ?compName )
+}'
+variable-params='["g", "comp", "existingTopic", "title", "abstract", "keyword", "keywords", "results", "concept", "compName"]'
+post-action='reload'>
+  <button class='btn btn-secondary'>Update Topics</button>
+</semantic-update>
+
 [[/inline]]
 [[/app:EntityView]]

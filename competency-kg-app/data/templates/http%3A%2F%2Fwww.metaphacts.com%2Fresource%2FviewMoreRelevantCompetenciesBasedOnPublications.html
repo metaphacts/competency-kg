@@ -1,0 +1,30 @@
+<semantic-query [[> query]] template="{{> template}}">
+  <template id="template">
+    <bs-col sm='6'>
+      <h3>Relevant competencies (based on publications)</h3> 
+      <semantic-table
+        [[> query]]
+        options='{
+          "enableGrouping": false,
+          "groupingOptions": {"groupedBy": ["publication"], "showOnlyAggregatedValue": false}
+        }'
+        column-configuration='[
+          {"variableName": "publication", "displayName": "Because of publication.."},
+          {"variableName": "pubComp", "displayName": "This competency might be relevant as well"}
+        ]'
+      ></semantic-table>
+    </bs-col>
+  </template>
+</semantic-query>
+
+[[#*inline "query"]]
+query='
+  SELECT ?publication ?pubComp WHERE {
+    ?publication comp:author ?? ;
+      comp:hasTopic ?pubComp .
+    FILTER NOT EXISTS {
+      ?? comp:hasCompetency ?pubComp .
+    }
+  }
+'
+[[/inline]]

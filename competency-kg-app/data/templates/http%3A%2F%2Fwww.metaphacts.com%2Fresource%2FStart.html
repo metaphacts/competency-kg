@@ -31,6 +31,7 @@
         <div class="panel">
           <bs-row style='padding: 50px 0;'>
             <bs-col sm='10' sm-offset='1'>
+              <h5 class="text-center" style="color: grey; padding-bottom: 10px;">Search over Competencies, Competency Holders, and Competency Targets</h5>
               <semantic-search limit=1000
                 [[> :competencyTypeSearchConfig]]>
                 <semantic-search-query-keyword-type
@@ -44,7 +45,7 @@
                   token-pattern='
                     SERVICE Repository:lookup {
                         ?subject lookup:token ?__token__  .
-                        ?subject lookup:limit 20 .
+                        ?subject lookup:limit 1000  .
                         ?subject lookup:type ?__domain__ .
                     }
                   '
@@ -56,6 +57,10 @@
                 [[> :typeSearchResultsTemplate]]
 
               </semantic-search>
+
+              <h6 class="text-center" style="color: grey; padding: 10px 0;">Use the various connections between competencies (<span style="color: #008cba;">tasks, methods, metrics, materials</span>), competency holders (<span style="color: #008cba;">persons, organisations</span>),<br>and competency targets (<span style="color: #008cba;">projects, applications, functionalities, processes</span>) to refine your search!</h6>
+
+              <h6 class="text-center" style="color: grey;">For further information, refer to our <a href="https://github.com/metaphacts/competency-kg/wiki">Wiki</a>.</h6>
 
             </bs-col>
           </bs-row>
@@ -79,19 +84,19 @@
                   [[/AddResourceModal]]
 
                   [[#> AddResourceModal resourceType="Project" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/42-business-professional-services/project-work.png"]]
-                    [[#*inline "modalContent"]][[> :formBusinessObject type="http://xmlns.com/foaf/0.1/Project"]][[/inline]]
+                    [[#*inline "modalContent"]][[> :formCompetencyTarget type="http://xmlns.com/foaf/0.1/Project"]][[/inline]]
                   [[/AddResourceModal]]
 
                   [[#> AddResourceModal resourceType="Application" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/07-web-app-development/desktop-application-app.png"]]
-                    [[#*inline "modalContent"]][[> :formBusinessObject type="http://ontologies.metaphacts.com/competencies/Application"]][[/inline]]
+                    [[#*inline "modalContent"]][[> :formCompetencyTarget type="http://ontologies.metaphacts.com/competencies/Application"]][[/inline]]
                   [[/AddResourceModal]]
 
                   [[#> AddResourceModal resourceType="Functionality" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/18-education-school/formula-fx.png"]]
-                    [[#*inline "modalContent"]][[> :formBusinessObject type="http://ontologies.metaphacts.com/competencies/Functionality"]][[/inline]]
+                    [[#*inline "modalContent"]][[> :formCompetencyTarget type="http://ontologies.metaphacts.com/competencies/Functionality"]][[/inline]]
                   [[/AddResourceModal]]
 
                   [[#> AddResourceModal resourceType="Process" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/42-business-professional-services/manufacturing-process-engineer.png"]]
-                    [[#*inline "modalContent"]][[> :formBusinessObject type="http://ontologies.metaphacts.com/competencies/Process"]][[/inline]]
+                    [[#*inline "modalContent"]][[> :formCompetencyTarget type="http://ontologies.metaphacts.com/competencies/Process"]][[/inline]]
                   [[/AddResourceModal]]
                 </div>
               </div>

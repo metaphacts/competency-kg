@@ -13,9 +13,9 @@
       "xsdDatatype": "xsd:string",
       "minOccurs": 1,
       "maxOccurs": 1,
-      "selectPattern": "SELECT ?value WHERE { $subject rdfs:label ?value }",
-      "insertPattern": "INSERT { $subject rdfs:label ?value } WHERE {}",
-      "deletePattern": "DELETE { $subject rdfs:label ?value } WHERE {}"
+      "selectPattern": "SELECT ?value WHERE { ?subject rdfs:label ?value }",
+      "insertPattern": "INSERT { ?subject rdfs:label ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject rdfs:label ?value } WHERE {}"
     },
     {
       "id": "type",
@@ -23,9 +23,9 @@
       "xsdDatatype": "xsd:anyURI",
       "minOccurs": 1,
       "maxOccurs": 1,
-      "selectPattern": "SELECT $value WHERE { $subject a $value }",
-      "insertPattern": "INSERT { $subject a $value } WHERE {}",
-      "deletePattern": "DELETE { $subject a $value } WHERE {}",
+      "selectPattern": "SELECT ?value WHERE { ?subject a $value }",
+      "insertPattern": "INSERT { ?subject a ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject a ?value } WHERE {}",
       "valueSetPattern": "SELECT ?value WHERE {
         ?value rdfs:subClassOf <http://xmlns.com/foaf/0.1/Document> .
         FILTER ( STRSTARTS(STR(?value), \"http://ontologies.metaphacts.com/competencies/\") )
@@ -35,18 +35,18 @@
       "id": "keyword",
       "label": "Keyword",
       "xsdDatatype": "xsd:string",
-      "selectPattern": "SELECT ?value WHERE { $subject <http://ontologies.metaphacts.com/competencies/keyword> ?value }",
-      "insertPattern": "INSERT { $subject <http://ontologies.metaphacts.com/competencies/keyword> ?value } WHERE {}",
-      "deletePattern": "DELETE { $subject <http://ontologies.metaphacts.com/competencies/keyword> ?value } WHERE {}"
+      "selectPattern": "SELECT ?value WHERE { ?subject <http://ontologies.metaphacts.com/competencies/keyword> ?value }",
+      "insertPattern": "INSERT { ?subject <http://ontologies.metaphacts.com/competencies/keyword> ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject <http://ontologies.metaphacts.com/competencies/keyword> ?value } WHERE {}"
     },
     {
       "id": "abstract",
       "label": "Abstract",
       "xsdDatatype": "xsd:string",
       "maxOccurs": 1,
-      "selectPattern": "SELECT ?value WHERE { $subject <http://ontologies.metaphacts.com/competencies/abstract> ?value }",
-      "insertPattern": "INSERT { $subject <http://ontologies.metaphacts.com/competencies/abstract> ?value } WHERE {}",
-      "deletePattern": "DELETE { $subject <http://ontologies.metaphacts.com/competencies/abstract> ?value } WHERE {}"
+      "selectPattern": "SELECT ?value WHERE { ?subject <http://ontologies.metaphacts.com/competencies/abstract> ?value }",
+      "insertPattern": "INSERT { ?subject <http://ontologies.metaphacts.com/competencies/abstract> ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject <http://ontologies.metaphacts.com/competencies/abstract> ?value } WHERE {}"
     }]'
     new-subject-template-settings='{
       "placeholders": {
