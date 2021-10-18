@@ -44,6 +44,38 @@
 
   <div data-flex-layout="column top-stretch" data-flex-self="size-x2" >
 
+    <semantic-query query='SELECT ?ch WHERE { ?ch comp:hasCompetency ?? }'
+      template="{{> template}}" no-result-template=''>
+      <template id="template">
+        <div class="grid-demo">
+            <h3>Competency Holders with this Competency</h3>
+              <ul>
+                {{#each bindings}}
+                  <li>
+                    <semantic-link iri="{{ch.value}}"></semantic-link>
+                  </li>
+                {{/each}}
+              </ul>
+        </div>
+      </template>
+    </semantic-query>
+
+    <semantic-query query='SELECT ?ct WHERE { ?ct comp:appliesCompetency ?? }'
+      template="{{> template}}" no-result-template=''>
+      <template id="template">
+        <div class="grid-demo">
+            <h3>Competency Targets where this Competency is applied</h3>
+              <ul>
+                {{#each bindings}}
+                  <li>
+                    <semantic-link iri="{{ct.value}}"></semantic-link>
+                  </li>
+                {{/each}}
+              </ul>
+        </div>
+      </template>
+    </semantic-query>
+
     <div data-flex-layout="row stretch-stretch">
       <div class="grid-demo">
         <h3>Mentioned in Publications</h3>

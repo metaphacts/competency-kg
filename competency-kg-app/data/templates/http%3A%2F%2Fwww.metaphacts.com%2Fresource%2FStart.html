@@ -26,63 +26,54 @@
 
   <bs-row>
     <bs-col sm='8' sm-offset='2'>
-
-      <div class="grid single-grid">
-        <div class="panel">
-          <bs-row style='padding: 50px 0;'>
-            <bs-col sm='10' sm-offset='1'>
-              <h5 class="text-center" style="color: grey; padding-bottom: 10px;">Search over Competencies, Competency Holders, and Competency Targets</h5>
-              <semantic-search limit=1000
-                [[> :competencyTypeSearchConfig]]>
-                <semantic-search-query-keyword-type
-                  default-query='SELECT ?subject WHERE {
-                        ?subject a ?__domain__ .
-                    }'
-                  default-count-query='SELECT (COUNT(*) as ?count) WHERE {
-                      ?subject a ?__domain__
-                    }'
-                  count-query-mode='queryPerCategory'
-                  token-pattern='
-                    SERVICE Repository:lookup {
-                        ?subject lookup:token ?__token__  .
-                        ?subject lookup:limit 1000  .
-                        ?subject lookup:type ?__domain__ .
-                    }
-                  '
-                  inline-suggest='true'
-                  placeholder="Enter your search term here"
-                >
-                </semantic-search-query-keyword-type>
-
-                [[> :typeSearchResultsTemplate]]
-
-              </semantic-search>
-
-              <h6 class="text-center" style="color: grey; padding: 10px 0;">Use the various connections between competencies (<span style="color: #008cba;">tasks, methods, metrics, materials</span>), competency holders (<span style="color: #008cba;">persons, organisations</span>),<br>and competency targets (<span style="color: #008cba;">projects, applications, functionalities, processes</span>) to refine your search!</h6>
-
-              <h6 class="text-center" style="color: grey;">For further information, refer to our <a href="https://github.com/metaphacts/competency-kg/wiki">Wiki</a>.</h6>
-
-            </bs-col>
-          </bs-row>
-        </div>
-      </div>
-
+      [[> SearchComponent]]
       <div class="grid single-grid">
         <div class="panel">  
           <bs-row style='padding: 50px 0;'>
             <bs-col sm='10' sm-offset='1'>
-              <h5 class="text-center" style="color: grey;">Not finding what you are looking for?</h5>
-
+              <h4 class="text-center" style="color: grey;">Not finding what you are looking for?</h4>
+              <!-- G1: tasks, methods, metrics, material  -->
               <div class="KeywordTypeQuery--domainCards">
-                <div data-flex-layout="rows stretch-stretch">
-                  [[#> AddResourceModal resourceType="Person" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/12-peoples-avatars/person-profile.png"]]
-                    [[#*inline "modalContent"]][[> :formPerson]][[/inline]]
+                <div id="group_1" data-flex-layout="">
+                  <div class="KeywordTypeQuery--domainCardItem" style="margin: auto; width: 225px;">Competencies:</div>
+                  [[#> AddResourceModal resourceType="Task" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/04-file-folder-type/checklist.png"]]
+                    [[#*inline "modalContent"]][[> :formTask]][[/inline]]
                   [[/AddResourceModal]]
 
-                  [[#> AddResourceModal resourceType="Organisation" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/42-business-professional-services/company-enterprise.png"]]
-                    [[#*inline "modalContent"]][[> :formOrganisation]][[/inline]]
+                  [[#> AddResourceModal resourceType="Method" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/42-business-professional-services/business-management.png"]]
+                    [[#*inline "modalContent"]][[> :formMethod]][[/inline]]
                   [[/AddResourceModal]]
 
+                  [[#> AddResourceModal resourceType="Metric" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/11-household-and-furniture/measuring-tape.png"]]
+                    [[#*inline "modalContent"]][[> :formMetric type="http://xmlns.com/foaf/0.1/Project"]][[/inline]]
+                  [[/AddResourceModal]]
+
+                  [[#> AddResourceModal resourceType="Material" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/07-web-app-development/database-line.png"]]
+                    [[#*inline "modalContent"]][[> :formMaterial type="http://ontologies.metaphacts.com/competencies/Application"]][[/inline]]
+                  [[/AddResourceModal]]
+                </div>
+              </div>
+              <hr />
+              <!-- G2: person, organizations  -->
+              <div class="KeywordTypeQuery--domainCards">
+                <div data-flex-layout="rows stretch" id="group_2" style="flex-wrap: nowrap; justify-content: space-evenly;">
+                  <div class="KeywordTypeQuery--domainCardItem" style="margin: auto; white-space:nowrap;">Competency Holders:</div>
+                  <div data-flex-layout="rows stretch-stretch" id="group_2" style="flex-wrap: nowrap; justify-content: space-evenly;">
+                    [[#> AddResourceModal resourceType="Person" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/12-peoples-avatars/person-profile.png"]]
+                      [[#*inline "modalContent"]][[> :formPerson]][[/inline]]
+                    [[/AddResourceModal]]
+
+                    [[#> AddResourceModal resourceType="Organisation" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/42-business-professional-services/company-enterprise.png"]]
+                      [[#*inline "modalContent"]][[> :formOrganisation]][[/inline]]
+                    [[/AddResourceModal]]                 
+                  </div>
+                </div>
+              </div>
+              <hr />
+             <!-- G3: projects, applications, functionalities, processes)  -->
+              <div class="KeywordTypeQuery--domainCards">
+                <div data-flex-layout="rows stretch-stretch" id="group_3" style="flex-wrap: nowrap;">
+                  <div class="KeywordTypeQuery--domainCardItem" style="margin: auto; white-space: nowrap;">Competency Targets:</div>
                   [[#> AddResourceModal resourceType="Project" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/42-business-professional-services/project-work.png"]]
                     [[#*inline "modalContent"]][[> :formCompetencyTarget type="http://xmlns.com/foaf/0.1/Project"]][[/inline]]
                   [[/AddResourceModal]]

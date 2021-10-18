@@ -26,9 +26,9 @@
       "xsdDatatype": "xsd:string",
       "minOccurs": 1,
       "maxOccurs": 1,
-      "selectPattern": "SELECT ?value WHERE { $subject comp:description ?value }",
-      "insertPattern": "INSERT { $subject comp:description ?value } WHERE {}",
-      "deletePattern": "DELETE { $subject comp:description ?value } WHERE {}"
+      "selectPattern": "SELECT ?value WHERE { ?subject comp:description ?value }",
+      "insertPattern": "INSERT { ?subject comp:description ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject comp:description ?value } WHERE {}"
     },
     {
       "id": "industrialSector",
@@ -55,6 +55,7 @@
         SERVICE Repository:lookup {
           ?value lookup:token ?__token__ .
           ?value lookup:name ?label .
+          ?value lookup:limit 100 .
         }
       }"
     },
@@ -71,6 +72,7 @@
           SERVICE Repository:lookup {
             ?value lookup:token ?__token__ .
             ?value lookup:name ?label .
+            ?value lookup:limit 100 .
           }
         }
       "
@@ -88,6 +90,7 @@
           SERVICE Repository:lookup {
             ?value lookup:token ?__token__ .
             ?value lookup:name ?label .
+            ?value lookup:limit 100 .
           }
         }
       "

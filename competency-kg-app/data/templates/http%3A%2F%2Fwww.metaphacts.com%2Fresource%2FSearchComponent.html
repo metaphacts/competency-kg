@@ -1,0 +1,166 @@
+  <div class="grid single-grid">
+        <div class="panel">
+          <bs-row style='padding: 50px 0;'>
+            <bs-col sm='10' sm-offset='1'>
+
+              <h5 class="text-center" style="color: grey; padding-bottom: 10px;">Explore the Competency Knowledge Graph</h5>
+                    <semantic-search limit=1000
+                [[> :competencyTypeSearchConfig]]>
+                <semantic-search-query-keyword-type
+                  default-query='SELECT ?subject WHERE {
+                        ?subject a ?__domain__ .
+                    }'
+                  default-count-query='SELECT (COUNT(*) as ?count) WHERE {
+                      ?subject a ?__domain__.
+                    }'
+                  count-query-mode='queryPerCategory'
+                  token-pattern='
+                    SERVICE Repository:lookup {
+                        ?subject lookup:token ?__token__  .
+                        ?subject lookup:limit 1000  .
+                        ?subject lookup:type ?__domain__ .
+                    }
+                  '
+                  inline-suggest='true'
+                  placeholder="Enter your search term here"                 
+                  template='{{> domainsTemplate}}'
+                >
+              <template id='domainsTemplate'>
+                <div>
+                  {{#if selectedDomain}}
+                    <div class='KeywordTypeQuery--selectedDomain'>
+                      <div class='KeywordTypeQuery--selectedDomainButton'>
+                        <mp-event-trigger
+                          type='KeywordTypeQuery.ToggleDomains'
+                          targets='["{{componentId}}"]'
+                        >
+                          <button class='KeywordTypeQuery--selectedDomainButtonContent'>{{selectedDomain.label}}</button>
+                        </mp-event-trigger>
+                        <mp-event-trigger
+                          type='KeywordTypeQuery.ClearDomain'
+                          targets='["{{componentId}}"]'
+                        >
+                          <button class='KeywordTypeQuery--selectedDomainButtonRemove'><i class='fa fa-times'></i></button>
+                        </mp-event-trigger>
+                      </div>
+                      <mp-event-trigger
+                        type='KeywordTypeQuery.ToggleDomains'
+                        targets='["{{componentId}}"]'
+                      >
+                        <button class='KeywordTypeQuery--editDomainButton'>
+                          {{#if showDomains}}
+                          <i class='fa fa-arrow-up'></i> Close
+                          {{else}}
+                          <i class='fa fa-pencil'></i> Edit
+                          {{/if}}
+                        </button>
+                      </mp-event-trigger>
+                      <mp-event-trigger
+                        type='KeywordTypeQuery.ClearSearch'
+                        targets='["{{componentId}}"]'
+                      >
+                        <button class='KeywordTypeQuery--clearSearchButton'>
+                          <i class='fa fa-trash'></i> Clear search
+                        </button>
+                      </mp-event-trigger>
+                    </div>
+                  {{/if}}
+
+	                  
+                  {{#if showDomains}}
+                    <div class='KeywordTypeQuery--domainCards'>
+                      <div data-flex-layout='rows stretch-stretch'>
+                        {{#each domains as |domain|}}
+                       {{#ifCond domain.label "==" "Person"}}
+                          <div data-flex-self='size-1of2 md-half sm-full' class='KeywordTypeQuery--domainCardItem'>
+                             <mp-event-trigger
+                                type='KeywordTypeQuery.SelectDomain'
+                                targets='["{{../componentId}}"]'
+                                data='{"domainIri": "{{iri}}"}'>
+                                <button type=button class='btn btn-secondary KeywordTypeQuery--domainCard {{#if selected}}KeywordTypeQuery--domainCardSelected{{/if}}'>
+                                  <span class='KeywordTypeQuery--domainThumbnail'>
+                                    {{#if thumbnail}}
+                                      <img src='{{thumbnail}}' alt='{{label}}' />
+                                    {{else}}
+                                      <i class='fa fa-edit fa-lg'></i>
+                                    {{/if}}
+                                  </span>
+                                  <span class='h4'>{{label}}</span>
+                                     <span class='h5'>{{#if count}}{{count}}{{else}}0{{/if}}</span>
+                                  {{#if ../loadingCounts}}<span class='h5'>?</span>{{/if}}
+                                </button>
+                              </mp-event-trigger>
+                            </div>
+                   
+                      {{else}}
+                      {{#ifCond domain.label "==" "Organisation"}}
+                          <div data-flex-self='size-1of2 md-half sm-full' class='KeywordTypeQuery--domainCardItem'>
+                             <mp-event-trigger
+                                type='KeywordTypeQuery.SelectDomain'
+                                targets='["{{../componentId}}"]'
+                                data='{"domainIri": "{{iri}}"}'>
+                                <button type=button class='btn btn-secondary KeywordTypeQuery--domainCard {{#if selected}}KeywordTypeQuery--domainCardSelected{{/if}}'>
+                                  <span class='KeywordTypeQuery--domainThumbnail'>
+                                    {{#if thumbnail}}
+                                      <img src='{{thumbnail}}' alt='{{label}}' />
+                                    {{else}}
+                                      <i class='fa fa-edit fa-lg'></i>
+                                    {{/if}}
+                                  </span>
+                                  <span class='h4'>{{label}}</span>
+                                     <span class='h5'>{{#if count}}{{count}}{{else}}0{{/if}}</span>
+                                  {{#if ../loadingCounts}}<span class='h5'>?</span>{{/if}}
+                                </button>
+                              </mp-event-trigger>
+                            </div>
+                   
+                      {{else}}
+                        <div data-flex-self='size-1of4 md-half sm-full' class='KeywordTypeQuery--domainCardItem'>
+                           <mp-event-trigger
+                                type='KeywordTypeQuery.SelectDomain'
+                                targets='["{{../componentId}}"]'
+                                data='{"domainIri": "{{iri}}"}'>
+                                <button type=button class='btn btn-secondary KeywordTypeQuery--domainCard {{#if selected}}KeywordTypeQuery--domainCardSelected{{/if}}'>
+                                  <span class='KeywordTypeQuery--domainThumbnail'>
+                                    {{#if thumbnail}}
+                                      <img src='{{thumbnail}}' alt='{{label}}' />
+                                    {{else}}
+                                      <i class='fa fa-edit fa-lg'></i>
+                                    {{/if}}
+                                  </span>
+                                  <span class='h4'>{{label}}</span>
+                                     <span class='h5'>{{#if count}}{{count}}{{else}}0{{/if}}</span>
+                                  {{#if ../loadingCounts}}<span class='h5'>?</span>{{/if}}
+                                </button>
+                              </mp-event-trigger>
+                            </div>
+                      {{/ifCond}}
+                      {{/ifCond}}
+                        {{/each}}
+                      </div>
+                    </div>
+                  {{/if}}
+                </div>
+
+                  
+                </template>
+                </semantic-search-query-keyword-type>
+
+                [[> :typeSearchResultsTemplate]]
+
+              </semantic-search>
+
+              <h6 class="text-center" style="color: grey; padding: 10px 0;">Use the various connections between <u><b>competencies</b></u>
+              (<span style="color: #000000;">tasks, methods, metrics, materials</span>),
+              <u><b>competency holders</b></u>
+              (<span style="color: #000000;">persons, organisations</span>),
+              <br>and 
+              <u><b>competency targets</b></u>
+              (<span style="color: #000000;">projects, applications, functionalities, processes</span>) to refine your search!</h6>
+
+              <h6 class="text-center" style="color: grey;">For further information, refer to our <a href="https://github.com/metaphacts/competency-kg/wiki">Wiki</a>.</h6>
+
+            </bs-col>
+          </bs-row>
+        </div>
+      </div>

@@ -20,6 +20,14 @@
       "deletePattern": "DELETE { ?subject rdfs:label ?value ; skos:prefLabel ?value } WHERE {}"
     },
     {
+      "id": "description",
+      "label": "Description",
+      "xsdDatatype": "xsd:string",
+      "selectPattern": "SELECT ?value WHERE { ?subject comp:description ?value }",
+      "insertPattern": "INSERT { ?subject comp:description ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject comp:description ?value } WHERE {}"
+    },
+    {
       "id": "organisation",
       "label": "Organisation",
       "description": "An organisation this person belongs to",
@@ -45,6 +53,7 @@
 [[#*inline "inputFields"]]
   <semantic-form-hidden-input for="type" default-value="http://xmlns.com/foaf/0.1/Person"></semantic-form-hidden-input>
   <semantic-form-auto-input for="label"></semantic-form-auto-input>
+  <semantic-form-text-input for="description" multiline='true'></semantic-form-text-input>
   <semantic-form-auto-input for="organisation"></semantic-form-auto-input>
   [[> :formCompetencyInput]]
   [[> :formDocumentInput]]

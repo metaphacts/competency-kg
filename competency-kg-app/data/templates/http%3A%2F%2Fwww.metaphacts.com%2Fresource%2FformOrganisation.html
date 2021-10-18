@@ -20,6 +20,35 @@
       "deletePattern": "DELETE { ?subject rdfs:label ?value ; skos:prefLabel ?value } WHERE {}"
     },
     {
+      "id": "logo",
+      "label": "Logo",
+      "xsdDatatype": "xsd:string",
+      "selectPattern": "SELECT ?value WHERE { ?subject comp:thumbnail ?value }",
+      "insertPattern": "INSERT { ?subject comp:thumbnail ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject comp:thumbnail ?value } WHERE {}"
+    },
+    {
+      "id": "description",
+      "label": "Description",
+      "xsdDatatype": "xsd:string",
+      "selectPattern": "SELECT ?value WHERE { ?subject comp:description ?value }",
+      "insertPattern": "INSERT { ?subject comp:description ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject comp:description ?value } WHERE {}"
+    },
+    {
+      "id": "industrialSector",
+      "label": "Industrial Sector",
+      "xsdDatatype": "xsd:anyURI",
+      "selectPattern": "SELECT ?value WHERE { ?subject <http://aida.kmi.open.ac.uk/ontology#hasIndustrialSector> ?value . }",
+      "insertPattern": "INSERT { ?subject <http://aida.kmi.open.ac.uk/ontology#hasIndustrialSector> ?value } WHERE {}",
+      "deletePattern": "DELETE { ?subject <http://aida.kmi.open.ac.uk/ontology#hasIndustrialSector> ?value } WHERE {}",
+      "autosuggestionPattern": "SELECT ?value ?label WHERE {
+        ?value a <http://aida.kmi.open.ac.uk/ontology#industrialSector> .
+        BIND (STRAFTER (STR(?value), \"http://aida.kmi.open.ac.uk/resource/\") as ?label)
+        FILTER REGEX(LCASE(?label), LCASE(?__token__), \"i\")
+      }"
+    },
+    {
       "id": "parentOrganisation",
       "label": "Parent Organisation",
       "xsdDatatype": "xsd:anyURI",
@@ -44,6 +73,9 @@
 [[#*inline "inputFields"]]
   <semantic-form-hidden-input for="type" default-value="http://www.w3.org/ns/org#Organization"></semantic-form-hidden-input>
   <semantic-form-auto-input for="label"></semantic-form-auto-input>
+  <semantic-form-auto-input for="logo"></semantic-form-auto-input>
+  <semantic-form-text-input for="description" multiline='true'></semantic-form-text-input>
+  [[> :formIndustrialSectorInput]]
   <semantic-form-auto-input for="parentOrganisation"></semantic-form-auto-input>
   [[> :formCompetencyInput]]
   [[> :formDocumentInput]]

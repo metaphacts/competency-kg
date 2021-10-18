@@ -1,34 +1,22 @@
-<style>
-  .checklistStyle{
-    flex-wrap: wrap;
-  }
-</style>
-
-<semantic-form-autocomplete-input for="competency" placeholder="Search for existing competencies..">
-  <semantic-form new-subject-template="{{type}}-{{label}}" fields='[
-    {
+<div> Create a new method (http://scholkg.kmi.open.ac.uk/aikg/ontology#Method) </div>
+<semantic-form new-subject-template="http://scholkg.kmi.open.ac.uk/aikg/resource/method/{{label}}" fields='[
+     {
       "id": "type",
       "label": "Type",
-      "xsdDatatype": "xsd:anyURI",
-      "minOccurs": 1,
-      "maxOccurs": 1,
       "selectPattern": "SELECT ?value WHERE { ?subject a ?value }",
       "insertPattern": "INSERT { ?subject a ?value } WHERE {}",
       "deletePattern": "DELETE { ?subject a ?value } WHERE {}",
-      "valueSetPattern": "SELECT ?value WHERE {
-        ?value rdfs:subClassOf+ comp:Competency .
-        FILTER NOT EXISTS { ?sub rdfs:subClassOf ?value }
-      }"
+      "xsdDatatype": "xsd:anyURI"
     },
-    {
+      {
       "id": "label",
       "label": "Name",
       "xsdDatatype": "xsd:string",
       "minOccurs": 1,
       "maxOccurs": 1,
       "selectPattern": "SELECT ?value WHERE { ?subject rdfs:label ?value ; skos:prefLabel ?value }",
-      "insertPattern": "INSERT { ?subject rdfs:label ?value ; skos:prefLabel ?value } WHERE {}",
-      "deletePattern": "DELETE { ?subject rdfs:label ?value ; skos:prefLabel ?value } WHERE {}"
+      "insertPattern": "INSERT { ?subject rdfs:label ?value ; skos:prefLabel ?value. } WHERE {}",
+      "deletePattern": "DELETE {  ?subject rdfs:label ?value ; skos:prefLabel ?value. } WHERE {}"
     },
     {
       "id": "superCompetency",
@@ -50,7 +38,7 @@
       "id": "subCompetency",
       "label": "More Specific Competency",
       "xsdDatatype": "xsd:anyURI",
-      "selectPattern": "SELECT ?value WHERE { ?value skos:broader ?subject }",
+      "selectPattern": "SELECT distinct ?value WHERE { ?value skos:broader ?subject }",
       "insertPattern": "INSERT { ?value skos:broader ?subject } WHERE {}",
       "deletePattern": "DELETE { ?value skos:broader ?subject } WHERE {}",
       "autosuggestionPattern": "
@@ -67,7 +55,7 @@
         "type": {"transform": "none"}
       }
     }'>
-  <semantic-form-checklist-input for="type" type="radio" row="true" class="checklistStyle"></semantic-form-checklist-input>
+  <semantic-form-hidden-input for="type" default-value="http://scholkg.kmi.open.ac.uk/aikg/ontology#Method"></semantic-form-hidden-input>
   <semantic-form-auto-input for="label"></semantic-form-auto-input>
   <semantic-form-autocomplete-input for="superCompetency"></semantic-form-autocomplete-input>
   <semantic-form-autocomplete-input for="subCompetency"></semantic-form-autocomplete-input>

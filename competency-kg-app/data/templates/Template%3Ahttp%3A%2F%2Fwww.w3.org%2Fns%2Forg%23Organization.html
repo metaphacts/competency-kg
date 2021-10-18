@@ -1,7 +1,16 @@
 [[#> :pageEntityView]]
 
 [[#*inline "viewDetailSection"]]
+  <semantic-query query='SELECT ?logo WHERE { ?? comp:thumbnail ?logo }'
+    template="<img style='padding: 10px 0; max-width: 200px; max-height: 100px;' src='{{bindings.0.logo.value}}'>"
+    no-result-template=''>
+  </semantic-query>
+
+  
+
   [[> :viewDetail label="Name" predicate="rdfs:label" singleValue=true]]
+  [[> :viewDetail label="Description" predicate="comp:description" singleValue=true]]
+  [[> :viewDetail label="Industrial Sector" predicate="<http://aida.kmi.open.ac.uk/ontology#hasIndustrialSector>"]]
   [[> :viewDetail label="Parent Organisations" predicate="<http://www.w3.org/ns/org#subOrganizationOf>"]]
   [[> :viewDetail label="Child Organisations" predicate="<http://www.w3.org/ns/org#subOrganizationOf>" inverse=true]]
   [[> :viewDetail label="Members" predicate="<http://www.w3.org/ns/org#memberOf>" inverse=true]]
