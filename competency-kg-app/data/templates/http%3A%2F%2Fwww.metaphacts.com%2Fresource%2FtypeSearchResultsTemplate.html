@@ -2,15 +2,62 @@
   #search-results .table-custom-row {
     justify-content: space-between;
   }
+  .semantic-facet-holder {
+    width:100%;
+  }
+  
+  .clearable-input {
+    width: 95%
+  }
+  .semantic-facet-holder > 
+  .show-facet-button__show {
+    position: relative;
+    margin-left: -56px;
+    left: -5px;
+    top: 30px;
+  }
+  .show-facet-button {
+    white-space: nowrap;
+  }
+  .hide-facet-button {
+    white-space: nowrap;
+  }
+  .show-facet-button__hide {
+    margin-left: -60px;
+    margin-top: 30px;
+    position: absolute;
+  }
+  .facet-relation__content{
+    white-space: nowrap;
+  }
+  .facet__category-selector-holder {
+    min-height: 40px;
+    min-width: 200px;
+  }
+  .facet {
+    margin-right:30px;
+    animation-duration: 0.1s;
+    animation-name: slidein;
+  }
+  
+@keyframes slidein {
+  from {
+    width: 0px;
+  }
+
+  to {
+    width: 100px;
+  }
+}
 </style>
 
 <div data-flex-layout="row stretch-stretch">
-  <div data-flex-self="size-1of3" style="flex: 0 0 20px;">
+  <div data-flex-self="size-1of2" style="flex: 0 0 0px;">
     <semantic-search-facet id='semantic-search-facet'></semantic-search-facet>
   </div>
 
   <semantic-search-result-holder>
-    <div data-flex-self="md-full">
+    <div data-flex-self="md-full" style="margin-left:-28px">
     <semantic-search-facet-breadcrumbs></semantic-search-facet-breadcrumbs>
       <semantic-search-result-context multi=true>
           <semantic-search-result>

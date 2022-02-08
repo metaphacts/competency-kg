@@ -1,5 +1,5 @@
 <div> Create a new method (http://scholkg.kmi.open.ac.uk/aikg/ontology#Method) </div>
-<semantic-form new-subject-template="http://scholkg.kmi.open.ac.uk/aikg/resource/method/{{label}}" fields='[
+<semantic-form class="semantic-form--align-footer-right" new-subject-template="http://scholkg.kmi.open.ac.uk/aikg/resource/method/{{label}}" fields='[
      {
       "id": "type",
       "label": "Type",
@@ -60,7 +60,9 @@
   <semantic-form-autocomplete-input for="superCompetency"></semantic-form-autocomplete-input>
   <semantic-form-autocomplete-input for="subCompetency"></semantic-form-autocomplete-input>
     <semantic-form-errors></semantic-form-errors>
-    <button name="submit" class="btn btn-secondary">Add Competency</button>
-    <button name="reset" class="btn btn-secondary">Reset Competency</button>
+    <div class="semantic-form-footer-buttons">
+      <button name="submit" class="btn btn-primary">Add Method</button>
+      <button name="reset" class="btn btn-secondary">Reset Method</button>
+    </div>
   </semantic-form>
 </semantic-form-autocomplete-input>

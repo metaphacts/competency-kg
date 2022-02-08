@@ -26,7 +26,10 @@
 
   <bs-row>
     <bs-col sm='8' sm-offset='2'>
-      [[> SearchComponent]]
+
+      [[> :SearchComponent]]
+
+
       <div class="grid single-grid">
         <div class="panel">  
           <bs-row style='padding: 50px 0;'>
@@ -57,16 +60,16 @@
               <!-- G2: person, organizations  -->
               <div class="KeywordTypeQuery--domainCards">
                 <div data-flex-layout="rows stretch" id="group_2" style="flex-wrap: nowrap; justify-content: space-evenly;">
-                  <div class="KeywordTypeQuery--domainCardItem" style="margin: auto; white-space:nowrap;">Competency Holders:</div>
-                  <div data-flex-layout="rows stretch-stretch" id="group_2" style="flex-wrap: nowrap; justify-content: space-evenly;">
-                    [[#> AddResourceModal resourceType="Person" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/12-peoples-avatars/person-profile.png"]]
-                      [[#*inline "modalContent"]][[> :formPerson]][[/inline]]
-                    [[/AddResourceModal]]
+                     <div class="KeywordTypeQuery--domainCardItem" style="margin: auto; white-space:nowrap;">Competency Holders:</div>
+                       <div data-flex-layout="rows stretch-stretch" id="group_2" style="flex-wrap: nowrap; justify-content: space-evenly;">
+                  [[#> AddResourceModal resourceType="Person" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/12-peoples-avatars/person-profile.png"]]
+                    [[#*inline "modalContent"]][[> :formPerson]][[/inline]]
+                  [[/AddResourceModal]]
 
-                    [[#> AddResourceModal resourceType="Organisation" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/42-business-professional-services/company-enterprise.png"]]
-                      [[#*inline "modalContent"]][[> :formOrganisation]][[/inline]]
-                    [[/AddResourceModal]]                 
-                  </div>
+                  [[#> AddResourceModal resourceType="Organisation" thumbnail="https://uxwing.com/wp-content/themes/uxwing/download/42-business-professional-services/company-enterprise.png"]]
+                    [[#*inline "modalContent"]][[> :formOrganisation]][[/inline]]
+                  [[/AddResourceModal]]                 
+                </div>
                 </div>
               </div>
               <hr />

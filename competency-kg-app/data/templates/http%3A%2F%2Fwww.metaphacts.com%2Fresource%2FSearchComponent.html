@@ -8,10 +8,10 @@
                 [[> :competencyTypeSearchConfig]]>
                 <semantic-search-query-keyword-type
                   default-query='SELECT ?subject WHERE {
-                        ?subject a ?__domain__ .
+                        ?subject a/rdfs:subClassOf* ?__domain__ .
                     }'
                   default-count-query='SELECT (COUNT(*) as ?count) WHERE {
-                      ?subject a ?__domain__.
+                      ?subject a/rdfs:subClassOf* ?__domain__ .
                     }'
                   count-query-mode='queryPerCategory'
                   token-pattern='

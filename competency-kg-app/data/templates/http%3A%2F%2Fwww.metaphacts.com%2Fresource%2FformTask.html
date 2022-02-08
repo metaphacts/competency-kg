@@ -1,6 +1,7 @@
 <div> Create a new task (http://scholkg.kmi.open.ac.uk/aikg/ontology#Task) </div>
 
-<semantic-form new-subject-template="http://scholkg.kmi.open.ac.uk/aikg/resource/task/{{label}}" fields='[
+<semantic-form class="semantic-form--align-footer-right"
+new-subject-template="http://scholkg.kmi.open.ac.uk/aikg/resource/task/{{label}}" fields='[
       {
         "id": "type",
         "label": "Type",
@@ -61,7 +62,9 @@
   <semantic-form-autocomplete-input for="superCompetency"></semantic-form-autocomplete-input>
   <semantic-form-autocomplete-input for="subCompetency"></semantic-form-autocomplete-input>
     <semantic-form-errors></semantic-form-errors>
-    <button name="submit" class="btn btn-secondary">Add Competency</button>
-    <button name="reset" class="btn btn-secondary">Reset Competency</button>
+    <div class="semantic-form-footer-buttons">
+      <button name="submit" class="btn btn-primary">Add Task</button>
+      <button name="reset" class="btn btn-secondary">Reset Task</button>
+    </div>
   </semantic-form>
 </semantic-form-autocomplete-input>

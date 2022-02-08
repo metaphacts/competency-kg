@@ -1,5 +1,5 @@
 <div> Create a new material (http://scholkg.kmi.open.ac.uk/aikg/ontology#Material) </div>
-<semantic-form new-subject-template="http://scholkg.kmi.open.ac.uk/aikg/resource/material/{{label}}" fields='[
+<semantic-form class="semantic-form--align-footer-right" new-subject-template="http://scholkg.kmi.open.ac.uk/aikg/resource/material/{{label}}" fields='[
      {
       "id": "type",
       "label": "Type",
@@ -60,7 +60,9 @@
   <semantic-form-autocomplete-input for="superCompetency"></semantic-form-autocomplete-input>
   <semantic-form-autocomplete-input for="subCompetency"></semantic-form-autocomplete-input>
     <semantic-form-errors></semantic-form-errors>
-    <button name="submit" class="btn btn-secondary">Add Competency</button>
-    <button name="reset" class="btn btn-secondary">Reset Competency</button>
+    <div class="semantic-form-footer-buttons">
+      <button name="submit" class="btn btn-primary">Add Material</button>
+      <button name="reset" class="btn btn-secondary">Reset Material</button>
+    </div>
   </semantic-form>
 </semantic-form-autocomplete-input>
